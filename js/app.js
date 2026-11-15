@@ -660,36 +660,12 @@
     const creator = getCreatorById(concept.creatorId);
     const isBookmarked = state.bookmarks.includes(concept.id);
 
-    const viewButtons =
-      concept.id === 'c-hcmut-tee-01'
-        ? [
-            { idx: 0, label: 'Áo Polo Trắng #1' },
-            { idx: 1, label: 'Mặt Sau & Tay BK' },
-            { idx: 2, label: 'Thông Số Nhận Diện' },
-          ]
-        : concept.id === 'c-hcmut-tee-02'
-          ? [
-              { idx: 0, label: 'Polo Navy Zipper' },
-              { idx: 1, label: 'Áo Thun Thể Thao' },
-              { idx: 2, label: 'Thông Số Nhận Diện' },
-            ]
-          : concept.category === 'cap'
-            ? [
-                { idx: 0, label: 'Nón Navy Thực Tế' },
-                { idx: 1, label: 'Bộ Merch Kit HCMUT' },
-                { idx: 2, label: 'Chi Tiết Khắc Kim Loại' },
-              ]
-            : concept.category === 'tote'
-              ? [
-                  { idx: 0, label: 'Túi Tote Canvas' },
-                  { idx: 1, label: 'Góc Studio HCMUT' },
-                  { idx: 2, label: 'Đeo Thực Tế' },
-                ]
-              : [
-                  { idx: 0, label: 'Mockup Mặt Trước' },
-                  { idx: 1, label: 'Mặt Sau & Chi Tiết' },
-                  { idx: 2, label: 'Thông Số Nhận Diện' },
-                ];
+    const defaultLabels = ['Góc chính diện (Studio)', 'Cận cảnh chi tiết & Logo', 'Phối cảnh sử dụng thực tế'];
+    const labels =
+      Array.isArray(concept.viewLabels) && concept.viewLabels.length === 3
+        ? concept.viewLabels
+        : defaultLabels;
+    const viewButtons = labels.map((label, idx) => ({ idx, label }));
 
     body.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-7">

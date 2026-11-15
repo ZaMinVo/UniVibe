@@ -567,7 +567,37 @@
     'assets/products/hcmut-tote.jpg': {
       background: '#E5E7EB',
       imgClass: 'object-cover',
-      objectPosition: 'center 78%',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-deskpad.png': {
+      background: '#D3D3D3',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-deskpad-closeup.png': {
+      background: '#D3D3D3',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-deskpad-top.png': {
+      background: '#D3D3D3',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cap.jpg': {
+      background: '#071B4B',
+      imgClass: 'object-cover',
+      objectPosition: 'center 52%',
+    },
+    'assets/products/hcmut-merch-kit.jpg': {
+      background: '#040B3C',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-metal-detail.jpg': {
+      background: '#03082B',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
     },
   };
 
