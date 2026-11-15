@@ -494,6 +494,14 @@
   }
 
   function renderCampusEmblem(campus) {
+    if (campus && campus.logo) {
+      const shortName = campus.shortName || 'UNI';
+      return `
+        <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#1E1E24] p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-[2px_2px_0px_#1E1E24]">
+          <img src="${escapeXml(campus.logo)}" alt="Logo ${escapeXml(shortName)}" class="w-full h-full object-contain" loading="lazy" />
+        </div>
+      `;
+    }
     if (campus && campus.id === 'hcmut') {
       return `
         <svg viewBox="0 0 112 112" class="w-11 h-11 shrink-0" aria-hidden="true">

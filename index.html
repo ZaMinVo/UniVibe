@@ -128,16 +128,24 @@
     <!-- ==================== 2. MULTI-CAMPUS HUBS SELECTOR ==================== -->
     <section id="campus-hubs" class="py-8 sm:py-10 bg-[#F4EFE6]/70 border-y-[2.5px] border-[#1E1E24]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
           <div>
             <span class="inline-block font-hand text-base text-[#2D5DA1] font-bold tracking-wide uppercase">01 · Không gian 2 tầng bản sắc</span>
             <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] mt-0.5">
               Chọn Không Gian <span class="sketch-highlight">Trường Đại Học</span>
             </h2>
+            <p class="text-sm text-[#52525B] max-w-2xl mt-1.5">
+              Ưu tiên hiển thị các trường thành viên thuộc <strong>ĐHQG-HCM</strong> cùng logo nhận diện chính thức. Chọn từng trường để xem không gian trưng bày riêng.
+            </p>
           </div>
-          <p class="text-sm text-[#52525B] max-w-md">
-            Chuyển nhanh giữa <strong>Khám phá Chung liên trường</strong> hoặc xem không gian trưng bày riêng của từng trường đại học.
-          </p>
+          <div class="flex flex-wrap items-center gap-2 shrink-0" role="group" aria-label="Bộ lọc nhóm trường đại học">
+            <button type="button" data-campus-scope="vnuhcm" class="campus-scope-btn sketch-btn sketch-btn-sm chip-active text-xs sm:text-sm">
+              Ưu tiên Khối ĐHQG-HCM (6)
+            </button>
+            <button type="button" data-campus-scope="all" class="campus-scope-btn sketch-btn sketch-btn-sm btn-paper text-xs sm:text-sm">
+              Tất cả các trường (9)
+            </button>
+          </div>
         </div>
 
         <div id="campusHubStrip" class="campus-strip grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 pb-2">

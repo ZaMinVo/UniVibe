@@ -15,6 +15,7 @@
     concepts: [],
     creators: [],
     bookmarks: [],
+    campusScope: 'vnuhcm',
     activeCampus: 'all',
     activeCategory: 'all',
     searchQuery: '',
@@ -394,39 +395,62 @@
     const strip = document.getElementById('campusHubStrip');
     if (!strip) return;
 
+    document.querySelectorAll('.campus-scope-btn').forEach((btn) => {
+      const isMatch = btn.dataset.campusScope === state.campusScope;
+      btn.classList.toggle('chip-active', isMatch);
+      btn.classList.toggle('btn-paper', !isMatch);
+    });
+
+    const orderedCampuses = [...CAMPUSES].sort(
+      (a, b) => Number(Boolean(b.isVnuHcm)) - Number(Boolean(a.isVnuHcm))
+    );
+    const visibleCampuses =
+      state.campusScope === 'vnuhcm'
+        ? orderedCampuses.filter((c) => c.isVnuHcm || c.id === state.activeCampus)
+        : orderedCampuses;
+
     const allActive = state.activeCampus === 'all';
     const allCard = `
-      <button type="button" data-campus-id="all" class="text-left p-3.5 sketch-card cursor-pointer transition-all ${
+      <button type="button" data-campus-id="all" class="text-left p-3.5 sketch-card cursor-pointer transition-all flex flex-col ${
         allActive ? 'bg-[#FFF3B0] ring-2 ring-[#1E1E24]' : 'bg-white hover:bg-[#FDFBF7]'
       }">
-        <div class="flex items-center gap-3 mb-2">
+        <div class="flex items-center gap-2.5 mb-2">
           <div class="w-11 h-11 rounded-xl bg-[#1E1E24] text-[#FFF3B0] border-2 border-[#1E1E24] flex items-center justify-center font-display font-extrabold text-sm shrink-0">
             ALL
           </div>
           <div class="min-w-0">
-            <div class="font-display font-extrabold text-sm truncate">Liên Trường</div>
-            <div class="text-xs font-mono text-[#52525B]">${state.concepts.length} concept</div>
+            <div class="font-display font-extrabold text-sm leading-tight">Liên Trường</div>
+            <div class="text-[11px] font-mono text-[#52525B] whitespace-nowrap mt-0.5">${state.concepts.length} concept</div>
           </div>
         </div>
-        <p class="text-xs text-[#52525B] line-clamp-2">Khám phá các mẫu vật phẩm trưng bày từ các trường đại học.</p>
+        <p class="text-xs text-[#52525B] line-clamp-2 mt-auto">Khám phá các mẫu vật phẩm trưng bày từ các trường.</p>
       </button>
     `;
 
-    const campusCards = CAMPUSES.map((campus) => {
+    const campusCards = visibleCampuses.map((campus) => {
       const count = state.concepts.filter((c) => c.campusId === campus.id).length;
       const isActive = state.activeCampus === campus.id;
+      const vnuBadge = campus.isVnuHcm
+        ? `<span class="inline-block px-1.5 py-0.5 text-[9px] font-mono font-bold bg-[#E0F2FE] text-[#030391] border border-[#1E1E24] rounded">ĐHQG-HCM</span>`
+        : '';
+
       return `
-        <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-3.5 sketch-card cursor-pointer transition-all ${
+        <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-3.5 sketch-card cursor-pointer transition-all flex flex-col ${
           isActive ? 'bg-[#FFF3B0] ring-2 ring-[#1E1E24]' : 'bg-white hover:bg-[#FDFBF7]'
         }">
-          <div class="flex items-center gap-3 mb-2">
+          <div class="flex items-center gap-2.5 mb-2">
             ${renderCampusEmblem(campus)}
             <div class="min-w-0">
-              <div class="font-display font-extrabold text-sm truncate">${escapeHtml(campus.shortName)}</div>
-              <div class="text-xs font-mono text-[#52525B]">${count > 0 ? `${count} concept` : 'Đang biên tập'}</div>
+              <div class="flex flex-wrap items-center gap-1">
+                <span class="font-display font-extrabold text-sm leading-tight">${escapeHtml(campus.shortName)}</span>
+              </div>
+              <div class="text-[11px] font-mono text-[#52525B] whitespace-nowrap mt-0.5">${count > 0 ? `${count} concept` : 'Đang biên tập'}</div>
             </div>
           </div>
-          <p class="text-xs text-[#52525B] line-clamp-2">${escapeHtml(campus.name)}</p>
+          <div class="mt-auto space-y-1">
+            ${vnuBadge}
+            <p class="text-xs text-[#52525B] line-clamp-2">${escapeHtml(campus.name)}</p>
+          </div>
         </button>
       `;
     }).join('');
@@ -923,6 +947,13 @@
   function bindEvents() {
     // Global click delegation
     document.addEventListener('click', (e) => {
+      const scopeBtn = e.target.closest('[data-campus-scope]');
+      if (scopeBtn) {
+        state.campusScope = scopeBtn.dataset.campusScope;
+        renderCampusHubStrip();
+        return;
+      }
+
       const campusBtn = e.target.closest('[data-campus-id]');
       if (campusBtn) {
         state.activeCampus = campusBtn.dataset.campusId;
