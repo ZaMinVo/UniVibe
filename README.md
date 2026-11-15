@@ -8,7 +8,7 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Không gian trưng bày tinh gọn:** Giới thiệu **6 concept** vật phẩm thực tế tối giản (**Túi Tote Canvas, Nón lưỡi trai, Áo thun & Lót chuột Deskpad**) đồng bộ theo hệ thống Wordmark hình học & ấn phẩm thương hiệu mới của **Trường ĐH Bách Khoa — ĐHQG-HCM (HCMUT)** (`#030391`, `#1488DB`, `#FFFFFF`, nét sọc dọc bậc thang & tam giác xanh, ghi rõ **Nguồn: HCMUT**).
+- **Không gian trưng bày tinh gọn:** Giới thiệu **6 concept** vật phẩm thực tế tối giản (**Áo Polo Trắng #1, Áo Polo Navy & Thun Thể Thao, Túi Tote Canvas, Nón lưỡi trai & Lót chuột Deskpad**) đồng bộ theo phong cách sản phẩm chính thức trên [HCMUT Shop (#1)](https://hcmut.edu.vn/hcmut-shop/product/1) (`#030391`, `#1488DB`, `#FFFFFF`, bo viền xanh kép, wordmark `HCMUT` + huy hiệu lập phương `BK TP.HCM` trên nền studio trung tính, ghi rõ **Nguồn: HCMUT**).
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
 - **Đăng tải ẩn danh (*Ẩn danh*):** Toàn bộ mẫu trưng bày hiện tại được xuất bản công khai dưới danh nghĩa **Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** để sinh viên và các CLB tự do tham khảo, không chứa dữ liệu demo cũ.
 - **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
