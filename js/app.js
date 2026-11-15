@@ -138,6 +138,7 @@
           c.story,
           c.specs,
           c.campusShort,
+          c.source ? `Nguồn ${c.source}` : '',
           campus.name,
           creator.name,
           creator.handle,
@@ -186,7 +187,7 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#52525B] max-w-2xl leading-relaxed">
-              Bộ sưu tập trưng bày các mẫu thiết kế thực tế tối giản (<strong>Áo thun &amp; Lót chuột</strong>) lấy cảm hứng từ hệ thống nhận diện thương hiệu đại học. Xem phối cảnh Studio 3 góc độ, bảng màu chuẩn và thông số chất liệu.
+              Bộ sưu tập trưng bày các mẫu thiết kế thực tế tối giản (<strong>Túi Tote, Nón lưỡi trai, Áo thun &amp; Lót chuột</strong>) đồng bộ hệ thống nhận diện thương hiệu đại học (Nguồn: <strong>HCMUT</strong>). Xem phối cảnh Studio 3 góc độ, bảng màu chuẩn và thông số chất liệu.
             </p>
 
             <div class="flex flex-wrap items-center gap-3.5 pt-1">
@@ -250,6 +251,8 @@
                     <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-semibold text-[#2D5DA1] hover:underline cursor-pointer">
                       ${escapeHtml(creator.name)}
                     </button>
+                    <span class="mx-1.5 text-[#CBD5E1]">·</span>
+                    <span class="font-mono text-xs font-bold text-[#030391]">Nguồn: ${escapeHtml(featured.source || 'HCMUT')}</span>
                   </p>
                 </div>
 
@@ -548,6 +551,8 @@
                   <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-bold text-[#2D5DA1] hover:underline cursor-pointer">
                     ${escapeHtml(creator.name)}
                   </button>
+                  <span class="mx-1 text-[#CBD5E1]">·</span>
+                  <span class="font-mono font-bold text-[#030391]">Nguồn: ${escapeHtml(item.source || 'HCMUT')}</span>
                 </div>
                 <span class="font-mono">${formatDateDisplay(item.createdAt)}</span>
               </div>
@@ -612,7 +617,7 @@
         return `
           <div class="sketch-box p-3.5 bg-white flex items-center gap-3">
             <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-16 rounded-lg overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer bg-[#F4F6F9]">
-              ${renderMerchIllustration(item, 0)}
+              ${renderMerchIllustration(item, 0, { compact: true })}
             </button>
             <div class="min-w-0 flex-1">
               <div class="text-[11px] font-mono font-bold text-[#2D5DA1]">${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}</div>
@@ -655,11 +660,24 @@
     const creator = getCreatorById(concept.creatorId);
     const isBookmarked = state.bookmarks.includes(concept.id);
 
-    const viewButtons = [
-      { idx: 0, label: 'Mockup Mặt Trước' },
-      { idx: 1, label: 'Mặt Sau & Chi Tiết' },
-      { idx: 2, label: 'Thông Số Nhận Diện' },
-    ];
+    const viewButtons =
+      concept.category === 'cap'
+        ? [
+            { idx: 0, label: 'Nón Navy Thực Tế' },
+            { idx: 1, label: 'Bộ Merch Kit HCMUT' },
+            { idx: 2, label: 'Chi Tiết Khắc Kim Loại' },
+          ]
+        : concept.category === 'tote'
+          ? [
+              { idx: 0, label: 'Túi Tote Canvas' },
+              { idx: 1, label: 'Bộ Nhận Diện Giấy' },
+              { idx: 2, label: 'Quy Chuẩn Wordmark' },
+            ]
+          : [
+              { idx: 0, label: 'Mockup Mặt Trước' },
+              { idx: 1, label: 'Mặt Sau & Chi Tiết' },
+              { idx: 2, label: 'Thông Số Nhận Diện' },
+            ];
 
     body.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-7">
@@ -709,6 +727,9 @@
               <span class="px-3 py-0.5 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">
                 Chế độ: Chỉ Trưng Bày
               </span>
+              <span class="px-3 py-0.5 text-xs font-mono font-bold bg-[#E0F2FE] text-[#030391] border-2 border-[#1E1E24] rounded-full">
+                Nguồn: ${escapeHtml(concept.source || 'HCMUT')}
+              </span>
             </div>
 
             <h2 id="conceptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] leading-tight">
@@ -724,7 +745,7 @@
                   <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-display font-bold text-sm text-[#2D5DA1] hover:underline cursor-pointer block text-left">
                     ${escapeHtml(creator.name)}
                   </button>
-                  <div class="text-xs text-[#52525B]">${escapeHtml(creator.faculty)} · ${formatDateDisplay(concept.createdAt)}</div>
+                  <div class="text-xs text-[#52525B]">${escapeHtml(creator.faculty)} · Nguồn: ${escapeHtml(concept.source || 'HCMUT')} · ${formatDateDisplay(concept.createdAt)}</div>
                 </div>
               </div>
 

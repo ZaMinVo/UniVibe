@@ -8,8 +8,9 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Không gian trưng bày tinh gọn:** Giới thiệu bộ sưu tập mockup sản phẩm thực tế tối giản (**Áo thun & Lót chuột**) lấy cảm hứng từ bộ nhận diện thương hiệu chính thức của **Trường ĐH Bách Khoa — ĐHQG-HCM (HCMUT)** (`#1488DB`, `#030391`, `#FFFFFF`, logo lục giác 3D chuẩn & phiên bản viền trắng).
-- **Đăng tải ẩn danh (*Ẩn danh*):** Toàn bộ mẫu trưng bày hiện tại được xuất bản công khai dưới danh nghĩa **Ẩn danh** để sinh viên và các CLB tự do tham khảo, không chứa dữ liệu demo cũ.
+- **Không gian trưng bày tinh gọn:** Giới thiệu **6 concept** vật phẩm thực tế tối giản (**Túi Tote Canvas, Nón lưỡi trai, Áo thun & Lót chuột Deskpad**) đồng bộ theo hệ thống Wordmark hình học & ấn phẩm thương hiệu mới của **Trường ĐH Bách Khoa — ĐHQG-HCM (HCMUT)** (`#030391`, `#1488DB`, `#FFFFFF`, nét sọc dọc bậc thang & tam giác xanh, ghi rõ **Nguồn: HCMUT**).
+- **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
+- **Đăng tải ẩn danh (*Ẩn danh*):** Toàn bộ mẫu trưng bày hiện tại được xuất bản công khai dưới danh nghĩa **Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** để sinh viên và các CLB tự do tham khảo, không chứa dữ liệu demo cũ.
 - **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---
@@ -17,7 +18,7 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 ## 2. Trải nghiệm Trưng bày hiện có
 
 1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
-2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo loại vật phẩm (*Áo thun*, *Lót chuột*, *Áo khoác*, *Túi Tote*, *Dây đeo thẻ*, *Mascot*), tìm kiếm theo từ khóa/tag và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
+2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo loại vật phẩm (*Túi Tote*, *Nón (Baseball Cap)*, *Áo thun*, *Lót chuột*, *Áo khoác*, *Dây đeo thẻ*, *Mascot*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
 3. **Chi tiết Tác phẩm 3 Góc nhìn Studio:**
    - **Mockup Mặt Trước**
    - **Mặt Sau & Chi Tiết**

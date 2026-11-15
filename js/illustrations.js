@@ -61,31 +61,118 @@
     `;
   }
 
-  function renderStudioBackdrop(uid, isDarkSubject) {
-    const bgTop = isDarkSubject ? '#E8EDF3' : '#F4F6F9';
-    const bgBottom = isDarkSubject ? '#CFD8E3' : '#DCE3EC';
+  /**
+   * Official HCMUT Wordmark (Geometric Ligature Lockup: HCM #030391 + UT #1488DB on white,
+   * or full #FFFFFF on deep navy #030391). Coordinate box: width 250, height 46.
+   */
+  function renderHcmutWordmark({ x = 0, y = 0, scale = 1, variant = 'two-tone', align = 'left' }) {
+    const isWhite = variant === 'white';
+    const cHcm = isWhite ? '#FFFFFF' : '#030391';
+    const cUt = isWhite ? '#FFFFFF' : '#1488DB';
+    const ox = align === 'center' ? -125 : align === 'right' ? -250 : 0;
+
+    return `
+      <g transform="translate(${x}, ${y}) scale(${scale}) translate(${ox}, 0)">
+        <!-- H -->
+        <path d="M0 0 L11.5 0 L11.5 17.5 L34.5 17.5 L34.5 0 L46 0 L46 46 L34.5 46 L34.5 28.5 L11.5 28.5 L11.5 46 L0 46 Z" fill="${cHcm}" />
+        <!-- C -->
+        <path d="M98 0 L66 0 C56.5 0 53 4.2 53 13 L53 33 C53 41.8 56.5 46 66 46 L98 46 L98 35 L68.5 35 C65 35 64 33.8 64 30.5 L64 15.5 C64 12.2 65 11 68.5 11 L98 11 Z" fill="${cHcm}" />
+        <!-- M -->
+        <path d="M105 46 L105 0 L119.5 0 L132 25.5 L144.5 0 L159 0 L159 46 L147.5 46 L147.5 17.5 L136 40.5 L128 40.5 L116.5 17.5 L116.5 46 Z" fill="${cHcm}" />
+        <!-- U + T Geometric Ligature with Diagonal Bevel Cut -->
+        <path d="M166 0 L177.5 0 L177.5 29 C177.5 34.8 180.5 36.2 188.5 36.2 C196.5 36.2 199.5 34.8 199.5 29 L199.5 3.8 L211.2 11.2 L213 8.8 L200.5 0 L250 0 L250 10.5 L216.5 10.5 L216.5 46 L188.5 46 C172.5 46 166 40 166 28.5 Z" fill="${cUt}" />
+      </g>
+    `;
+  }
+
+  /**
+   * Full HCMUT Identity Lockup (Wordmark + TRƯỜNG ĐẠI HỌC BÁCH KHOA + English subtitle)
+   */
+  function renderHcmutWordmarkLockup({ x = 0, y = 0, scale = 1, variant = 'two-tone', align = 'left' }) {
+    const isWhite = variant === 'white';
+    const cMain = isWhite ? '#FFFFFF' : '#030391';
+    const cSub = isWhite ? '#BFDBFE' : '#1488DB';
+    const ox = align === 'center' ? -125 : align === 'right' ? -250 : 0;
+
+    return `
+      <g transform="translate(${x}, ${y}) scale(${scale}) translate(${ox}, 0)">
+        ${renderHcmutWordmark({ x: 0, y: 0, scale: 1, variant, align: 'left' })}
+        <text x="0" y="61" font-family="Arial, Helvetica, sans-serif" font-size="13.2" font-weight="800" fill="${cMain}" letter-spacing="0.2">TRƯỜNG ĐẠI HỌC BÁCH KHOA</text>
+        <text x="0" y="74" font-family="Arial, Helvetica, sans-serif" font-size="8.6" font-weight="700" fill="${cSub}" letter-spacing="0.15">HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY</text>
+      </g>
+    `;
+  }
+
+  /**
+   * Signature HCMUT Stepped Vertical Line Motif (seen on Tote & Stationery system)
+   */
+  function renderSteppedVerticalLines({ x = 0, y = 0, count = 11, stepX = 8, baseLen = 14, growth = 7, dir = 'up', color = '#030391', strokeWidth = 1.4, opacity = 0.72 }) {
+    const lines = [];
+    for (let i = 0; i < count; i += 1) {
+      const lx = i * stepX;
+      const len = baseLen + i * growth;
+      const y1 = 0;
+      const y2 = dir === 'up' ? -len : len;
+      lines.push(`<line x1="${lx}" y1="${y1}" x2="${lx}" y2="${y2}" stroke="${color}" stroke-width="${strokeWidth}" stroke-opacity="${opacity}" />`);
+    }
+    return `<g transform="translate(${x}, ${y})">${lines.join('')}</g>`;
+  }
+
+  /**
+   * Minimal Geometric Triangle Mosaic (derived from HCMUT Brand Stationery)
+   */
+  function renderTriangleMosaic({ x = 0, y = 0, cols = 3, rows = 4, size = 18, darkBg = false }) {
+    const h = size * 0.866;
+    const tones = darkBg
+      ? ['#1488DB', '#1E40AF', '#60A5FA', '#0F172A']
+      : ['#DBEAFE', '#93C5FD', '#1488DB', '#030391'];
+    const polys = [];
+    for (let r = 0; r < rows; r += 1) {
+      for (let c = 0; c < cols; c += 1) {
+        const px = c * size;
+        const py = r * h;
+        const t1 = tones[(r * 2 + c) % tones.length];
+        const t2 = tones[(r + c * 3 + 1) % tones.length];
+        polys.push(
+          `<polygon points="${px},${py} ${px + size},${py + h * 0.5} ${px},${py + h}" fill="${t1}" fill-opacity="${darkBg ? '0.26' : '0.45'}" />`,
+          `<polygon points="${px + size},${py - h * 0.5} ${px + size},${py + h * 0.5} ${px},${py}" fill="${t2}" fill-opacity="${darkBg ? '0.18' : '0.32'}" />`
+        );
+      }
+    }
+    return `<g transform="translate(${x}, ${y})">${polys.join('')}</g>`;
+  }
+
+  function renderStudioBackdrop(uid, isDarkSubject, useNavyStage = false) {
+    const bgTop = useNavyStage ? '#02053D' : isDarkSubject ? '#E5EBF3' : '#EEF2F6';
+    const bgBottom = useNavyStage ? '#040B66' : isDarkSubject ? '#CBD5E1' : '#D5DCE5';
     return `
       <defs>
         <linearGradient id="${uid}_bg" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="${bgTop}" />
           <stop offset="72%" stop-color="${bgBottom}" />
-          <stop offset="100%" stop-color="#C7D1DE" />
+          <stop offset="100%" stop-color="${useNavyStage ? '#050F7A' : '#C2CCD9'}" />
         </linearGradient>
         <radialGradient id="${uid}_spot" cx="50%" cy="42%" r="58%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.92" />
+          <stop offset="0%" stop-color="${useNavyStage ? '#1488DB' : '#FFFFFF'}" stop-opacity="${useNavyStage ? '0.22' : '0.88'}" />
           <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
         </radialGradient>
         <filter id="${uid}_shadow" x="-18%" y="-18%" width="136%" height="145%">
-          <feDropShadow dx="0" dy="14" stdDeviation="11" flood-color="#0F172A" flood-opacity="0.22" />
+          <feDropShadow dx="0" dy="14" stdDeviation="11" flood-color="#050824" flood-opacity="${useNavyStage ? '0.52' : '0.22'}" />
         </filter>
         <filter id="${uid}_softShadow" x="-15%" y="-15%" width="130%" height="135%">
-          <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.16" />
+          <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#050824" flood-opacity="${useNavyStage ? '0.42' : '0.16'}" />
         </filter>
       </defs>
       <rect x="0" y="0" width="480" height="360" fill="url(#${uid}_bg)" />
-      <rect x="0" y="0" width="480" height="360" fill="url(#${uid}_spot)" />
-      <!-- Subtle Studio Floor Horizon -->
-      <line x1="0" y1="298" x2="480" y2="298" stroke="#94A3B8" stroke-opacity="0.22" stroke-width="1" />
+      ${
+        useNavyStage
+          ? `<polygon points="0,360 480,145 480,360" fill="#06148C" opacity="0.68" />
+             <rect x="0" y="0" width="480" height="360" fill="url(#${uid}_spot)" />`
+          : `<rect x="0" y="0" width="480" height="360" fill="url(#${uid}_spot)" />
+             <!-- Soft Sunlit Architectural Cast Shadow & Horizon -->
+             <polygon points="0,0 130,0 24,360 0,360" fill="#94A3B8" fill-opacity="0.14" />
+             <line x1="0" y1="298" x2="480" y2="298" stroke="#94A3B8" stroke-opacity="0.22" stroke-width="1" />`
+      }
     `;
   }
 
@@ -96,8 +183,7 @@
     const bodyShade = isNavy ? '#02026B' : '#E9EEF4';
     const bodyMid = isNavy ? '#0710A6' : '#F8FAFC';
     const foldStroke = isNavy ? 'rgba(255,255,255,0.09)' : 'rgba(15,23,42,0.08)';
-    const seamStroke = isNavy ? 'rgba(20,136,219,0.35)' : 'rgba(15,23,42,0.14)';
-    const textColor = isNavy ? '#FFFFFF' : '#030391';
+    const seamStroke = isNavy ? 'rgba(20,136,219,0.42)' : 'rgba(15,23,42,0.14)';
     const accentBlue = '#1488DB';
 
     const fabricDefs = `
@@ -116,63 +202,85 @@
           <stop offset="100%" stop-color="${bodyBase}" />
         </linearGradient>
         <radialGradient id="${uid}_chestSheen" cx="46%" cy="35%" r="55%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="${isNavy ? '0.12' : '0.65'}" />
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="${isNavy ? '0.14' : '0.68'}" />
           <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
         </radialGradient>
+        <clipPath id="${uid}_refClip">
+          <rect x="0" y="0" width="90" height="58" rx="6" />
+        </clipPath>
       </defs>
     `;
 
     if (viewIndex === 2) {
-      // View 2: Minimalist Spec & Official Brand Compliance Sheet
+      // View 2: Minimalist Spec & Official Brand Wordmark Compliance Sheet
       return `
         ${fabricDefs}
         <g transform="translate(34, 24)">
           <rect x="0" y="0" width="412" height="302" rx="14" fill="#FFFFFF" filter="url(#${uid}_softShadow)" />
           <rect x="0" y="0" width="412" height="44" rx="14" fill="#030391" />
           <rect x="0" y="28" width="412" height="16" fill="#030391" />
-          <text x="20" y="27" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" letter-spacing="0.8">THÔNG SỐ KỸ THUẬT &amp; CHUẨN NHẬN DIỆN HCMUT</text>
+          <text x="20" y="27" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" letter-spacing="0.8">THÔNG SỐ KỸ THUẬT &amp; CHUẨN WORDMARK HCMUT</text>
+
+          <!-- Dual Wordmark Usage Boxes (White bg two-tone & Deep Navy bg white) -->
+          <g transform="translate(20, 60)">
+            <rect x="0" y="0" width="180" height="58" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
+            ${renderHcmutWordmark({ x: 90, y: 15, scale: 0.48, variant: 'two-tone', align: 'center' })}
+            <rect x="192" y="0" width="180" height="58" rx="8" fill="#030391" />
+            ${renderHcmutWordmark({ x: 282, y: 15, scale: 0.48, variant: 'white', align: 'center' })}
+          </g>
 
           <!-- Mini Front & Back Wireframe Silhouettes -->
-          <g transform="translate(26, 68)">
-            <path d="M40 8 L66 8 C72 15, 84 15, 90 8 L116 8 L142 36 L126 62 L114 52 L114 148 L42 148 L42 52 L30 62 L14 36 Z" fill="${bodyBase}" stroke="#94A3B8" stroke-width="1.5" />
-            ${isHcmut ? renderHcmutBrandMark({ cx: 92, cy: 52, r: 10, darkBg: isNavy }) : ''}
-            <text x="78" y="168" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9.5" fill="#475569">MẶT TRƯỚC</text>
+          <g transform="translate(20, 128)">
+            <path d="M28 6 L46 6 C50 11, 58 11, 62 6 L80 6 L98 25 L87 44 L78 37 L78 106 L30 106 L30 37 L21 44 L10 25 Z" fill="${bodyBase}" stroke="#94A3B8" stroke-width="1.4" />
+            ${renderHcmutWordmark({ x: 64, y: 34, scale: 0.085, variant: isNavy ? 'white' : 'two-tone', align: 'center' })}
+            <text x="54" y="121" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8.5" fill="#475569">MẶT TRƯỚC</text>
           </g>
 
-          <g transform="translate(184, 68)">
-            <path d="M40 8 L66 8 C72 11, 84 11, 90 8 L116 8 L142 36 L126 62 L114 52 L114 148 L42 148 L42 52 L30 62 L14 36 Z" fill="${bodyBase}" stroke="#94A3B8" stroke-width="1.5" />
-            <polygon points="78,42 92,50 92,66 78,74 64,66 64,50" fill="none" stroke="${accentBlue}" stroke-width="1.5" />
-            <text x="78" y="88" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="6.5" font-weight="700" fill="${textColor}">HCMUT · 1957</text>
-            <text x="78" y="168" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9.5" fill="#475569">MẶT SAU</text>
+          <g transform="translate(132, 128)">
+            <path d="M28 6 L46 6 C50 9, 58 9, 62 6 L80 6 L98 25 L87 44 L78 37 L78 106 L30 106 L30 37 L21 44 L10 25 Z" fill="${bodyBase}" stroke="#94A3B8" stroke-width="1.4" />
+            ${renderHcmutWordmark({ x: 54, y: 32, scale: 0.14, variant: isNavy ? 'white' : 'two-tone', align: 'center' })}
+            <text x="54" y="51" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="4.6" font-weight="700" fill="${isNavy ? '#FFFFFF' : '#030391'}">TRƯỜNG ĐẠI HỌC BÁCH KHOA</text>
+            <text x="54" y="121" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8.5" fill="#475569">MẶT SAU</text>
           </g>
 
-          <!-- Official Color & Fabric Specs -->
-          <g transform="translate(342, 68)">
-            <rect x="-12" y="4" width="66" height="32" rx="6" fill="#1488DB" />
-            <text x="21" y="49" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" font-weight="700" fill="#0F172A">#1488DB</text>
-            <rect x="-12" y="64" width="66" height="32" rx="6" fill="#030391" />
-            <text x="21" y="109" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" font-weight="700" fill="#0F172A">#030391</text>
-            <rect x="-12" y="124" width="66" height="32" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
-            <text x="21" y="169" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" font-weight="700" fill="#0F172A">#FFFFFF</text>
+          <!-- Brand Color Swatches + Official Reference Preview -->
+          <g transform="translate(248, 134)">
+            <rect x="0" y="0" width="44" height="26" rx="5" fill="#030391" />
+            <text x="22" y="38" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7.8" font-weight="700" fill="#0F172A">#030391</text>
+            <rect x="52" y="0" width="44" height="26" rx="5" fill="#1488DB" />
+            <text x="74" y="38" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7.8" font-weight="700" fill="#0F172A">#1488DB</text>
+            <rect x="104" y="0" width="44" height="26" rx="5" fill="#FFFFFF" stroke="#CBD5E1" />
+            <text x="126" y="38" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7.8" font-weight="700" fill="#0F172A">#FFFFFF</text>
+
+            <g transform="translate(0, 50)">
+              <rect x="0" y="0" width="90" height="58" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+              <image href="assets/products/hcmut-wordmark.jpg" x="0" y="0" width="90" height="58" preserveAspectRatio="xMidYMid slice" clip-path="url(#${uid}_refClip)" />
+              <text x="98" y="24" font-family="'Space Mono', monospace" font-size="8" font-weight="700" fill="#030391">NGUỒN: HCMUT</text>
+              <text x="98" y="38" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#475569">Wordmark &amp; Line</text>
+              <text x="98" y="50" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#475569">Pattern Identity</text>
+            </g>
           </g>
 
-          <line x1="20" y1="258" x2="392" y2="258" stroke="#E2E8F0" stroke-width="1.5" />
-          <text x="20" y="278" font-family="'Space Mono', monospace" font-size="9.5" fill="#334155">100% COTTON COMBED 250GSM · FORM BOXY UNISEX · FONT ARIAL BOLD</text>
+          <line x1="20" y1="262" x2="392" y2="262" stroke="#E2E8F0" stroke-width="1.5" />
+          <text x="20" y="282" font-family="'Space Mono', monospace" font-size="9" fill="#334155">COTTON COMBED 250GSM · THÊU/IN PET CHUYỂN NHIỆT · BO CỔ KẺ XANH #030391</text>
         </g>
       `;
     }
 
     if (viewIndex === 1) {
-      // View 1: Realistic Back View + Macro Fabric/Patch Zoom
+      // View 1: Realistic Back View + Macro Hem Detail (Official Wordmark Style)
       return `
         ${fabricDefs}
         <g transform="translate(64, 20)" filter="url(#${uid}_shadow)">
           <!-- Back Tee Silhouette -->
           <path d="M112 22 C136 28, 172 28, 196 22 L238 30 L292 86 L256 138 L234 114 L234 294 C186 300, 122 300, 74 294 L74 114 L52 138 L16 86 L70 30 Z"
                 fill="url(#${uid}_teeBody)" />
-          <!-- Sleeves Shading -->
-          <path d="M70 30 L16 86 L52 138 L74 114 Z" fill="url(#${uid}_sleeveL)" opacity="0.55" />
-          <path d="M238 30 L292 86 L256 138 L234 114 Z" fill="url(#${uid}_sleeveR)" opacity="0.55" />
+          <!-- Sleeves Shading & Brand Cuff Accent -->
+          <path d="M70 30 L16 86 L52 138 L74 114 Z" fill="url(#${uid}_sleeveL)" opacity="0.65" />
+          <path d="M238 30 L292 86 L256 138 L234 114 Z" fill="url(#${uid}_sleeveR)" opacity="0.65" />
+          <path d="M18 89 L52 134" stroke="${isNavy ? '#1488DB' : '#030391'}" stroke-width="3.2" stroke-linecap="round" />
+          <path d="M290 89 L256 134" stroke="${isNavy ? '#1488DB' : '#030391'}" stroke-width="3.2" stroke-linecap="round" />
+
           <!-- Back Ribbed Neckline -->
           <path d="M112 22 C136 33, 172 33, 196 22 L192 31 C170 40, 138 40, 116 31 Z" fill="${bodyShade}" stroke="${seamStroke}" stroke-width="1" />
           <!-- Subtle Fabric Drape Folds -->
@@ -180,45 +288,50 @@
           <path d="M210 128 Q206 212 212 288" fill="none" stroke="${foldStroke}" stroke-width="5" stroke-linecap="round" />
           <path d="M74 284 C122 290, 186 290, 234 284" fill="none" stroke="${seamStroke}" stroke-width="1.2" stroke-dasharray="3 2" />
 
-          <!-- Minimalist Back Graphic (Upper Center) -->
-          <g transform="translate(154, 108)">
-            <!-- Subtle Isometric Hexagon Motif -->
-            <polygon points="0,-28 24.2,-14 24.2,14 0,28 -24.2,14 -24.2,-14" fill="none" stroke="${accentBlue}" stroke-width="1.8" opacity="0.9" />
-            <path d="M0,-28 L0,0 M-24.2,-14 L0,0 L24.2,-14" fill="none" stroke="${accentBlue}" stroke-width="1.2" opacity="0.65" />
-            <text x="0" y="48" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" fill="${textColor}" letter-spacing="2.5">HCMUT</text>
-            <text x="0" y="61" text-anchor="middle" font-family="'Space Mono', monospace" font-size="6.8" fill="${isNavy ? '#93C5FD' : '#475569'}" letter-spacing="1.2">268 LY THUONG KIET · EST. 1957</text>
+          <!-- Minimalist Back Graphic (Upper Center Wordmark Lockup) -->
+          <g transform="translate(154, 96)">
+            ${isHcmut ? renderHcmutWordmarkLockup({ x: 0, y: 0, scale: 0.36, variant: isNavy ? 'white' : 'two-tone', align: 'center' }) : ''}
           </g>
+
+          <!-- Subtle Stepped Vertical Lines Corner Accent on Bottom Right of Back Hem -->
+          ${renderSteppedVerticalLines({
+            x: 168,
+            y: 284,
+            count: 7,
+            stepX: 7.5,
+            baseLen: 12,
+            growth: 6.5,
+            dir: 'up',
+            color: isNavy ? '#1488DB' : '#030391',
+            strokeWidth: 1.3,
+            opacity: isNavy ? 0.55 : 0.42,
+          })}
         </g>
 
         <!-- Macro Detail Lens (Right Corner) -->
         <g transform="translate(384, 240)" filter="url(#${uid}_softShadow)">
           <circle cx="0" cy="0" r="54" fill="${bodyBase}" stroke="#FFFFFF" stroke-width="4" />
-          <circle cx="0" cy="0" r="50" fill="none" stroke="#1488DB" stroke-width="1.5" opacity="0.55" />
-          <!-- Simulated Woven Hem Tag -->
-          <rect x="-26" y="-12" width="52" height="24" rx="3" fill="${isNavy ? '#0B154D' : '#F8FAFC'}" stroke="${isNavy ? '#1488DB' : '#CBD5E1'}" stroke-width="1" />
-          <rect x="-26" y="-12" width="12" height="24" rx="2" fill="#030391" />
-          <rect x="-14" y="-12" width="6" height="24" fill="#1488DB" />
-          <text x="8" y="3" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="8" font-weight="700" fill="${isNavy ? '#FFFFFF' : '#030391'}">HCMUT</text>
-          <text x="0" y="36" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7" fill="${isNavy ? '#CBD5E1' : '#475569'}">TAG DỆT 2 MÀU</text>
+          <circle cx="0" cy="0" r="50" fill="none" stroke="${accentBlue}" stroke-width="1.5" opacity="0.55" />
+          <!-- Simulated Woven Hem Tag with Official Wordmark -->
+          <rect x="-32" y="-13" width="64" height="26" rx="4" fill="${isNavy ? '#061059' : '#F8FAFC'}" stroke="${isNavy ? '#1488DB' : '#CBD5E1'}" stroke-width="1" />
+          <rect x="-32" y="-13" width="10" height="26" rx="2" fill="#030391" />
+          <rect x="-22" y="-13" width="5" height="26" fill="#1488DB" />
+          ${renderHcmutWordmark({ x: 8, y: -5, scale: 0.17, variant: isNavy ? 'white' : 'two-tone', align: 'center' })}
+          <text x="0" y="34" text-anchor="middle" font-family="'Space Mono', monospace" font-size="6.8" fill="${isNavy ? '#CBD5E1' : '#475569'}">TAG DỆT WORDMARK</text>
         </g>
       `;
     }
 
-    // View 0: Front Realistic Studio Mockup
+    // View 0: Front Realistic Studio Mockup (HCMUT Brand Kit Polo/Tee Aesthetic)
     return `
       ${fabricDefs}
       <g transform="translate(86, 16)" filter="url(#${uid}_shadow)">
         <!-- Left & Right Sleeves -->
         <path d="M70 30 L14 92 L52 142 L76 114 Z" fill="url(#${uid}_sleeveL)" />
         <path d="M238 30 L294 92 L256 142 L232 114 Z" fill="url(#${uid}_sleeveR)" />
-        <!-- Minimalist Dual-Blue Sleeve Cuff Trim (Subtle Detail) -->
-        ${
-          isNavy
-            ? `<path d="M16 90 L52 138" stroke="#1488DB" stroke-width="2.5" opacity="0.85" />
-               <path d="M292 90 L256 138" stroke="#1488DB" stroke-width="2.5" opacity="0.85" />`
-            : `<path d="M16 90 L52 138" stroke="#030391" stroke-width="2" opacity="0.28" />
-               <path d="M292 90 L256 138" stroke="#1488DB" stroke-width="2" opacity="0.35" />`
-        }
+        <!-- Clean Royal-Blue Sleeve Cuff Trim (Inspired by HCMUT Merch Kit) -->
+        <path d="M16 90 L52 138" stroke="${isNavy ? '#1488DB' : '#030391'}" stroke-width="3.6" stroke-linecap="round" />
+        <path d="M292 90 L256 138" stroke="${isNavy ? '#1488DB' : '#030391'}" stroke-width="3.6" stroke-linecap="round" />
 
         <!-- Garment Body -->
         <path d="M110 22 C132 52, 176 52, 198 22 L238 30 L234 114 L234 294 C186 300, 122 300, 74 294 L74 114 L70 30 Z"
@@ -228,48 +341,68 @@
 
         <!-- Inner Neck Cavity & Woven Collar Label -->
         <path d="M110 22 C134 10, 174 10, 198 22 C176 48, 132 48, 110 22 Z" fill="${isNavy ? '#010145' : '#D5DCE4'}" />
-        <rect x="142" y="21" width="24" height="13" rx="2" fill="#FFFFFF" />
-        <rect x="142" y="21" width="24" height="3.5" fill="#1488DB" />
-        <text x="154" y="31" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="4.8" font-weight="700" fill="#030391">HCMUT</text>
+        <rect x="139" y="21" width="30" height="13" rx="2" fill="#FFFFFF" />
+        ${renderHcmutWordmark({ x: 154, y: 24.5, scale: 0.09, variant: 'two-tone', align: 'center' })}
 
-        <!-- Ribbed Crew Neck Collar -->
+        <!-- Ribbed Collar with Subtle HCMUT Blue Trim -->
         <path d="M106 24 C130 58, 178 58, 202 24 L196 20 C174 50, 134 50, 112 20 Z"
-              fill="${bodyShade}" stroke="${seamStroke}" stroke-width="0.9" />
+              fill="${isNavy ? '#02026B' : '#F1F5F9'}" stroke="${isNavy ? '#1488DB' : '#030391'}" stroke-width="1.6" />
 
         <!-- Natural Cotton Fold & Twin-Needle Stitch Details -->
         <path d="M96 118 Q100 202 92 284" fill="none" stroke="${foldStroke}" stroke-width="6" stroke-linecap="round" />
         <path d="M214 124 Q209 208 216 284" fill="none" stroke="${foldStroke}" stroke-width="5" stroke-linecap="round" />
         <path d="M74 284 C122 290, 186 290, 234 284" fill="none" stroke="${seamStroke}" stroke-width="1.2" stroke-dasharray="3 2" />
 
-        <!-- Minimalist Chest Brand Identity Placement -->
+        <!-- Minimalist Chest Wordmark Placement -->
         ${
           isNavy
             ? `
-          <!-- Centered Minimalist Navy Lockup with Official White-Border Emblem -->
-          <g transform="translate(154, 108)">
-            ${isHcmut ? renderHcmutBrandMark({ cx: 0, cy: 0, r: 22, darkBg: true }) : ''}
-            <line x1="-22" y1="32" x2="22" y2="32" stroke="#1488DB" stroke-width="2" />
-            <text x="0" y="47" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="2.4">HCMUT</text>
+          <!-- Centered Minimalist Navy Lockup with Official White Geometric Wordmark -->
+          <g transform="translate(154, 110)">
+            ${isHcmut ? renderHcmutWordmarkLockup({ x: 0, y: 0, scale: 0.42, variant: 'white', align: 'center' }) : ''}
           </g>
+          ${renderSteppedVerticalLines({
+            x: 174,
+            y: 286,
+            count: 7,
+            stepX: 7,
+            baseLen: 10,
+            growth: 5.5,
+            dir: 'up',
+            color: '#1488DB',
+            strokeWidth: 1.2,
+            opacity: 0.52,
+          })}
         `
             : `
-          <!-- Minimalist Left-Chest Placement -->
-          <g transform="translate(194, 96)">
-            ${isHcmut ? renderHcmutBrandMark({ cx: 0, cy: 0, r: 16, darkBg: false }) : ''}
-            <text x="0" y="27" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="8.2" font-weight="700" fill="#030391" letter-spacing="1.4">HCMUT</text>
+          <!-- Minimalist Left-Chest Official Wordmark (Two-Tone #030391 + #1488DB) -->
+          <g transform="translate(194, 98)">
+            ${isHcmut ? renderHcmutWordmark({ x: 0, y: 0, scale: 0.21, variant: 'two-tone', align: 'center' }) : ''}
           </g>
+          ${renderSteppedVerticalLines({
+            x: 172,
+            y: 286,
+            count: 7,
+            stepX: 7,
+            baseLen: 10,
+            growth: 5.5,
+            dir: 'up',
+            color: '#030391',
+            strokeWidth: 1.2,
+            opacity: 0.35,
+          })}
         `
         }
 
         <!-- Minimalist Hem Woven Tab (Bottom Left) -->
         <g transform="translate(86, 266)">
-          <rect x="0" y="0" width="26" height="11" rx="2" fill="${isNavy ? '#1488DB' : '#030391'}" />
+          <rect x="0" y="0" width="28" height="11" rx="2" fill="${isNavy ? '#1488DB' : '#030391'}" />
           <rect x="0" y="0" width="7" height="11" rx="1" fill="${isNavy ? '#FFFFFF' : '#1488DB'}" />
-          <text x="16" y="7.8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="5" font-weight="700" fill="#FFFFFF">BK</text>
+          <text x="17.5" y="7.6" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="4.4" font-weight="700" fill="#FFFFFF">HCMUT</text>
         </g>
 
         <!-- Minimalist Coordinate Micro-Text (Bottom Right) -->
-        <text x="220" y="275" text-anchor="end" font-family="'Space Mono', monospace" font-size="5.8" fill="${isNavy ? '#93C5FD' : '#64748B'}" letter-spacing="0.4">10°46'20"N 106°39'35"E</text>
+        <text x="220" y="276" text-anchor="end" font-family="'Space Mono', monospace" font-size="5.5" fill="${isNavy ? '#93C5FD' : '#64748B'}" letter-spacing="0.4">10°46'20"N · 106°39'35"E</text>
       </g>
     `;
   }
@@ -316,42 +449,47 @@
           ${
             isDark
               ? `
-            <!-- Minimalist Isometric Honeycomb Wireframe on Right Wing -->
-            <g transform="translate(${w - 135}, ${h / 2})" stroke="#1488DB" fill="none" opacity="0.28">
-              <polygon points="0,-42 36.4,-21 36.4,21 0,42 -36.4,21 -36.4,-21" stroke-width="1.4" />
-              <polygon points="48,-24 74,-9 74,21 48,36 22,21 22,-9" stroke-width="1.1" />
-              <polygon points="-48,-14 -22,1 -22,31 -48,46 -74,31 -74,1" stroke-width="1" />
-              <line x1="-110" y1="0" x2="100" y2="0" stroke-width="0.8" stroke-dasharray="4 4" />
-            </g>
-            <!-- White-Outlined Official HCMUT Crest (Top Right) -->
-            <g transform="translate(${w - 42}, 40)">
-              ${isHcmut ? renderHcmutBrandMark({ cx: 0, cy: 0, r: 19, darkBg: true }) : ''}
-            </g>
-            <!-- Minimalist Bottom-Left Typographic Lockup -->
-            <rect x="22" y="${h - 38}" width="26" height="3" rx="1.5" fill="#1488DB" />
-            <text x="22" y="${h - 21}" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="${textMain}" letter-spacing="2.2">HCMUT</text>
-            <text x="74" y="${h - 21}" font-family="'Space Mono', monospace" font-size="7.5" fill="${textSub}" letter-spacing="1">· ENGINEERING &amp; INNOVATION</text>
+            <!-- Minimalist Geometric Triangle Mosaic on Right Wing (HCMUT Stationery Pattern) -->
+            ${renderTriangleMosaic({ x: w - 88, y: 12, cols: 4, rows: Math.max(3, Math.floor((h - 24) / 24)), size: 19, darkBg: true })}
+            <!-- Stepped Vertical Accent Lines (Top Right Corner) -->
+            ${renderSteppedVerticalLines({
+              x: w - 92,
+              y: 10,
+              count: 8,
+              stepX: 9,
+              baseLen: 12,
+              growth: 6,
+              dir: 'down',
+              color: '#1488DB',
+              strokeWidth: 1.2,
+              opacity: 0.45,
+            })}
+            <!-- Minimalist Bottom-Left Official White Wordmark Lockup -->
+            ${isHcmut ? renderHcmutWordmarkLockup({ x: 24, y: h - 56, scale: 0.46, variant: 'white', align: 'left' }) : ''}
           `
               : `
-            <!-- Minimalist Dual-Blue Identity Ribbon on Left Margin -->
-            <rect x="20" y="18" width="5" height="${h - 36}" rx="2.5" fill="#030391" />
-            <rect x="28" y="18" width="2.5" height="${h - 36}" rx="1.2" fill="#1488DB" />
-            <!-- Standard White-Bg Official HCMUT Crest (Top Left) -->
-            <g transform="translate(64, 46)">
-              ${isHcmut ? renderHcmutBrandMark({ cx: 0, cy: 0, r: 20, darkBg: false }) : ''}
-            </g>
-            <text x="94" y="43" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#030391" letter-spacing="1.4">HCMUT</text>
-            <text x="94" y="56" font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="700" fill="#1488DB" letter-spacing="0.8">ĐẠI HỌC BÁCH KHOA TP.HCM</text>
+            <!-- Minimalist Geometric Triangle Mosaic on Right Margin -->
+            ${renderTriangleMosaic({ x: w - 82, y: 12, cols: 4, rows: Math.max(3, Math.floor((h - 24) / 24)), size: 18, darkBg: false })}
+            <!-- Stepped Vertical Lines Corner Accent (Inspired by HCMUT Tote & Stationery) -->
+            ${renderSteppedVerticalLines({
+              x: w - 96,
+              y: h - 10,
+              count: 9,
+              stepX: 8.5,
+              baseLen: 14,
+              growth: 7.5,
+              dir: 'up',
+              color: '#030391',
+              strokeWidth: 1.3,
+              opacity: 0.55,
+            })}
+            <!-- Full Two-Tone Official HCMUT Wordmark Lockup (Top Left) -->
+            ${isHcmut ? renderHcmutWordmarkLockup({ x: 24, y: 24, scale: 0.52, variant: 'two-tone', align: 'left' }) : ''}
 
             <!-- Subtle Calibration Ruler along Bottom Edge -->
-            <g transform="translate(42, ${h - 22})" stroke="#94A3B8" stroke-width="1">
-              <line x1="0" y1="6" x2="290" y2="6" stroke-opacity="0.45" />
-              ${Array.from({ length: 15 }, (_, idx) => `<line x1="${idx * 20}" y1="${idx % 5 === 0 ? 0 : 3}" x2="${idx * 20}" y2="6" />`).join('')}
-            </g>
-            <!-- Faint Geometric Honeycomb Watermark (Bottom Right) -->
-            <g transform="translate(${w - 58}, ${h - 50})" stroke="#1488DB" fill="none" opacity="0.22">
-              <polygon points="0,-24 20.8,-12 20.8,12 0,24 -20.8,12 -20.8,-12" stroke-width="1.5" />
-              <polygon points="0,-13 11.2,-6.5 11.2,6.5 0,13 -11.2,6.5 -11.2,-6.5" stroke-width="1" />
+            <g transform="translate(24, ${h - 22})" stroke="#94A3B8" stroke-width="1">
+              <line x1="0" y1="6" x2="210" y2="6" stroke-opacity="0.45" />
+              ${Array.from({ length: 11 }, (_, idx) => `<line x1="${idx * 20}" y1="${idx % 5 === 0 ? 0 : 3}" x2="${idx * 20}" y2="6" />`).join('')}
             </g>
           `
           }
@@ -461,11 +599,26 @@
     `;
   }
 
-  function renderMerchIllustration(item, viewIndex = 0) {
+  function renderMerchIllustration(item, viewIndex = 0, options = {}) {
+    const showSourceBadge = options.compact !== true && item && item.source;
+    const sourceBadge = showSourceBadge
+      ? `<span class="absolute bottom-2 left-2 z-10 px-2 py-0.5 text-[10px] font-mono font-bold bg-[#1E1E24]/85 text-white rounded-md border border-white/25 pointer-events-none">Nguồn: ${escapeXml(item.source)}</span>`
+      : '';
+
+    if (item && Array.isArray(item.galleryImages) && item.galleryImages[viewIndex]) {
+      return `
+        <div class="w-full h-full relative bg-[#02053D] flex items-center justify-center overflow-hidden">
+          <img src="${escapeXml(item.galleryImages[viewIndex])}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover" loading="lazy" />
+          ${sourceBadge}
+        </div>
+      `;
+    }
+
     if (item && item.customImageUrl && viewIndex === 0) {
       return `
         <div class="w-full h-full relative bg-[#F4F6F9] flex items-center justify-center overflow-hidden">
           <img src="${escapeXml(item.customImageUrl)}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover" loading="lazy" />
+          ${sourceBadge}
         </div>
       `;
     }
@@ -475,6 +628,7 @@
     const uid = makeUid(item, viewIndex);
     const isDarkSubject =
       (item && (item.designVariant === 'tee-navy' || item.designVariant === 'pad-dark')) || false;
+    const useNavyStage = Boolean(item && item.useNavyStage && viewIndex === 0);
 
     let inner = '';
     if (category === 'tee' || category === 'polo') {
@@ -486,10 +640,13 @@
     }
 
     return `
-      <svg viewBox="0 0 480 360" class="w-full h-full block" role="img" aria-label="${escapeXml(item ? item.title : 'Mockup sản phẩm thực tế')}">
-        ${renderStudioBackdrop(uid, isDarkSubject)}
-        ${inner}
-      </svg>
+      <div class="w-full h-full relative">
+        <svg viewBox="0 0 480 360" class="w-full h-full block" role="img" aria-label="${escapeXml(item ? item.title : 'Mockup sản phẩm thực tế')}">
+          ${renderStudioBackdrop(uid, isDarkSubject, useNavyStage)}
+          ${inner}
+        </svg>
+        ${sourceBadge}
+      </div>
     `;
   }
 
@@ -561,6 +718,8 @@
     renderMerchIllustration,
     renderCampusEmblem,
     renderHcmutBrandMark,
+    renderHcmutWordmark,
+    renderHcmutWordmarkLockup,
     HAND_DRAWN_RECIPES,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
