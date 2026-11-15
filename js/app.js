@@ -142,8 +142,8 @@
         const campus = getCampusById(c.campusId);
         const haystack = [
           c.title,
-          c.story,
-          c.specs,
+          c.story || '',
+          c.specs || '',
           c.campusShort,
           c.source ? `Nguồn ${c.source}` : '',
           campus.name,
@@ -703,11 +703,17 @@
             </div>
           </div>
 
+          ${
+            concept.story && concept.story.trim()
+              ? `
           <!-- Curatorial Note -->
           <div>
             <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-1.5">Câu chuyện thiết kế</div>
             <p class="text-sm text-[#1A1A1A]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
           </div>
+          `
+              : ''
+          }
 
           <!-- Palette & Material Specs -->
           <div class="bg-white border border-[#E5E5E5] p-5 space-y-4">

@@ -173,8 +173,6 @@
       viewLabels: ['Phối cảnh Studio'],
       palette: ['#FFFFFF', '#1488DB', '#030391', '#D3D3D3'],
       tags: ['Áo Polo #1', 'HCMUT Shop', 'Bo viền xanh', 'BK TP.HCM', 'Nguồn HCMUT'],
-      story:
-        'Mẫu chuẩn trực tiếp theo phong cách sản phẩm #1 trên HCMUT Shop: phom Polo tối giản trên nền studio trung tính (#D3D3D3), cổ bẻ phối bo viền kép xanh trời (#1488DB) + xanh royal (#030391), kết hợp wordmark HCMUT trước ngực trái và huy hiệu lập phương BK TP.HCM bên tay phải.',
       specs:
         'Chất liệu OWEN Regular Fit (70% Cotton, 25% Polyester, 5% Spandex) thoáng mát ít nhăn; bo cổ & bo tay dệt sọc kép #1488DB / #030391 giữ phom; in/thêu sắc nét wordmark HCMUT ngực trái và logo BK TP.HCM tay phải.',
       ratings: {
@@ -239,8 +237,6 @@
       viewLabels: ['Phối cảnh Studio'],
       palette: ['#FFFFFF', '#030391', '#1488DB', '#E5E7EB'],
       tags: ['Túi Tote', 'Canvas 12oz', 'HCMUT Shop', 'Minimalist', 'Nguồn HCMUT'],
-      story:
-        'Mẫu túi tote canvas trắng ngà phối hệ vạch nhịp điệu tối giản và cụm wordmark hình học HCMUT hai tông (#030391 + #1488DB) kèm tên trường song ngữ.',
       specs:
         'Vải canvas cotton 12oz dệt chéo dày dặn đứng form, quai xách may gia cố chữ X chịu lực laptop 14–16 inch và tài liệu học tập hằng ngày.',
       ratings: {
@@ -268,8 +264,6 @@
       viewLabels: ['Phối cảnh Thực Tế'],
       palette: ['#030391', '#FFFFFF', '#1488DB', '#02053D'],
       tags: ['Nón lưỡi trai', 'Baseball Cap', 'Deep Navy', 'Thêu 3D', 'Nguồn HCMUT'],
-      story:
-        'Chiếc nón lưỡi trai 6 múi màu xanh navy đậm #030391 thuộc bộ ấn phẩm nhận diện chính thức HCMUT. Logo wordmark HCMUT màu trắng tinh khiết được thêu nổi 3D cân đối ở mặt trước, kết hợp đường chỉ may nổi tinh xảo trên vành nón cong.',
       specs:
         'Chất liệu kaki cotton twill 6 múi thoáng khí màu #030391, thêu nổi 3D wordmark HCMUT trắng mặt trước, khóa kim loại khắc logo ở quai điều chỉnh phía sau.',
       ratings: {
