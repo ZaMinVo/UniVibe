@@ -174,6 +174,10 @@
     if (!container) return;
 
     const totalConcepts = state.concepts.length;
+    const totalViews = state.concepts.reduce(
+      (sum, c) => sum + (Array.isArray(c.galleryImages) && c.galleryImages.length ? c.galleryImages.length : 1),
+      0
+    );
     const vnuCount = CAMPUSES.filter((c) => c.isVnuHcm).length;
 
     if (state.activeCampus === 'all') {
@@ -212,8 +216,8 @@
                 <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Tác phẩm</div>
               </div>
               <div>
-                <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">03</div>
-                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Góc nhìn studio</div>
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">${padCount(totalViews)}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Ảnh studio</div>
               </div>
               <div>
                 <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">${padCount(vnuCount)}</div>
@@ -267,6 +271,10 @@
     // Active Campus Hub Dedicated Banner
     const campus = getCampusById(state.activeCampus);
     const campusConcepts = state.concepts.filter((c) => c.campusId === campus.id);
+    const campusViews = campusConcepts.reduce(
+      (sum, c) => sum + (Array.isArray(c.galleryImages) && c.galleryImages.length ? c.galleryImages.length : 1),
+      0
+    );
     const topDesign = campusConcepts.find((c) => c.featured) || campusConcepts[0] || null;
     const topCreator = topDesign ? getCreatorById(topDesign.creatorId) : null;
     const uniqueCreatorCount = new Set(campusConcepts.map((c) => c.creatorId)).size;
@@ -312,8 +320,8 @@
                 <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Tác phẩm</div>
               </div>
               <div>
-                <div class="font-display text-3xl font-bold text-[#1A1A1A]">03</div>
-                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Góc studio</div>
+                <div class="font-display text-3xl font-bold text-[#1A1A1A]">${campusConcepts.length > 0 ? padCount(campusViews) : '—'}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Ảnh studio</div>
               </div>
               <div>
                 <div class="font-display text-2xl sm:text-3xl font-bold text-[#1A1A1A]">${campusConcepts.length > 0 ? padCount(uniqueCreatorCount) : '—'}</div>
@@ -605,27 +613,35 @@
     const creator = getCreatorById(concept.creatorId);
     const isBookmarked = state.bookmarks.includes(concept.id);
 
-    const defaultLabels = ['Phối cảnh chính diện (Studio)', 'Cận cảnh chi tiết & Logo', 'Phối cảnh thực tế'];
-    const labels =
-      Array.isArray(concept.viewLabels) && concept.viewLabels.length === 3
+    const galleryImages = Array.isArray(concept.galleryImages) ? concept.galleryImages : [];
+    const viewCount = galleryImages.length > 0 ? galleryImages.length : 1;
+    const rawLabels =
+      Array.isArray(concept.viewLabels) && concept.viewLabels.length > 0
         ? concept.viewLabels
-        : defaultLabels;
+        : ['Phối cảnh Studio'];
+    const labels = Array.from({ length: viewCount }, (_, idx) => rawLabels[idx] || `Góc nhìn ${idx + 1}`);
+    const activeView = state.activeDetailView < labels.length ? state.activeDetailView : 0;
+    state.activeDetailView = activeView;
     const viewButtons = labels.map((label, idx) => ({ idx, label }));
+    const viewGridClass = viewButtons.length === 2 ? 'grid-cols-2' : 'grid-cols-3';
 
     body.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-        <!-- Left Column: Multi-Angle Studio Artwork -->
+        <!-- Left Column: Studio Artwork (1 or Multi-Angle depending on concept) -->
         <div class="lg:col-span-6 space-y-4">
           <div class="border border-[#E5E5E5] bg-white p-3">
             <div id="detailArtworkFrame" class="art-frame aspect-[4/3] bg-[#F5F5F5]">
-              ${renderMerchIllustration(concept, state.activeDetailView)}
+              ${renderMerchIllustration(concept, activeView)}
             </div>
-            <div class="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-[#E5E5E5]">
+            ${
+              viewButtons.length > 1
+                ? `
+            <div class="grid ${viewGridClass} gap-2 mt-3 pt-2 border-t border-[#E5E5E5]">
               ${viewButtons
                 .map(
                   (vb) => `
                 <button type="button" data-detail-view="${vb.idx}" class="py-2 px-2 text-xs font-medium border transition-colors cursor-pointer ${
-                    state.activeDetailView === vb.idx
+                    activeView === vb.idx
                       ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
                       : 'bg-white text-[#666666] border-[#E5E5E5] hover:border-[#1A1A1A] hover:text-[#1A1A1A]'
                   }">
@@ -635,6 +651,9 @@
                 )
                 .join('')}
             </div>
+            `
+                : ''
+            }
           </div>
 
           <div class="flex flex-wrap items-center gap-3">

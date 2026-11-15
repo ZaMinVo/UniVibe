@@ -19,10 +19,7 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 
 1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
 2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo 4 nhóm vật phẩm chủ lực (*Áo Polo & Thun*, *Lót Chuột Deskpad*, *Túi Tote Canvas*, *Nón Lưỡi Trai*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
-3. **Chi tiết Tác phẩm 3 Góc nhìn Studio:**
-   - **Phối cảnh Studio chính diện**
-   - **Cận cảnh / Phiên bản phối màu**
-   - **Phối cảnh Thực tế / Bộ Nhận Diện**
+3. **Chi tiết Tác phẩm Studio Linh hoạt:** Các sản phẩm chính thức *by HCMUT* (Áo Polo, Túi Tote Canvas, Nón Lưỡi Trai) hiển thị tinh gọn 1 góc nhìn chuẩn thực tế; mẫu Lót Chuột Deskpad (*by Ẩn danh*) giữ 3 góc nhìn 3D Studio chi tiết.
 4. **Bảng mã màu & Chất liệu:** Xem *Câu chuyện bản sắc (The Vibe Story)*, sao chép nhanh mã màu HEX chuẩn nhận diện và tham khảo thông số chất liệu dự kiến.
 5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào bộ sưu tập cá nhân trên trình duyệt (`localStorage`).
 

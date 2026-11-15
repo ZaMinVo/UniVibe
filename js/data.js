@@ -169,20 +169,12 @@
       createdAt: '2026-11-15',
       timeframe: 'week',
       featured: true,
-      galleryImages: [
-        'assets/products/hcmut-polo-white.png',
-        'assets/products/hcmut-polo-navy.png',
-        'assets/products/hcmut-merch-kit.jpg',
-      ],
-      viewLabels: [
-        'Phối cảnh Studio (Trắng)',
-        'Phiên bản Navy (Studio)',
-        'Phối cảnh Bộ Nhận Diện',
-      ],
+      galleryImages: ['assets/products/hcmut-polo-white.png'],
+      viewLabels: ['Phối cảnh Studio'],
       palette: ['#FFFFFF', '#1488DB', '#030391', '#D3D3D3'],
       tags: ['Áo Polo #1', 'HCMUT Shop', 'Bo viền xanh', 'BK TP.HCM', 'Nguồn HCMUT'],
       story:
-        'Mẫu chuẩn trực tiếp theo phong cách sản phẩm #1 trên HCMUT Shop: phom Polo tối giản trên nền studio trung tính (#D3D3D3), cổ bẻ phối bo viền kép xanh trời (#1488DB) + xanh royal (#030391). Kết hợp wordmark HCMUT trước ngực trái, huy hiệu lập phương BK TP.HCM bên tay phải và phiên bản Navy đồng bộ trong bộ nhận diện.',
+        'Mẫu chuẩn trực tiếp theo phong cách sản phẩm #1 trên HCMUT Shop: phom Polo tối giản trên nền studio trung tính (#D3D3D3), cổ bẻ phối bo viền kép xanh trời (#1488DB) + xanh royal (#030391), kết hợp wordmark HCMUT trước ngực trái và huy hiệu lập phương BK TP.HCM bên tay phải.',
       specs:
         'Chất liệu OWEN Regular Fit (70% Cotton, 25% Polyester, 5% Spandex) thoáng mát ít nhăn; bo cổ & bo tay dệt sọc kép #1488DB / #030391 giữ phom; in/thêu sắc nét wordmark HCMUT ngực trái và logo BK TP.HCM tay phải.',
       ratings: {
@@ -243,20 +235,12 @@
       createdAt: '2026-11-15',
       timeframe: 'week',
       featured: true,
-      galleryImages: [
-        'assets/products/hcmut-tote.jpg',
-        'assets/products/hcmut-tote-studio.png',
-        'assets/products/hcmut-tote-lifestyle.png',
-      ],
-      viewLabels: [
-        'Phối cảnh Ánh Nắng Studio',
-        'Phối cảnh Studio Nền Đậm',
-        'Phối cảnh Thực Tế Sân Trường',
-      ],
+      galleryImages: ['assets/products/hcmut-tote.jpg'],
+      viewLabels: ['Phối cảnh Studio'],
       palette: ['#FFFFFF', '#030391', '#1488DB', '#E5E7EB'],
       tags: ['Túi Tote', 'Canvas 12oz', 'HCMUT Shop', 'Minimalist', 'Nguồn HCMUT'],
       story:
-        'Mẫu túi tote canvas trắng ngà phối hệ vạch nhịp điệu tối giản và cụm wordmark hình học HCMUT hai tông (#030391 + #1488DB) kèm tên trường song ngữ, đi cùng phiên bản studio xanh Bách khoa với huy hiệu BK TP.HCM chính thức.',
+        'Mẫu túi tote canvas trắng ngà phối hệ vạch nhịp điệu tối giản và cụm wordmark hình học HCMUT hai tông (#030391 + #1488DB) kèm tên trường song ngữ.',
       specs:
         'Vải canvas cotton 12oz dệt chéo dày dặn đứng form, quai xách may gia cố chữ X chịu lực laptop 14–16 inch và tài liệu học tập hằng ngày.',
       ratings: {
@@ -280,16 +264,8 @@
       createdAt: '2026-11-15',
       timeframe: 'week',
       featured: true,
-      galleryImages: [
-        'assets/products/hcmut-cap.jpg',
-        'assets/products/hcmut-merch-kit.jpg',
-        'assets/products/hcmut-metal-detail.jpg',
-      ],
-      viewLabels: [
-        'Phối cảnh Thực Tế Sân Thể Thao',
-        'Phối cảnh Bộ Nhận Diện',
-        'Chi Tiết Gia Công Logo',
-      ],
+      galleryImages: ['assets/products/hcmut-cap.jpg'],
+      viewLabels: ['Phối cảnh Thực Tế'],
       palette: ['#030391', '#FFFFFF', '#1488DB', '#02053D'],
       tags: ['Nón lưỡi trai', 'Baseball Cap', 'Deep Navy', 'Thêu 3D', 'Nguồn HCMUT'],
       story:

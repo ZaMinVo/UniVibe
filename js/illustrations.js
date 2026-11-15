@@ -602,7 +602,8 @@
   };
 
   function renderMerchIllustration(item, viewIndex = 0) {
-    const imageSrc = item && Array.isArray(item.galleryImages) ? item.galleryImages[viewIndex] : null;
+    const galleryImages = item && Array.isArray(item.galleryImages) ? item.galleryImages : [];
+    const imageSrc = galleryImages[viewIndex] || galleryImages[0] || null;
     if (imageSrc) {
       const studioStyle = STUDIO_IMAGE_STYLES[imageSrc] || {
         background: '#F3F0EA',
