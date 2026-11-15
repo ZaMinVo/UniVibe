@@ -1,6 +1,6 @@
 # UniVibe
 
-> **UniVibe** là phòng trưng bày số (*Showcase-Only*) giới thiệu các ý tưởng vật phẩm mang đậm bản sắc sinh viên đại học — kết hợp giao diện web phong cách **Hand-Drawn Sketchbook** với các mockup sản phẩm thực tế tối giản.
+> **UniVibe** là phòng trưng bày số (*Showcase-Only*) giới thiệu các ý tưởng vật phẩm mang đậm bản sắc sinh viên đại học — thiết kế theo phong cách tối giản **Editorial Gallery ("GALERIE" / `uupm.cc/demo/nft-art-gallery`)** kết hợp khung viền mảnh thủ công và mockup sản phẩm studio thực tế.
 
 ---
 
@@ -45,7 +45,7 @@ Các tính năng tương tác cộng đồng và cho phép người dùng tự �
 
 ## 4. Hiện thực Giao diện & Triển khai GitHub Pages
 
-- **Phong cách Giao diện:** Web UI giữ nguyên chất **Hand-Drawn Sketchbook**, trong khi phần tác phẩm trưng bày sử dụng SVG **Realistic Studio Product Mockups** trên nền studio sáng sạch (`#F4F6F9`).
+- **Phong cách Giao diện:** Bố cục phòng tranh tinh giản theo [uupm.cc/demo/nft-art-gallery](https://uupm.cc/demo/nft-art-gallery) (nền Alabaster `#FAF8F5`, typography editorial serif `Cormorant Garamond`, đường viền mảnh `1px` kết hợp dấu góc kiến trúc thủ công, tác phẩm studio thực tế không bị che khuất bởi nhãn dán).
 - **Kiến trúc Static Zero-Build:** Chạy thuần bằng HTML5, Tailwind CSS CDN, CSS tùy biến ([css/styles.css](css/styles.css)) và Vanilla JavaScript ([js/illustrations.js](js/illustrations.js), [js/data.js](js/data.js), [js/app.js](js/app.js)).
 - **Chạy thử tại máy (Local):**
   ```bash

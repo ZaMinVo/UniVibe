@@ -1,5 +1,6 @@
 /* ==========================================================================
    UniVibe — Main Interactive Application Logic
+   Editorial Gallery Architecture (inspired by uupm.cc/demo/nft-art-gallery)
    ========================================================================== */
 
 (function () {
@@ -56,6 +57,10 @@
       return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
     return isoDate;
+  }
+
+  function padCount(num) {
+    return String(num).padStart(2, '0');
   }
 
   function showToast(message) {
@@ -118,7 +123,7 @@
   // -------------------- SVG Icon Helpers --------------------
   function iconBookmark(saved) {
     return `
-      <svg class="w-4 h-4 ${saved ? 'text-[#FF4D4D] fill-[#FF4D4D]' : 'text-[#1E1E24]'}" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="w-4 h-4 ${saved ? 'text-[#030391] fill-[#030391]' : 'text-[#141413]'}" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
       </svg>
     `;
@@ -161,123 +166,98 @@
     return filtered;
   }
 
-  // -------------------- Render: Hero / Campus Hub Banner --------------------
+  // -------------------- Render: Hero Exhibition Banner --------------------
   function renderHero() {
     const container = document.getElementById('heroContainer');
     if (!container) return;
 
     const totalConcepts = state.concepts.length;
+    const vnuCount = CAMPUSES.filter((c) => c.isVnuHcm).length;
 
     if (state.activeCampus === 'all') {
       const featured = state.concepts.find((c) => c.featured) || state.concepts[0];
       const creator = getCreatorById(featured.creatorId);
-      const campus = getCampusById(featured.campusId);
 
       container.innerHTML = `
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          <!-- Left Exhibition Intro -->
-          <div class="lg:col-span-7 space-y-6">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFF3B0] sketch-pill text-xs sm:text-sm font-mono font-bold shadow-[3px_3px_0px_#1E1E24]">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#2D5DA1] border border-[#1E1E24]"></span>
-              TRIỂN LÃM BẢN SẮC SINH VIÊN · CHỈ TRƯNG BÀY (SHOWCASE ONLY)
-            </div>
-
-            <h1 class="font-display text-3xl sm:text-5xl lg:text-[52px] font-extrabold leading-[1.15] text-[#1E1E24]">
-              Không gian <span class="sketch-highlight">trưng bày</span> ý tưởng vật phẩm mang đậm bản sắc <span class="sketch-highlight sketch-highlight--mint">trường mình</span>
-            </h1>
-
-            <p class="text-base sm:text-lg text-[#52525B] max-w-2xl leading-relaxed">
-              Bộ sưu tập trưng bày các mẫu thiết kế thực tế tối giản (<strong>Túi Tote, Nón lưỡi trai, Áo thun &amp; Lót chuột</strong>) đồng bộ hệ thống nhận diện thương hiệu đại học (Nguồn: <strong>HCMUT</strong>). Xem phối cảnh Studio 3 góc độ, bảng màu chuẩn và thông số chất liệu.
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <!-- Left Editorial Statement (GALERIE Hero) -->
+          <div class="lg:col-span-6 space-y-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[#6E6A63]">
+              Current Exhibition · Showcase Only
             </p>
 
-            <div class="flex flex-wrap items-center gap-3.5 pt-1">
-              <a href="#gallery" class="sketch-btn btn-ink text-base">
-                <span>Khám phá Phòng Trưng Bày</span>
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-[64px] font-semibold leading-[1.04] tracking-tight text-[#141413]">
+              Bản Sắc <em class="italic font-normal text-[#030391]">Sinh Viên</em> Trong Không Gian Tối Giản
+            </h1>
+
+            <p class="text-base sm:text-lg text-[#6E6A63] max-w-xl leading-relaxed">
+              Tuyển chọn <strong class="font-semibold text-[#141413]">0${totalConcepts} thiết kế vật phẩm</strong> thực tế tối giản (Áo Polo, Lót chuột Deskpad, Túi Tote, Nón lưỡi trai) đồng bộ hệ thống nhận diện thương hiệu đại học — Nguồn <strong class="font-semibold text-[#141413]">HCMUT</strong>.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-1">
+              <a href="#gallery" class="gallery-btn-primary">
+                Xem Phòng Trưng Bày
               </a>
-              <a href="#feature-work" class="sketch-btn btn-postit text-base">
-                <span>Feature Work (Tính năng thêm mẫu)</span>
+              <a href="#campus-hubs" class="gallery-btn-outline">
+                Chọn Trường ĐH
               </a>
             </div>
 
-            <!-- Showcase Metrics Strip -->
-            <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-3 max-w-xl">
-              <div class="sketch-box p-3 sm:p-4 bg-white">
-                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#1E1E24]">${totalConcepts}</div>
-                <div class="font-hand text-sm sm:text-base text-[#52525B]">Concept trưng bày</div>
+            <!-- Quiet Curatorial Metrics -->
+            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-[#E2DDD5] max-w-lg">
+              <div>
+                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">${padCount(totalConcepts)}</div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Tác phẩm</div>
               </div>
-              <div class="sketch-box p-3 sm:p-4 bg-white">
-                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#2D5DA1]">3 góc</div>
-                <div class="font-hand text-sm sm:text-base text-[#52525B]">Phối cảnh Studio / mẫu</div>
+              <div>
+                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">03</div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Góc Studio / mẫu</div>
               </div>
-              <div class="sketch-box p-3 sm:p-4 bg-white">
-                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#FF4D4D]">${CAMPUSES.length}</div>
-                <div class="font-hand text-sm sm:text-base text-[#52525B]">Không gian bản sắc trường</div>
+              <div>
+                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">${padCount(vnuCount)}</div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Trường ĐHQG-HCM</div>
               </div>
             </div>
           </div>
 
-          <!-- Right Framed Spotlight Piece (Galerie Hero Card) -->
-          <div class="lg:col-span-5">
-            <div class="sketch-card p-4 sm:p-5 bg-white relative card-tilt-right">
-              <div class="washi-tape -top-3 left-6 -rotate-6"></div>
-              <div class="washi-tape washi-tape--mint -top-3 right-6 rotate-6"></div>
-
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                  ★ MẪU TRƯNG BÀY TIÊU BIỂU
-                </span>
-                <span class="px-2.5 py-1 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background-color: ${escapeHtml(campus.color)}">
-                  ${escapeHtml(campus.shortName)}
-                </span>
-              </div>
-
-              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="block w-full text-left group cursor-pointer rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9]">
-                <div class="aspect-[4/3] w-full overflow-hidden">
-                  ${renderMerchIllustration(featured, 0)}
-                </div>
+          <!-- Right Framed Spotlight Artwork -->
+          <div class="lg:col-span-6">
+            <article class="gallery-card group">
+              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="sketch-frame block w-full aspect-[4/3] overflow-hidden bg-[#F3F0EA] cursor-pointer">
+                ${renderMerchIllustration(featured, 0)}
               </button>
 
-              <div class="mt-4 space-y-3">
-                <div>
-                  <h2 class="font-display font-extrabold text-lg sm:text-xl leading-snug text-[#1E1E24]">
-                    ${escapeHtml(featured.title)}
-                  </h2>
-                  <p class="text-sm text-[#52525B] mt-0.5">
-                    Tác giả:
-                    <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-semibold text-[#2D5DA1] hover:underline cursor-pointer">
-                      ${escapeHtml(creator.name)}
-                    </button>
-                    <span class="mx-1.5 text-[#CBD5E1]">·</span>
-                    <span class="font-mono text-xs font-bold text-[#030391]">Nguồn: ${escapeHtml(featured.source || 'HCMUT')}</span>
-                  </p>
-                </div>
-
-                <!-- Palette & Material Specs Snapshot -->
-                <div class="p-3 bg-[#FDFBF7] border-2 border-dashed border-[#1E1E24]/40 rounded-xl space-y-2">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="font-display font-bold text-xs">Bảng màu &amp; Chất liệu</span>
-                    <div class="flex items-center gap-1.5">
-                      ${(featured.palette || [])
-                        .slice(0, 4)
-                        .map(
-                          (hex) =>
-                            `<span class="w-4 h-4 rounded-full border border-[#1E1E24] inline-block" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
-                        )
-                        .join('')}
+              <div class="p-5 sm:p-6 bg-white">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
+                  <div class="sm:col-span-8">
+                    <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1">
+                      Featured Work · Sản phẩm #01
+                    </div>
+                    <h2 class="font-display text-2xl font-semibold text-[#141413] leading-snug">
+                      <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="text-left hover:text-[#030391] transition-colors cursor-pointer">
+                        ${escapeHtml(featured.title)}
+                      </button>
+                    </h2>
+                    <div class="text-xs text-[#6E6A63] mt-1.5">
+                      Tác giả:
+                      <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-[#141413] underline underline-offset-4 decoration-[#E2DDD5] hover:decoration-[#141413] cursor-pointer">
+                        ${escapeHtml(creator.name)}
+                      </button>
                     </div>
                   </div>
-                  <p class="text-xs text-[#52525B] leading-relaxed line-clamp-2">${escapeHtml(featured.specs)}</p>
-                </div>
 
-                <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="sketch-btn btn-postit w-full text-sm">
-                  Xem phối cảnh 3 góc &amp; Thông số
-                </button>
+                  <div class="sm:col-span-4 sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2DDD5]">
+                    <div>
+                      <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Nguồn</div>
+                      <div class="font-mono text-sm font-bold text-[#030391]">${escapeHtml(featured.source || 'HCMUT')}</div>
+                    </div>
+                    <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#141413] hover:text-[#030391] underline underline-offset-4 cursor-pointer">
+                      Xem chi tiết →
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       `;
@@ -290,53 +270,52 @@
     const topDesign = campusConcepts.find((c) => c.featured) || campusConcepts[0] || null;
 
     container.innerHTML = `
-      <div class="sketch-card p-6 sm:p-8 bg-white relative overflow-hidden">
-        <div class="washi-tape washi-tape--blue -top-3 left-10 -rotate-3"></div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div class="lg:col-span-7 space-y-4">
-            <div class="flex flex-wrap items-center gap-3">
-              <button type="button" id="backToGlobalBtn" class="sketch-btn sketch-btn-sm btn-paper text-xs">
-                ← Về Khám phá Chung
+      <div class="border border-[#E2DDD5] bg-white p-6 sm:p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div class="lg:col-span-7 space-y-5">
+            <div class="flex flex-wrap items-center gap-4">
+              <button type="button" id="backToGlobalBtn" class="gallery-btn-outline gallery-btn-sm">
+                ← Triển lãm Chung
               </button>
-              <span class="px-3 py-1 text-xs font-mono font-bold text-white sketch-pill" style="background-color: ${escapeHtml(campus.color)}">
-                CAMPUS HUB · ${escapeHtml(campus.city)}
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6E6A63]">
+                Campus Archive · ${escapeHtml(campus.city)}
               </span>
             </div>
 
-            <div class="flex items-center gap-4">
+            <div class="flex items-start sm:items-center gap-4 pt-1">
               ${renderCampusEmblem(campus)}
               <div>
-                <h1 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24]">
+                <h1 class="font-display text-3xl sm:text-5xl font-semibold text-[#141413] tracking-tight">
                   ${escapeHtml(campus.name)}
                 </h1>
-                <p class="font-hand text-lg text-[#52525B] mt-0.5">“${escapeHtml(campus.motto)}”</p>
+                <p class="font-display italic text-lg text-[#6E6A63] mt-0.5">“${escapeHtml(campus.motto)}”</p>
               </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2 pt-1">
-              <span class="text-xs font-mono font-bold text-[#52525B]">Màu bản sắc trường:</span>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-full text-xs font-mono">
-                <span class="w-3.5 h-3.5 rounded-full border border-[#1E1E24]" style="background:${escapeHtml(campus.color)}"></span>
+            <div class="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-[#6E6A63]">
+              <span class="uppercase tracking-wider">Màu bản sắc:</span>
+              <span class="inline-flex items-center gap-2 text-[#141413]">
+                <span class="w-3 h-3 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(campus.color)}"></span>
                 ${escapeHtml(campus.color)}
               </span>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-full text-xs font-mono">
-                <span class="w-3.5 h-3.5 rounded-full border border-[#1E1E24]" style="background:${escapeHtml(campus.secondaryColor)}"></span>
+              <span class="inline-flex items-center gap-2 text-[#141413]">
+                <span class="w-3 h-3 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(campus.secondaryColor)}"></span>
                 ${escapeHtml(campus.secondaryColor)}
               </span>
             </div>
 
-            <div class="grid grid-cols-3 gap-3 pt-2 max-w-lg">
-              <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
-                <div class="font-mono text-2xl font-bold">${campusConcepts.length}</div>
-                <div class="text-xs font-hand text-[#52525B]">Mẫu trưng bày</div>
+            <div class="grid grid-cols-3 gap-6 pt-5 border-t border-[#E2DDD5] max-w-lg">
+              <div>
+                <div class="font-display text-3xl font-semibold">${padCount(campusConcepts.length)}</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Tác phẩm</div>
               </div>
-              <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
-                <div class="font-mono text-2xl font-bold text-[#2D5DA1]">3 góc</div>
-                <div class="text-xs font-hand text-[#52525B]">Phối cảnh Studio</div>
+              <div>
+                <div class="font-display text-3xl font-semibold text-[#030391]">03</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Góc Studio</div>
               </div>
-              <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
-                <div class="font-mono text-xl sm:text-2xl font-bold text-[#1E1E24]">Ẩn danh</div>
-                <div class="text-xs font-hand text-[#52525B]">Lưu trữ thiết kế</div>
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-semibold">Ẩn danh</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Lưu trữ</div>
               </div>
             </div>
           </div>
@@ -345,29 +324,30 @@
             ${
               topDesign
                 ? `
-              <div class="p-4 bg-[#FDFBF7] border-[2.5px] border-[#1E1E24] rounded-2xl shadow-[4px_4px_0px_#1E1E24]">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-mono font-bold px-2.5 py-0.5 bg-[#FFF3B0] border border-[#1E1E24] rounded-full">MẪU TRƯNG BÀY TẠI ${escapeHtml(campus.shortName)}</span>
-                  <span class="text-xs font-mono font-bold text-[#52525B]">Ẩn danh</span>
+              <div class="border border-[#E2DDD5] bg-[#FAF8F5] p-4">
+                <div class="flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.14em] text-[#6E6A63] mb-3">
+                  <span>Tiêu biểu · ${escapeHtml(campus.shortName)}</span>
+                  <span>Ẩn danh</span>
                 </div>
-                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] bg-[#F4F6F9] cursor-pointer mb-3">
+                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="sketch-frame block w-full aspect-[4/3] overflow-hidden bg-[#F3F0EA] cursor-pointer mb-3">
                   ${renderMerchIllustration(topDesign, 0)}
                 </button>
                 <div class="flex items-center justify-between gap-3">
-                  <h3 class="font-display font-bold text-base truncate">${escapeHtml(topDesign.title)}</h3>
-                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="sketch-btn sketch-btn-sm btn-postit shrink-0 text-xs">Xem chi tiết</button>
+                  <h3 class="font-display text-lg font-semibold truncate">${escapeHtml(topDesign.title)}</h3>
+                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="font-mono text-[11px] uppercase tracking-wider text-[#030391] underline underline-offset-4 shrink-0 cursor-pointer">
+                    Chi tiết →
+                  </button>
                 </div>
               </div>
               `
                 : `
-              <div class="p-6 bg-[#FDFBF7] border-[2.5px] border-dashed border-[#1E1E24] rounded-2xl text-center space-y-3">
-                <div class="font-display font-bold text-base">Không gian ${escapeHtml(campus.shortName)} chưa có mẫu trưng bày</div>
-                <p class="text-xs text-[#52525B] leading-relaxed">
-                  Trang hiện tại hoạt động ở chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong> với bộ sưu tập HCMUT. Tính năng cho phép người dùng tự thêm mẫu cho các trường khác thuộc mục <strong>Feature Work</strong>.
+              <div class="p-8 bg-[#FAF8F5] border border-[#E2DDD5] text-center space-y-4">
+                <div class="font-display text-2xl font-semibold text-[#141413]">${escapeHtml(campus.shortName)} đang biên tập</div>
+                <p class="text-xs text-[#6E6A63] leading-relaxed">
+                  Phòng trưng bày hiện tập trung vào bộ sưu tập chuẩn của <strong>HCMUT</strong>. Cổng tự thêm mẫu cho các trường thành viên khác nằm trong lộ trình <strong>Feature Work</strong>.
                 </p>
-                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
-                  <button type="button" id="viewHcmutShowcaseBtn" class="sketch-btn sketch-btn-sm btn-postit text-xs">Xem bộ sưu tập HCMUT</button>
-                  <a href="#feature-work" class="sketch-btn sketch-btn-sm btn-paper text-xs">Xem Feature Work</a>
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+                  <button type="button" id="viewHcmutShowcaseBtn" class="gallery-btn-primary gallery-btn-sm">Xem bộ sưu tập HCMUT</button>
                 </div>
               </div>
               `
@@ -393,15 +373,14 @@
     }
   }
 
-  // -------------------- Render: Campus Hub Strip --------------------
+  // -------------------- Render: Curated University Spaces --------------------
   function renderCampusHubStrip() {
     const strip = document.getElementById('campusHubStrip');
     if (!strip) return;
 
     document.querySelectorAll('.campus-scope-btn').forEach((btn) => {
       const isMatch = btn.dataset.campusScope === state.campusScope;
-      btn.classList.toggle('chip-active', isMatch);
-      btn.classList.toggle('btn-paper', !isMatch);
+      btn.classList.toggle('gallery-tab--active', isMatch);
     });
 
     const orderedCampuses = [...CAMPUSES].sort(
@@ -414,54 +393,55 @@
 
     const allActive = state.activeCampus === 'all';
     const allCard = `
-      <button type="button" data-campus-id="all" class="text-left p-3.5 sketch-card cursor-pointer transition-all flex flex-col ${
-        allActive ? 'bg-[#FFF3B0] ring-2 ring-[#1E1E24]' : 'bg-white hover:bg-[#FDFBF7]'
+      <button type="button" data-campus-id="all" class="text-left p-4 bg-white border transition-all flex flex-col cursor-pointer ${
+        allActive ? 'border-[#141413] ring-1 ring-[#141413]' : 'border-[#E2DDD5] hover:border-[#141413]'
       }">
-        <div class="flex items-center gap-2.5 mb-2">
-          <div class="w-11 h-11 rounded-xl bg-[#1E1E24] text-[#FFF3B0] border-2 border-[#1E1E24] flex items-center justify-center font-display font-extrabold text-sm shrink-0">
+        <div class="flex items-center gap-3 mb-2.5">
+          <div class="w-10 h-10 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xs font-bold tracking-wider shrink-0">
             ALL
           </div>
           <div class="min-w-0">
-            <div class="font-display font-extrabold text-sm leading-tight">Liên Trường</div>
-            <div class="text-[11px] font-mono text-[#52525B] whitespace-nowrap mt-0.5">${state.concepts.length} concept</div>
+            <div class="font-display font-semibold text-base leading-tight text-[#141413]">Liên Trường</div>
+            <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63] mt-0.5">${padCount(state.concepts.length)} tác phẩm</div>
           </div>
         </div>
-        <p class="text-xs text-[#52525B] line-clamp-2 mt-auto">Khám phá các mẫu vật phẩm trưng bày từ các trường.</p>
+        <p class="text-xs text-[#6E6A63] line-clamp-2 mt-auto">Toàn bộ tác phẩm trưng bày.</p>
       </button>
     `;
 
-    const campusCards = visibleCampuses.map((campus) => {
-      const count = state.concepts.filter((c) => c.campusId === campus.id).length;
-      const isActive = state.activeCampus === campus.id;
-      const vnuBadge = campus.isVnuHcm
-        ? `<span class="inline-block px-1.5 py-0.5 text-[9px] font-mono font-bold bg-[#E0F2FE] text-[#030391] border border-[#1E1E24] rounded">ĐHQG-HCM</span>`
-        : '';
+    const campusCards = visibleCampuses
+      .map((campus) => {
+        const count = state.concepts.filter((c) => c.campusId === campus.id).length;
+        const isActive = state.activeCampus === campus.id;
+        const statusText = count > 0 ? `${padCount(count)} tác phẩm` : 'Đang biên tập';
+        const vnuLabel = campus.isVnuHcm
+          ? `<span class="font-mono text-[9px] uppercase tracking-[0.14em] text-[#030391]">ĐHQG-HCM</span>`
+          : '';
 
-      return `
-        <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-3.5 sketch-card cursor-pointer transition-all flex flex-col ${
-          isActive ? 'bg-[#FFF3B0] ring-2 ring-[#1E1E24]' : 'bg-white hover:bg-[#FDFBF7]'
-        }">
-          <div class="flex items-center gap-2.5 mb-2">
-            ${renderCampusEmblem(campus)}
-            <div class="min-w-0">
-              <div class="flex flex-wrap items-center gap-1">
-                <span class="font-display font-extrabold text-sm leading-tight">${escapeHtml(campus.shortName)}</span>
+        return `
+          <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-4 bg-white border transition-all flex flex-col cursor-pointer ${
+            isActive ? 'border-[#141413] ring-1 ring-[#141413]' : 'border-[#E2DDD5] hover:border-[#141413]'
+          }">
+            <div class="flex items-center gap-3 mb-2.5">
+              ${renderCampusEmblem(campus)}
+              <div class="min-w-0">
+                <div class="font-display font-semibold text-base leading-tight text-[#141413] truncate">${escapeHtml(campus.shortName)}</div>
+                <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63] mt-0.5">${statusText}</div>
               </div>
-              <div class="text-[11px] font-mono text-[#52525B] whitespace-nowrap mt-0.5">${count > 0 ? `${count} concept` : 'Đang biên tập'}</div>
             </div>
-          </div>
-          <div class="mt-auto space-y-1">
-            ${vnuBadge}
-            <p class="text-xs text-[#52525B] line-clamp-2">${escapeHtml(campus.name)}</p>
-          </div>
-        </button>
-      `;
-    }).join('');
+            <div class="mt-auto space-y-0.5">
+              ${vnuLabel}
+              <p class="text-xs text-[#6E6A63] line-clamp-2">${escapeHtml(campus.name)}</p>
+            </div>
+          </button>
+        `;
+      })
+      .join('');
 
     strip.innerHTML = allCard + campusCards;
   }
 
-  // -------------------- Render: Category Filter Pills --------------------
+  // -------------------- Render: Category Filter Tabs --------------------
   function renderCategoryFilters() {
     const bar = document.getElementById('categoryFilterBar');
     if (!bar) return;
@@ -469,16 +449,16 @@
     bar.innerHTML = CATEGORIES.map((cat) => {
       const active = state.activeCategory === cat.id;
       return `
-        <button type="button" data-category-id="${escapeHtml(cat.id)}" class="sketch-btn sketch-btn-sm ${
-          active ? 'chip-active' : 'btn-paper'
-        } text-xs sm:text-sm">
+        <button type="button" data-category-id="${escapeHtml(cat.id)}" class="gallery-tab ${
+          active ? 'gallery-tab--active' : ''
+        }">
           ${escapeHtml(cat.label)}
         </button>
       `;
     }).join('');
   }
 
-  // -------------------- Render: Gallery Grid --------------------
+  // -------------------- Render: Available Works Gallery Grid --------------------
   function renderGallery() {
     const grid = document.getElementById('galleryGrid');
     const empty = document.getElementById('galleryEmptyState');
@@ -488,7 +468,7 @@
     const items = getFilteredConcepts();
     const campusLabel =
       state.activeCampus === 'all' ? 'Liên trường' : getCampusById(state.activeCampus).shortName;
-    countBadge.textContent = `${items.length} concept · ${campusLabel}`;
+    countBadge.textContent = `${padCount(items.length)} tác phẩm · ${campusLabel}`;
 
     if (items.length === 0) {
       grid.innerHTML = '';
@@ -497,96 +477,63 @@
     }
 
     empty.classList.add('hidden');
-    const tapeVariants = ['', 'washi-tape--mint', 'washi-tape--blue', 'washi-tape--kraft'];
 
     grid.innerHTML = items
-      .map((item, idx) => {
+      .map((item) => {
         const campus = getCampusById(item.campusId);
         const creator = getCreatorById(item.creatorId);
         const isBookmarked = state.bookmarks.includes(item.id);
-        const tiltClass = idx % 2 === 0 ? 'card-tilt-left' : 'card-tilt-right';
-        const cardStyle = idx % 2 === 0 ? 'sketch-card' : 'sketch-card-alt';
-        const tapeClass = tapeVariants[idx % tapeVariants.length];
 
         return `
-          <article class="${cardStyle} ${tiltClass} p-4 sm:p-5 flex flex-col relative">
-            <div class="washi-tape ${tapeClass} -top-3 left-1/2 -translate-x-1/2 ${idx % 2 === 0 ? '-rotate-2' : 'rotate-2'}"></div>
+          <article class="gallery-card group flex flex-col">
+            <!-- Pure Studio Artwork Frame (Zero Sticker Clutter) -->
+            <div class="relative aspect-[4/3] overflow-hidden bg-[#F3F0EA]">
+              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="sketch-frame block w-full h-full cursor-pointer" aria-label="Mở chi tiết ${escapeHtml(item.title)}">
+                ${renderMerchIllustration(item, 0)}
+              </button>
 
-            <!-- Card Top Metadata -->
-            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
-              <div class="flex items-center gap-1.5 min-w-0">
-                <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="px-2.5 py-0.5 text-[11px] font-mono font-bold text-white border-[1.8px] border-[#1E1E24] rounded-full cursor-pointer shrink-0" style="background-color: ${escapeHtml(campus.color)}" title="Vào không gian ${escapeHtml(campus.name)}">
-                  ${escapeHtml(campus.shortName)}
-                </button>
-                <span class="px-2.5 py-0.5 text-[11px] font-hand font-bold bg-[#F4EFE6] border-[1.8px] border-[#1E1E24] rounded-full truncate">
-                  ${escapeHtml(getCategoryLabel(item.category))}
-                </span>
-              </div>
-
-              <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="w-10 h-10 -mr-1 flex items-center justify-center rounded-xl border-2 border-[#1E1E24] ${
-                isBookmarked ? 'bg-[#FFF3B0]' : 'bg-white hover:bg-[#F4EFE6]'
-              } cursor-pointer transition-colors shrink-0" aria-label="${isBookmarked ? 'Bỏ lưu concept' : 'Lưu concept vào bộ sưu tập'}" title="${isBookmarked ? 'Đã lưu' : 'Lưu vào bộ sưu tập'}">
+              <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="gallery-btn-icon absolute top-3.5 right-3.5 z-10 ${
+                isBookmarked ? '!bg-white !border-[#141413]' : ''
+              }" aria-label="${isBookmarked ? 'Bỏ lưu tác phẩm' : 'Lưu tác phẩm'}" title="${isBookmarked ? 'Đã lưu' : 'Lưu tác phẩm'}">
                 ${iconBookmark(isBookmarked)}
               </button>
             </div>
 
-            <!-- Realistic Studio Artwork Frame -->
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9] relative group cursor-pointer mb-3.5">
-              ${renderMerchIllustration(item, 0)}
-              <span class="absolute bottom-2 right-2 px-2 py-0.5 text-[10px] font-mono font-bold bg-white/95 border border-[#1E1E24] rounded-md opacity-90 group-hover:bg-[#FFF3B0] transition-colors">
-                3 góc xem
-              </span>
-            </button>
-
-            <!-- Title & Creator -->
-            <div class="mb-3">
-              <h3 class="font-display font-extrabold text-lg leading-snug text-[#1E1E24] line-clamp-2">
-                <button type="button" data-open-concept="${escapeHtml(item.id)}" class="text-left hover:text-[#2D5DA1] cursor-pointer">
-                  ${escapeHtml(item.title)}
-                </button>
-              </h3>
-              <div class="flex flex-wrap items-center justify-between gap-1.5 mt-1.5 text-xs text-[#52525B]">
-                <div>
-                  <span>bởi</span>
-                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-bold text-[#2D5DA1] hover:underline cursor-pointer">
-                    ${escapeHtml(creator.name)}
-                  </button>
-                  <span class="mx-1 text-[#CBD5E1]">·</span>
-                  <span class="font-mono font-bold text-[#030391]">Nguồn: ${escapeHtml(item.source || 'HCMUT')}</span>
-                </div>
-                <span class="font-mono">${formatDateDisplay(item.createdAt)}</span>
-              </div>
-            </div>
-
-            <!-- Specs & Brand Palette Snapshot -->
-            <div class="mt-auto p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl space-y-2 mb-3.5">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-xs font-display font-bold text-[#1E1E24]">Thông số &amp; Bảng màu chuẩn</span>
-                <div class="flex items-center gap-1" aria-label="Bảng màu thiết kế">
+            <!-- Quiet Museum Placard -->
+            <div class="p-5 sm:p-6 flex-1 flex flex-col bg-white">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#6E6A63]">
+                  ${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}
+                </span>
+                <div class="flex items-center gap-1.5" aria-label="Bảng màu sản phẩm">
                   ${(item.palette || [])
                     .slice(0, 4)
                     .map(
                       (hex) =>
-                        `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#1E1E24] rounded text-[10px] font-mono" title="${escapeHtml(hex)}"><span class="w-2.5 h-2.5 rounded-full border border-[#1E1E24]" style="background:${escapeHtml(hex)}"></span></span>`
+                        `<span class="w-2.5 h-2.5 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
                     )
                     .join('')}
                 </div>
               </div>
-              <p class="text-xs text-[#52525B] line-clamp-2 leading-relaxed">${escapeHtml(item.specs || 'Thiết kế tối giản chuẩn nhận diện.')}</p>
-              <div class="flex flex-wrap gap-1 pt-0.5">
-                ${(item.tags || [])
-                  .slice(0, 3)
-                  .map(
-                    (tag) =>
-                      `<span class="px-2 py-0.5 text-[10px] font-hand font-bold bg-[#F4EFE6] border border-[#1E1E24] rounded-full">#${escapeHtml(tag)}</span>`
-                  )
-                  .join('')}
+
+              <h3 class="font-display text-2xl font-semibold leading-snug text-[#141413]">
+                <button type="button" data-open-concept="${escapeHtml(item.id)}" class="text-left hover:text-[#030391] transition-colors cursor-pointer">
+                  ${escapeHtml(item.title)}
+                </button>
+              </h3>
+
+              <div class="mt-auto pt-4 mt-4 border-t border-[#E2DDD5] flex items-center justify-between gap-3 text-xs text-[#6E6A63]">
+                <div>
+                  <span>Tác giả:</span>
+                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-[#141413] underline underline-offset-4 decoration-[#E2DDD5] hover:decoration-[#141413] font-medium cursor-pointer ml-1">
+                    ${escapeHtml(creator.name)}
+                  </button>
+                </div>
+                <div class="font-mono text-[11px] uppercase tracking-wider">
+                  Nguồn: <span class="text-[#141413] font-bold">${escapeHtml(item.source || 'HCMUT')}</span>
+                </div>
               </div>
             </div>
-
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="sketch-btn sketch-btn-sm btn-paper w-full text-sm">
-              Xem phối cảnh 3 góc &amp; Thông số
-            </button>
           </article>
         `;
       })
@@ -603,9 +550,9 @@
     const bookmarkedItems = state.concepts.filter((c) => state.bookmarks.includes(c.id));
     if (bookmarkedItems.length === 0) {
       list.innerHTML = `
-        <div class="sketch-box p-6 bg-white text-center">
-          <p class="font-display font-bold text-base mb-1">Chưa lưu concept nào</p>
-          <p class="text-sm text-[#52525B]">Nhấn biểu tượng lưu trên mỗi thiết kế để gom thành bộ sưu tập tham khảo cho riêng bạn hoặc CLB.</p>
+        <div class="border border-[#E2DDD5] bg-white p-8 text-center">
+          <p class="font-display text-xl font-semibold text-[#141413] mb-1">Chưa lưu tác phẩm nào</p>
+          <p class="text-xs text-[#6E6A63] leading-relaxed">Nhấn biểu tượng lưu ở góc trên bên phải mỗi tác phẩm để tổng hợp thành bộ sưu tập cá nhân.</p>
         </div>
       `;
       return;
@@ -615,18 +562,18 @@
       .map((item) => {
         const campus = getCampusById(item.campusId);
         return `
-          <div class="sketch-box p-3.5 bg-white flex items-center gap-3">
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-16 rounded-lg overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer bg-[#F4F6F9]">
-              ${renderMerchIllustration(item, 0, { compact: true })}
+          <div class="border border-[#E2DDD5] bg-white p-3.5 flex items-center gap-3.5">
+            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-15 aspect-[4/3] overflow-hidden border border-[#E2DDD5] shrink-0 cursor-pointer bg-[#F3F0EA]">
+              ${renderMerchIllustration(item, 0)}
             </button>
             <div class="min-w-0 flex-1">
-              <div class="text-[11px] font-mono font-bold text-[#2D5DA1]">${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}</div>
-              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-bold text-sm text-left line-clamp-2 hover:text-[#2D5DA1] cursor-pointer">
+              <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63]">${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}</div>
+              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-semibold text-base text-left line-clamp-2 hover:text-[#030391] cursor-pointer text-[#141413]">
                 ${escapeHtml(item.title)}
               </button>
             </div>
-            <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="w-10 h-10 flex items-center justify-center rounded-lg border-2 border-[#1E1E24] bg-[#F4EFE6] hover:bg-[#FECDD3] cursor-pointer shrink-0" aria-label="Xóa khỏi đã lưu">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="gallery-btn-icon shrink-0" aria-label="Xóa khỏi đã lưu">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -660,7 +607,7 @@
     const creator = getCreatorById(concept.creatorId);
     const isBookmarked = state.bookmarks.includes(concept.id);
 
-    const defaultLabels = ['Góc chính diện (Studio)', 'Cận cảnh chi tiết & Logo', 'Phối cảnh sử dụng thực tế'];
+    const defaultLabels = ['Phối cảnh chính diện (Studio)', 'Cận cảnh chi tiết & Logo', 'Phối cảnh thực tế'];
     const labels =
       Array.isArray(concept.viewLabels) && concept.viewLabels.length === 3
         ? concept.viewLabels
@@ -668,20 +615,21 @@
     const viewButtons = labels.map((label, idx) => ({ idx, label }));
 
     body.innerHTML = `
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-7">
-        <!-- Left Column: Multi-Angle Studio Artwork + Link Copy -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+        <!-- Left Column: Multi-Angle Studio Artwork -->
         <div class="lg:col-span-6 space-y-4">
-          <div class="sketch-box p-3 bg-white relative">
-            <div class="washi-tape washi-tape--mint -top-3 left-8 -rotate-3"></div>
-            <div id="detailArtworkFrame" class="aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9]">
+          <div class="border border-[#E2DDD5] bg-white p-3">
+            <div id="detailArtworkFrame" class="sketch-frame aspect-[4/3] overflow-hidden bg-[#F3F0EA]">
               ${renderMerchIllustration(concept, state.activeDetailView)}
             </div>
-            <div class="grid grid-cols-3 gap-2 mt-3">
+            <div class="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-[#E2DDD5]">
               ${viewButtons
                 .map(
                   (vb) => `
-                <button type="button" data-detail-view="${vb.idx}" class="sketch-btn sketch-btn-sm text-xs ${
-                    state.activeDetailView === vb.idx ? 'chip-active' : 'btn-paper'
+                <button type="button" data-detail-view="${vb.idx}" class="py-2 px-2 text-[11px] font-medium border transition-colors cursor-pointer ${
+                    state.activeDetailView === vb.idx
+                      ? 'bg-[#141413] text-[#FAF8F5] border-[#141413]'
+                      : 'bg-white text-[#6E6A63] border-[#E2DDD5] hover:border-[#141413] hover:text-[#141413]'
                   }">
                   ${escapeHtml(vb.label)}
                 </button>
@@ -691,80 +639,69 @@
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2.5">
-            <button type="button" id="copyConceptLinkBtn" class="sketch-btn sketch-btn-sm btn-paper text-xs">
-              Sao chép link mẫu trưng bày
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="button" id="copyConceptLinkBtn" class="gallery-btn-outline gallery-btn-sm">
+              Sao chép liên kết
             </button>
-            <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-mint'} text-xs">
+            <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="${
+              isBookmarked ? 'gallery-btn-primary' : 'gallery-btn-outline'
+            } gallery-btn-sm">
               ${iconBookmark(isBookmarked)}
-              <span>${isBookmarked ? 'Đã lưu trong bộ sưu tập' : 'Lưu mẫu này'}</span>
+              <span>${isBookmarked ? 'Đã lưu trong bộ sưu tập' : 'Lưu tác phẩm'}</span>
             </button>
           </div>
         </div>
 
-        <!-- Right Column: Showcase Info (Story + Palette + Specs + Feature Work Notice) -->
-        <div class="lg:col-span-6 space-y-5 pr-2">
-          <div class="pr-10">
-            <div class="flex flex-wrap items-center gap-2 mb-2">
-              <span class="px-3 py-0.5 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background:${escapeHtml(campus.color)}">
-                ${escapeHtml(campus.name)}
-              </span>
-              <span class="px-3 py-0.5 text-xs font-hand font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                ${escapeHtml(getCategoryLabel(concept.category))}
-              </span>
-              <span class="px-3 py-0.5 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">
-                Chế độ: Chỉ Trưng Bày
-              </span>
-              <span class="px-3 py-0.5 text-xs font-mono font-bold bg-[#E0F2FE] text-[#030391] border-2 border-[#1E1E24] rounded-full">
-                Nguồn: ${escapeHtml(concept.source || 'HCMUT')}
-              </span>
+        <!-- Right Column: Curatorial Placard Info -->
+        <div class="lg:col-span-6 space-y-6 pr-2">
+          <div class="pr-8">
+            <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-2">
+              <span class="text-[#030391] font-bold">${escapeHtml(campus.shortName)}</span>
+              <span>·</span>
+              <span>${escapeHtml(getCategoryLabel(concept.category))}</span>
+              <span>·</span>
+              <span>Nguồn: ${escapeHtml(concept.source || 'HCMUT')}</span>
             </div>
 
-            <h2 id="conceptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] leading-tight">
+            <h2 id="conceptModalTitle" class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] leading-tight">
               ${escapeHtml(concept.title)}
             </h2>
 
-            <div class="flex flex-wrap items-center justify-between gap-3 mt-3 p-3 bg-white border-2 border-[#1E1E24] rounded-xl">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-full border-2 border-[#1E1E24] flex items-center justify-center font-display font-bold text-sm" style="background:${escapeHtml(creator.avatarBg)}">
+            <div class="flex items-center justify-between gap-3 mt-4 py-3 border-y border-[#E2DDD5]">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xs font-bold">
                   ${escapeHtml(creator.initials)}
                 </div>
                 <div>
-                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-display font-bold text-sm text-[#2D5DA1] hover:underline cursor-pointer block text-left">
+                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-sm font-medium text-[#141413] hover:text-[#030391] underline underline-offset-4 decoration-[#E2DDD5] cursor-pointer block text-left">
                     ${escapeHtml(creator.name)}
                   </button>
-                  <div class="text-xs text-[#52525B]">${escapeHtml(creator.faculty)} · Nguồn: ${escapeHtml(concept.source || 'HCMUT')} · ${formatDateDisplay(concept.createdAt)}</div>
+                  <div class="text-[11px] text-[#6E6A63]">${escapeHtml(creator.faculty)} · ${formatDateDisplay(concept.createdAt)}</div>
                 </div>
               </div>
 
-              <div class="flex items-center gap-2">
-                <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-mint text-xs">
-                  Hồ sơ Ẩn danh
-                </button>
-                <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-paper'} text-xs">
-                  ${iconBookmark(isBookmarked)}
-                  <span>${isBookmarked ? 'Đã lưu' : 'Lưu mẫu'}</span>
-                </button>
-              </div>
+              <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="gallery-btn-outline gallery-btn-sm shrink-0 whitespace-nowrap">
+                Hồ sơ
+              </button>
             </div>
           </div>
 
-          <!-- The Vibe Story -->
-          <div class="p-4 bg-[#FFF3B0]/45 border-2 border-[#1E1E24] rounded-2xl">
-            <div class="font-display font-bold text-sm text-[#1E1E24] mb-1">Câu chuyện bản sắc (The Vibe Story)</div>
-            <p class="text-sm text-[#1E1E24]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
+          <!-- Curatorial Note -->
+          <div>
+            <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1.5">Câu chuyện thiết kế</div>
+            <p class="text-sm text-[#141413]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
           </div>
 
-          <!-- Official Palette & Material Specs -->
-          <div class="sketch-box p-4 bg-white space-y-3">
+          <!-- Palette & Material Specs -->
+          <div class="bg-white border border-[#E2DDD5] p-5 space-y-4">
             <div>
-              <div class="font-display font-bold text-sm mb-2">Bảng mã màu chuẩn nhận diện (Nhấn để sao chép HEX)</div>
+              <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-2.5">Bảng màu chuẩn nhận diện (Bấm để sao chép HEX)</div>
               <div class="flex flex-wrap gap-2">
                 ${(concept.palette || [])
                   .map(
                     (hex) => `
-                  <button type="button" data-copy-hex="${escapeHtml(hex)}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-full text-xs font-mono font-bold hover:bg-[#FFF3B0] cursor-pointer">
-                    <span class="w-4 h-4 rounded-full border border-[#1E1E24]" style="background:${escapeHtml(hex)}"></span>
+                  <button type="button" data-copy-hex="${escapeHtml(hex)}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FAF8F5] border border-[#E2DDD5] hover:border-[#141413] text-xs font-mono cursor-pointer transition-colors">
+                    <span class="w-3.5 h-3.5 rounded-full border border-[#D5CFC7]" style="background:${escapeHtml(hex)}"></span>
                     ${escapeHtml(hex)}
                   </button>
                 `
@@ -773,32 +710,16 @@
               </div>
             </div>
 
-            <hr class="sketch-divider" />
-
-            <div>
-              <div class="font-display font-bold text-sm mb-1">Thông số kỹ thuật &amp; Chất liệu đề xuất</div>
-              <p class="text-sm text-[#52525B] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số sản xuất.')}</p>
-            </div>
-
-            <div class="flex flex-wrap gap-1.5 pt-1">
-              ${(concept.tags || [])
-                .map(
-                  (tag) =>
-                    `<span class="px-2.5 py-0.5 text-xs font-hand font-bold bg-[#F4EFE6] border border-[#1E1E24] rounded-full">#${escapeHtml(tag)}</span>`
-                )
-                .join('')}
+            <div class="border-t border-[#E2DDD5] pt-4">
+              <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1.5">Thông số chất liệu</div>
+              <p class="text-xs sm:text-sm text-[#6E6A63] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số.')}</p>
             </div>
           </div>
 
-          <!-- Feature Work Notice -->
-          <div class="sketch-box p-4 bg-[#F4EFE6]/80 space-y-1.5">
-            <div class="flex items-center justify-between gap-2">
-              <span class="font-display font-extrabold text-sm text-[#2D5DA1]">Feature Work · Định hướng mở rộng</span>
-              <a href="#feature-work" data-jump-feature-work="true" class="text-xs font-mono font-bold underline hover:text-[#FF4D4D]">Xem lộ trình →</a>
-            </div>
-            <p class="text-xs text-[#52525B] leading-relaxed">
-              Trang đang vận hành ở chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong>. Tính năng cho người dùng thêm thiết kế mới (<em>User Concept Submission</em>), chấm điểm đa tiêu chí và bình luận góp ý sẽ được mở trong mục <strong>Feature Work</strong>.
-            </p>
+          <!-- Minimal Feature Work Notice -->
+          <div class="border-t border-[#E2DDD5] pt-4 flex items-center justify-between gap-4 text-xs text-[#6E6A63]">
+            <span>Chế độ Chỉ Trưng Bày · Tương tác &amp; Góp ý nằm trong Feature Work.</span>
+            <a href="#feature-work" data-jump-feature-work="true" class="font-mono uppercase tracking-wider text-[#141413] underline underline-offset-4 shrink-0">Lộ trình →</a>
           </div>
         </div>
       </div>
@@ -808,7 +729,7 @@
     if (copyLinkBtn) {
       copyLinkBtn.addEventListener('click', () => {
         const shareUrl = `${window.location.origin}${window.location.pathname}#concept-${concept.id}`;
-        copyToClipboard(shareUrl, 'Đã sao chép link mẫu trưng bày!');
+        copyToClipboard(shareUrl, 'Đã sao chép liên kết tác phẩm!');
       });
     }
 
@@ -830,73 +751,35 @@
     if (!body) return;
 
     body.innerHTML = `
-      <div class="space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-5 pr-10">
-          <div class="w-20 h-20 rounded-full border-[3px] border-[#1E1E24] flex items-center justify-center font-display font-extrabold text-2xl shrink-0 shadow-[4px_4px_0px_#1E1E24]" style="background:${escapeHtml(creator.avatarBg)}">
+      <div class="space-y-8">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-5 pr-8 border-b border-[#E2DDD5] pb-6">
+          <div class="w-16 h-16 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xl font-bold shrink-0">
             ${escapeHtml(creator.initials)}
           </div>
-          <div class="space-y-1.5">
-            <div class="flex flex-wrap items-center gap-2">
-              <h2 id="creatorModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold">${escapeHtml(creator.name)}</h2>
-              <span class="px-2.5 py-0.5 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">Showcase Archive</span>
-            </div>
-            <p class="text-sm font-mono text-[#52525B]">${escapeHtml(creator.handle)} · ${escapeHtml(campus.name)} (${escapeHtml(creator.faculty)})</p>
-            <div class="flex flex-wrap gap-1.5 pt-1">
-              ${(creator.badges || [])
-                .map(
-                  (b) =>
-                    `<span class="px-2.5 py-0.5 text-xs font-display font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">${escapeHtml(b)}</span>`
-                )
-                .join('')}
-            </div>
+          <div class="space-y-1">
+            <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Showcase Archive · ${escapeHtml(campus.name)}</div>
+            <h2 id="creatorModalTitle" class="font-display text-3xl font-semibold text-[#141413]">${escapeHtml(creator.name)}</h2>
+            <p class="text-xs font-mono text-[#6E6A63]">${escapeHtml(creator.handle)} · ${escapeHtml(creator.faculty)}</p>
           </div>
         </div>
 
-        <p class="text-sm sm:text-base text-[#1E1E24] bg-white p-4 border-2 border-[#1E1E24] rounded-2xl">${escapeHtml(creator.bio)}</p>
+        <p class="text-sm text-[#6E6A63] leading-relaxed">${escapeHtml(creator.bio)}</p>
 
-        <!-- Stats & Showcase Archive Notice -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-4 bg-[#F4EFE6] border-2 border-[#1E1E24] rounded-2xl grid grid-cols-3 gap-2 text-center">
-            <div>
-              <div class="font-mono text-2xl font-bold">${works.length}</div>
-              <div class="text-xs font-hand text-[#52525B]">Concept trưng bày</div>
-            </div>
-            <div>
-              <div class="font-mono text-2xl font-bold text-[#2D5DA1]">3 Góc</div>
-              <div class="text-xs font-hand text-[#52525B]">Góc nhìn Studio</div>
-            </div>
-            <div>
-              <div class="font-mono text-lg sm:text-xl font-bold text-[#1E1E24]">HCMUT</div>
-              <div class="text-xs font-hand text-[#52525B]">Nhận diện chuẩn</div>
-            </div>
-          </div>
-
-          <div class="p-4 bg-[#B8F2E6]/50 border-2 border-[#1E1E24] rounded-2xl space-y-2">
-            <div class="font-display font-bold text-sm">Đóng góp Ẩn danh · Chế độ Chỉ Trưng Bày</div>
-            <p class="text-xs text-[#1E1E24]/85 leading-relaxed">
-              Các mẫu được chia sẻ công khai dưới danh nghĩa <strong>Ẩn danh</strong> để sinh viên và các CLB tự do tham khảo theo chuẩn nhận diện thương hiệu. Cổng tác giả tự đăng &amp; cầu nối sản xuất sẽ mở trong mục <strong>Feature Work</strong>.
-            </p>
-          </div>
-        </div>
-
-        <!-- Archive Works -->
         <div>
-          <h3 class="font-display font-extrabold text-lg mb-3">Tác phẩm đang trưng bày (${works.length})</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6E6A63] mb-4">Tác phẩm đang trưng bày (${padCount(works.length)})</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             ${works
               .map(
                 (w) => `
-              <div class="sketch-box p-3.5 bg-white flex items-center gap-3">
-                <button type="button" data-open-concept="${escapeHtml(w.id)}" class="w-24 h-20 rounded-xl overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer bg-[#F4F6F9]">
+              <button type="button" data-open-concept="${escapeHtml(w.id)}" class="gallery-card text-left p-3 cursor-pointer flex items-center gap-3.5">
+                <div class="w-24 aspect-[4/3] overflow-hidden bg-[#F3F0EA] border border-[#E2DDD5] shrink-0">
                   ${renderMerchIllustration(w, 0)}
-                </button>
-                <div class="min-w-0 flex-1">
-                  <div class="text-xs font-mono font-bold text-[#2D5DA1]">${escapeHtml(getCategoryLabel(w.category))} · ${formatDateDisplay(w.createdAt)}</div>
-                  <button type="button" data-open-concept="${escapeHtml(w.id)}" class="font-display font-bold text-sm text-left line-clamp-2 hover:text-[#2D5DA1] cursor-pointer">
-                    ${escapeHtml(w.title)}
-                  </button>
                 </div>
-              </div>
+                <div class="min-w-0">
+                  <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63]">${escapeHtml(getCategoryLabel(w.category))}</div>
+                  <div class="font-display font-semibold text-base text-[#141413] line-clamp-2 mt-0.5">${escapeHtml(w.title)}</div>
+                </div>
+              </button>
             `
               )
               .join('')}
@@ -930,7 +813,7 @@
     const idx = state.bookmarks.indexOf(conceptId);
     if (idx === -1) {
       state.bookmarks.push(conceptId);
-      showToast('Đã lưu thiết kế vào Bộ sưu tập!');
+      showToast('Đã lưu tác phẩm vào Bộ sưu tập.');
     } else {
       state.bookmarks.splice(idx, 1);
       showToast('Đã bỏ khỏi Bộ sưu tập.');
@@ -954,7 +837,6 @@
 
   // -------------------- Event Binding --------------------
   function bindEvents() {
-    // Global click delegation
     document.addEventListener('click', (e) => {
       const scopeBtn = e.target.closest('[data-campus-scope]');
       if (scopeBtn) {
@@ -1012,7 +894,6 @@
       }
     });
 
-    // Search & Sort
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
@@ -1042,13 +923,11 @@
       });
     }
 
-    // Modal & Drawer Triggers
     document.getElementById('closeConceptModalBtn')?.addEventListener('click', closeConceptModal);
     document.getElementById('closeCreatorModalBtn')?.addEventListener('click', closeCreatorModal);
     document.getElementById('openBookmarksBtn')?.addEventListener('click', openBookmarksDrawer);
     document.getElementById('closeBookmarksBtn')?.addEventListener('click', closeBookmarksDrawer);
 
-    // Mobile nav toggle
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mobilePanel = document.getElementById('mobileMenuPanel');
     if (mobileBtn && mobilePanel) {
@@ -1064,12 +943,11 @@
       });
     }
 
-    // Backdrop clicks & ESC key
     ['conceptModal', 'creatorModal'].forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener('click', (e) => {
-        if (!e.target.closest('.sketch-card, .sketch-card-alt')) {
+        if (!e.target.closest('.gallery-modal-panel')) {
           el.classList.add('hidden');
           document.body.style.overflow = '';
         }

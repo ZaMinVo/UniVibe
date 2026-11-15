@@ -601,32 +601,25 @@
     },
   };
 
-  function renderMerchIllustration(item, viewIndex = 0, options = {}) {
-    const showSourceBadge = options.compact !== true && item && item.source;
-    const sourceBadge = showSourceBadge
-      ? `<span class="absolute bottom-2 left-2 z-10 px-2 py-0.5 text-[10px] font-mono font-bold bg-[#1E1E24]/85 text-white rounded-md border border-white/25 pointer-events-none">Nguồn: ${escapeXml(item.source)}</span>`
-      : '';
-
+  function renderMerchIllustration(item, viewIndex = 0) {
     const imageSrc = item && Array.isArray(item.galleryImages) ? item.galleryImages[viewIndex] : null;
     if (imageSrc) {
       const studioStyle = STUDIO_IMAGE_STYLES[imageSrc] || {
-        background: '#02053D',
+        background: '#F3F0EA',
         imgClass: 'object-cover',
         objectPosition: 'center center',
       };
       return `
         <div class="w-full h-full relative flex items-center justify-center overflow-hidden" style="background: ${studioStyle.background}">
-          <img src="${escapeXml(imageSrc)}" alt="${escapeXml(item.title)}" class="w-full h-full ${studioStyle.imgClass}" style="object-position: ${studioStyle.objectPosition}" loading="lazy" />
-          ${sourceBadge}
+          <img src="${escapeXml(imageSrc)}" alt="${escapeXml(item.title)}" class="w-full h-full ${studioStyle.imgClass} transition-transform duration-500 ease-out group-hover:scale-[1.025]" style="object-position: ${studioStyle.objectPosition}" loading="lazy" />
         </div>
       `;
     }
 
     if (item && item.customImageUrl && viewIndex === 0) {
       return `
-        <div class="w-full h-full relative bg-[#F4F6F9] flex items-center justify-center overflow-hidden">
-          <img src="${escapeXml(item.customImageUrl)}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover" loading="lazy" />
-          ${sourceBadge}
+        <div class="w-full h-full relative bg-[#F3F0EA] flex items-center justify-center overflow-hidden">
+          <img src="${escapeXml(item.customImageUrl)}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]" loading="lazy" />
         </div>
       `;
     }
@@ -653,7 +646,6 @@
           ${renderStudioBackdrop(uid, isDarkSubject, useNavyStage)}
           ${inner}
         </svg>
-        ${sourceBadge}
       </div>
     `;
   }
@@ -662,14 +654,14 @@
     if (campus && campus.logo) {
       const shortName = campus.shortName || 'UNI';
       return `
-        <div class="w-11 h-11 rounded-xl bg-white border-2 border-[#1E1E24] p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-[2px_2px_0px_#1E1E24]">
+        <div class="w-10 h-10 bg-white border border-[#E2DDD5] p-1 flex items-center justify-center shrink-0 overflow-hidden">
           <img src="${escapeXml(campus.logo)}" alt="Logo ${escapeXml(shortName)}" class="w-full h-full object-contain" loading="lazy" />
         </div>
       `;
     }
     if (campus && campus.id === 'hcmut') {
       return `
-        <svg viewBox="0 0 112 112" class="w-11 h-11 shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 112 112" class="w-10 h-10 shrink-0" aria-hidden="true">
           ${renderHcmutBrandMark({ cx: 56, cy: 56, r: 50, darkBg: false })}
         </svg>
       `;
@@ -678,9 +670,9 @@
     const c2 = (campus && campus.secondaryColor) || '#1488DB';
     const shortName = (campus && campus.shortName) || 'UNI';
     return `
-      <svg viewBox="0 0 56 56" class="w-11 h-11 shrink-0" aria-hidden="true">
-        <path d="M10 10 L46 8 L44 36 Q28 50 12 36 Z" fill="${c2}" stroke="#1E1E24" stroke-width="2.6" stroke-linejoin="round" />
-        <path d="M15 15 L41 13 L39 34 Q28 44 17 34 Z" fill="${c1}" stroke="#1E1E24" stroke-width="1.8" stroke-linejoin="round" />
+      <svg viewBox="0 0 56 56" class="w-10 h-10 shrink-0" aria-hidden="true">
+        <path d="M10 10 L46 8 L44 36 Q28 50 12 36 Z" fill="${c2}" stroke="#E2DDD5" stroke-width="1.5" stroke-linejoin="round" />
+        <path d="M15 15 L41 13 L39 34 Q28 44 17 34 Z" fill="${c1}" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" />
         <text x="28" y="31" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" fill="#FFFFFF">${escapeXml(shortName.slice(0, 5))}</text>
       </svg>
     `;

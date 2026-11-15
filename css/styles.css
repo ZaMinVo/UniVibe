@@ -1,21 +1,18 @@
 /* ==========================================================================
-   UniVibe — Hand-Drawn Sketchbook & Curated Gallery Stylesheet
-   Synthesized from UI/UX Pro Max (Sketch Hand-Drawn #84 & Anti-Polish #59)
+   UniVibe — Editorial Fine-Art Gallery Stylesheet
+   Inspired by https://uupm.cc/demo/nft-art-gallery ("GALERIE")
    ========================================================================== */
 
 :root {
-  --bg-paper: #FDFBF7;
-  --bg-paper-alt: #F4EFE6;
+  --bg-alabaster: #FAF8F5;
+  --bg-wash: #F3F0EA;
   --surface-card: #FFFFFF;
-  --ink: #1E1E24;
-  --ink-muted: #52525B;
-  --accent-red: #FF4D4D;
-  --accent-blue: #2D5DA1;
-  --postit-yellow: #FFF3B0;
-  --highlighter-mint: #B8F2E6;
-  --kraft: #E6CCB2;
-  --lavender-wash: #E9D8FD;
-  --shadow-ink: #1E1E24;
+  --ink: #141413;
+  --ink-muted: #6E6A63;
+  --border-hairline: #E2DDD5;
+  --border-strong: #141413;
+  --brand-royal: #030391;
+  --brand-sky: #1488DB;
 }
 
 *,
@@ -30,386 +27,258 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--bg-paper);
+  background-color: var(--bg-alabaster);
   color: var(--ink);
   font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.55;
+  line-height: 1.6;
   overflow-x: hidden;
-  /* Warm sketchbook dot-grid + subtle paper tint */
-  background-image:
-    radial-gradient(rgba(30, 30, 36, 0.11) 1.1px, transparent 1.1px),
-    linear-gradient(180deg, rgba(244, 239, 230, 0.35) 0%, rgba(253, 251, 247, 0) 280px);
-  background-size: 24px 24px, 100% 100%;
-  background-position: 0 0, 0 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Families */
+/* Typography Roles */
 .font-display {
-  font-family: 'Shantell Sans', 'Patrick Hand', cursive;
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
-.font-hand {
-  font-family: 'Patrick Hand', 'Shantell Sans', cursive;
+.font-sans {
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.font-body {
-  font-family: 'Be Vietnam Pro', sans-serif;
-}
-
-.font-mono-num {
+.font-mono {
   font-family: 'Space Mono', monospace;
   font-variant-numeric: tabular-nums;
 }
 
 /* Accessible Keyboard Focus Ring */
 :focus-visible {
-  outline: 3px solid var(--accent-blue);
-  outline-offset: 3px;
+  outline: 2px solid var(--brand-royal);
+  outline-offset: 2px;
 }
 
-/* Hand-Drawn Wobbly Surfaces */
-.sketch-pill {
-  border: 2.5px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-}
-
-.sketch-box {
-  border: 2.5px solid var(--ink);
-  border-radius: 18px 28px 16px 24px / 24px 16px 28px 18px;
-  box-shadow: 4px 4px 0px var(--shadow-ink);
+/* Museum-Grade Artwork Frame & Gallery Cards */
+.gallery-card {
   background-color: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  transition:
+    border-color 240ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sketch-card {
-  border: 2.5px solid var(--ink);
-  border-radius: 16px 24px 14px 22px / 22px 14px 24px 16px;
-  box-shadow: 5px 5px 0px var(--shadow-ink);
-  background-color: var(--surface-card);
-  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+.gallery-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -12px rgba(20, 20, 19, 0.1);
 }
 
-.sketch-card-alt {
-  border: 2.5px solid var(--ink);
-  border-radius: 22px 14px 24px 16px / 14px 24px 16px 22px;
-  box-shadow: 5px 5px 0px var(--shadow-ink);
-  background-color: var(--surface-card);
-  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (min-width: 768px) {
-  .card-tilt-left {
-    transform: rotate(-0.75deg);
-  }
-  .card-tilt-right {
-    transform: rotate(0.75deg);
-  }
-}
-
-.sketch-card:hover,
-.sketch-card-alt:hover {
-  transform: translate(-2px, -3px) rotate(0deg);
-  box-shadow: 7px 7px 0px var(--shadow-ink);
-}
-
-/* Tactile Sketch Buttons */
-.sketch-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  min-height: 44px;
-  padding: 0.5rem 1.1rem;
-  border: 2.5px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  box-shadow: 4px 4px 0px var(--shadow-ink);
-  font-family: 'Shantell Sans', 'Patrick Hand', cursive;
-  font-weight: 700;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
-}
-
-.sketch-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0px var(--shadow-ink);
-}
-
-.sketch-btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0px var(--shadow-ink);
-}
-
-.sketch-btn-sm {
-  min-height: 40px;
-  padding: 0.35rem 0.85rem;
-  font-size: 0.875rem;
-  box-shadow: 3px 3px 0px var(--shadow-ink);
-}
-
-.sketch-btn-sm:hover {
-  box-shadow: 4px 4px 0px var(--shadow-ink);
-}
-
-.sketch-btn-sm:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px var(--shadow-ink);
-}
-
-.sketch-btn-icon {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0.5rem;
-}
-
-/* Color Variants for Sketch Buttons */
-.btn-postit {
-  background-color: var(--postit-yellow);
-  color: var(--ink);
-}
-.btn-postit:hover {
-  background-color: #FFEE8C;
-}
-
-.btn-ink {
-  background-color: var(--ink);
-  color: #FFFFFF;
-}
-.btn-ink:hover {
-  background-color: #2E2E38;
-}
-
-.btn-paper {
-  background-color: #FFFFFF;
-  color: var(--ink);
-}
-.btn-paper:hover {
-  background-color: var(--bg-paper-alt);
-}
-
-.btn-red {
-  background-color: var(--accent-red);
-  color: #FFFFFF;
-}
-.btn-red:hover {
-  background-color: #F23838;
-}
-
-.btn-blue {
-  background-color: var(--accent-blue);
-  color: #FFFFFF;
-}
-.btn-blue:hover {
-  background-color: #234B85;
-}
-
-.btn-mint {
-  background-color: var(--highlighter-mint);
-  color: var(--ink);
-}
-
-/* Hand-Drawn Inputs & Selects */
-.sketch-input {
-  width: 100%;
-  min-height: 44px;
-  padding: 0.55rem 0.9rem;
-  border: 2.5px solid var(--ink);
-  border-radius: 14px 22px 16px 20px / 20px 14px 22px 16px;
-  background-color: #FFFFFF;
-  color: var(--ink);
-  font-family: 'Be Vietnam Pro', sans-serif;
-  box-shadow: 3px 3px 0px var(--shadow-ink);
-  transition: border-color 150ms ease, box-shadow 150ms ease;
-}
-
-.sketch-input:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 3px 3px 0px var(--accent-blue);
-}
-
-/* Masking Tape (Washi Tape) & Pushpin Decorations */
-.washi-tape {
-  position: absolute;
-  width: 92px;
-  height: 24px;
-  background-color: rgba(255, 243, 176, 0.88);
-  border: 1.5px solid rgba(30, 30, 36, 0.38);
-  box-shadow: 0 2px 4px rgba(30, 30, 36, 0.08);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0.28) 6px,
-    transparent 6px,
-    transparent 12px
-  );
-  pointer-events: none;
-  z-index: 10;
-}
-
-.washi-tape--mint {
-  background-color: rgba(184, 242, 230, 0.88);
-}
-
-.washi-tape--red {
-  background-color: rgba(255, 165, 165, 0.85);
-}
-
-.washi-tape--blue {
-  background-color: rgba(179, 212, 255, 0.86);
-}
-
-.washi-tape--kraft {
-  background-color: rgba(230, 204, 178, 0.9);
-}
-
-/* Hand-Drawn Underline Highlight */
-.sketch-highlight {
+/* Subtle Architectural Corner Marks for Editorial Artwork Presentation */
+.sketch-frame {
   position: relative;
-  display: inline-block;
-  z-index: 1;
 }
 
-.sketch-highlight::after {
+.sketch-frame::before,
+.sketch-frame::after {
   content: '';
   position: absolute;
-  left: -4px;
-  right: -4px;
-  bottom: 2px;
-  height: 12px;
-  background-color: var(--postit-yellow);
-  border-radius: 6px 14px 8px 12px;
-  transform: rotate(-1deg);
-  z-index: -1;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.45;
+  transition: opacity 220ms ease;
 }
 
-.sketch-highlight--mint::after {
-  background-color: var(--highlighter-mint);
+.sketch-frame::before {
+  top: 10px;
+  left: 10px;
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
 }
 
-/* Sketch Dashed Divider */
-.sketch-divider {
-  border: 0;
-  border-top: 2.5px dashed rgba(30, 30, 36, 0.35);
+.sketch-frame::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
 }
 
-/* Multi-Criteria Hand-Drawn Meter */
-.sketch-meter-track {
-  width: 100%;
-  height: 12px;
-  background-color: var(--bg-paper-alt);
-  border: 2px solid var(--ink);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  overflow: hidden;
+.gallery-card:hover .sketch-frame::before,
+.gallery-card:hover .sketch-frame::after {
+  opacity: 0.85;
 }
 
-.sketch-meter-fill {
-  height: 100%;
-  border-right: 2px solid var(--ink);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0.25) 4px,
-    transparent 4px,
-    transparent 8px
-  );
-  transition: width 350ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Custom Sketch Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-paper-alt);
-  border-left: 2px solid var(--ink);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--kraft);
-  border: 2px solid var(--ink);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--postit-yellow);
-}
-
-/* Campus Hub Horizontal Scroll Snap on Mobile */
-.campus-strip {
-  scrollbar-width: thin;
-}
-
-/* Star Rating Hover Scale */
-.star-btn {
-  min-width: 44px;
-  min-height: 44px;
+/* Restrained Editorial Buttons */
+.gallery-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.35rem;
+  background-color: var(--ink);
+  color: var(--bg-alabaster);
+  border: 1px solid var(--ink);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   cursor: pointer;
-  border-radius: 10px;
-  transition: transform 140ms ease, background-color 140ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
 }
 
-.star-btn:hover {
-  transform: scale(1.12) rotate(-4deg);
-  background-color: var(--bg-paper-alt);
+.gallery-btn-primary:hover {
+  background-color: var(--brand-royal);
+  border-color: var(--brand-royal);
+  color: #FFFFFF;
+}
+
+.gallery-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.25rem;
+  background-color: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.gallery-btn-outline:hover {
+  background-color: var(--ink);
+  color: var(--bg-alabaster);
+}
+
+.gallery-btn-sm {
+  min-height: 36px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.6875rem;
+}
+
+.gallery-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  border: 1px solid var(--border-hairline);
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.gallery-btn-icon:hover {
+  border-color: var(--ink);
+  background-color: #FFFFFF;
+}
+
+/* Filter Underline Tabs (GALERIE Pattern) */
+.gallery-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid transparent;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.gallery-tab:hover {
+  color: var(--ink);
+}
+
+.gallery-tab--active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* Editorial Underline / Hairline Inputs */
+.gallery-input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0.45rem 0.25rem;
+  background-color: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid #D5CFC7;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.875rem;
+  transition: border-color 160ms ease;
+}
+
+.gallery-input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
 }
 
 /* Modal & Drawer Backdrop */
 .modal-backdrop {
-  background-color: rgba(30, 30, 36, 0.58);
-  backdrop-filter: blur(2px);
+  background-color: rgba(20, 20, 19, 0.52);
+  backdrop-filter: blur(4px);
 }
 
-/* Subtle Stamp Animation for Newly Submitted / Rated Actions */
-@keyframes inkPop {
-  0% {
+.gallery-modal-panel {
+  background-color: var(--bg-alabaster);
+  border: 1px solid var(--border-hairline);
+  box-shadow: 0 24px 60px -16px rgba(20, 20, 19, 0.25);
+}
+
+/* Subtle Entrance Animation */
+@keyframes editorialFade {
+  from {
     opacity: 0;
-    transform: translateY(12px) scale(0.96) rotate(-1deg);
+    transform: translateY(8px);
   }
-  100% {
+  to {
     opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translateY(0);
   }
 }
 
-.animate-ink-pop {
-  animation: inkPop 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.animate-editorial {
+  animation: editorialFade 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Active Nav/Filter Chip */
-.chip-active {
-  background-color: var(--ink) !important;
-  color: #FFFFFF !important;
-  transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0px var(--accent-red) !important;
+/* Subtle Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Vibe Card Export Paper Texture */
-.vibe-card-sheet {
-  background-color: #FDFBF7;
-  background-image: radial-gradient(rgba(30, 30, 36, 0.09) 1px, transparent 1px);
-  background-size: 16px 16px;
+::-webkit-scrollbar-track {
+  background: var(--bg-alabaster);
 }
 
-/* Respect Reduced Motion */
+::-webkit-scrollbar-thumb {
+  background: #D5CFC7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9E988E;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .card-tilt-left,
-  .card-tilt-right {
-    transform: none !important;
-  }
-  .sketch-card,
-  .sketch-card-alt,
-  .sketch-btn,
-  .star-btn,
-  .sketch-meter-fill,
-  .animate-ink-pop {
+  .gallery-card,
+  .animate-editorial {
     transition: none !important;
     animation: none !important;
   }

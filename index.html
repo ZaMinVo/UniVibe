@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UniVibe — Phòng Trưng Bày Ý Tưởng Vật Phẩm Bản Sắc Sinh Viên</title>
-  <meta name="description" content="Không gian trưng bày concept vật phẩm sinh viên theo bộ nhận diện thương hiệu trường đại học — từ áo thun, lót chuột đến các vật phẩm bản sắc tối giản." />
+  <title>UNIVIBE — Galerie Bản Sắc Sinh Viên</title>
+  <meta name="description" content="Phòng trưng bày concept vật phẩm sinh viên tối giản theo bộ nhận diện thương hiệu đại học — theo tinh thần editorial gallery." />
 
-  <!-- OpenGraph Preview for Social Sharing (Facebook / Zalo / Threads) -->
-  <meta property="og:title" content="UniVibe — Triển Lãm Ý Tưởng Vật Phẩm Sinh Viên" />
-  <meta property="og:description" content="Không gian trưng bày concept vật phẩm sinh viên theo bộ nhận diện thương hiệu trường đại học. Xem phối cảnh Studio 3 góc nhìn, bảng màu chuẩn và thông số chất liệu." />
+  <!-- OpenGraph Preview -->
+  <meta property="og:title" content="UNIVIBE — Galerie Bản Sắc Sinh Viên" />
+  <meta property="og:description" content="Trưng bày 4 thiết kế vật phẩm thực tế tối giản chuẩn nhận diện thương hiệu đại học (Nguồn: HCMUT)." />
   <meta property="og:type" content="website" />
 
-  <!-- Vietnamese-Safe Hand-Drawn Google Fonts -->
+  <!-- Vietnamese-Safe Editorial Gallery Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Patrick+Hand&family=Shantell+Sans:ital,wght@0,500;0,700;0,800;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,19 +23,16 @@
       theme: {
         extend: {
           colors: {
-            paper: '#FDFBF7',
-            paperAlt: '#F4EFE6',
-            ink: '#1E1E24',
-            inkMuted: '#52525B',
-            markerRed: '#FF4D4D',
-            ballpointBlue: '#2D5DA1',
-            postit: '#FFF3B0',
-            mint: '#B8F2E6',
-            kraft: '#E6CCB2',
+            alabaster: '#FAF8F5',
+            wash: '#F3F0EA',
+            ink: '#141413',
+            stoneMuted: '#6E6A63',
+            hairline: '#E2DDD5',
+            hcmutRoyal: '#030391',
+            hcmutSky: '#1488DB',
           },
           fontFamily: {
-            display: ['"Shantell Sans"', '"Patrick Hand"', 'cursive'],
-            hand: ['"Patrick Hand"', 'cursive'],
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
             sans: ['"Be Vietnam Pro"', 'sans-serif'],
             mono: ['"Space Mono"', 'monospace'],
           },
@@ -44,58 +41,43 @@
     };
   </script>
 
-  <!-- Custom Hand-Drawn Stylesheet -->
+  <!-- Custom Editorial Gallery Stylesheet -->
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="font-sans text-ink antialiased selection:bg-[#FFF3B0] selection:text-[#1E1E24]">
+<body class="bg-[#FAF8F5] text-[#141413] font-sans antialiased selection:bg-[#141413] selection:text-[#FAF8F5]">
 
-  <!-- ==================== STICKY CURATED NAVBAR ==================== -->
-  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-sm border-b-[2.5px] border-[#1E1E24]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-[74px] gap-3">
-        <!-- Brand Mark -->
-        <a href="#hero" class="flex items-center gap-3 group shrink-0" aria-label="UniVibe Trang chủ">
-          <div class="w-11 h-11 bg-[#FFF3B0] sketch-pill flex items-center justify-center shadow-[3px_3px_0px_#1E1E24] group-hover:-translate-y-0.5 transition-transform">
-            <svg viewBox="0 0 36 36" class="w-7 h-7" fill="none" stroke="#1E1E24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M8 7 L26 6 L28 29 L10 30 Z" fill="#FFFFFF" />
-              <path d="M12 14 L23 13 M12 19 L21 18 M12 24 L18 23" />
-              <path d="M22 6 L28 12" stroke="#FF4D4D" />
-              <circle cx="25" cy="24" r="3" fill="#FF4D4D" />
-            </svg>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-display font-extrabold text-xl tracking-tight text-[#1E1E24]">UniVibe</span>
-              <span class="hidden sm:inline-block text-[11px] font-mono font-bold uppercase px-2 py-0.5 bg-[#B8F2E6] border-[1.8px] border-[#1E1E24] rounded-full -rotate-2">Gallery</span>
-            </div>
-            <p class="hidden sm:block text-xs text-[#52525B] font-hand leading-none mt-0.5">Bản sắc sinh viên qua từng nét phác</p>
-          </div>
+  <!-- ==================== MINIMAL EDITORIAL HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E2DDD5]">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+      <div class="flex items-center justify-between h-20 gap-4">
+        <!-- Brand Lockup -->
+        <a href="#hero" class="flex items-center gap-3 shrink-0 group" aria-label="UniVibe Trang chủ">
+          <span class="font-display text-2xl font-semibold tracking-[0.22em] uppercase text-[#141413]">UNIVIBE</span>
+          <span class="hidden sm:inline-block h-4 w-px bg-[#D5CFC7]" aria-hidden="true"></span>
+          <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.18em] uppercase text-[#6E6A63]">Galerie · Showcase</span>
         </a>
 
-        <!-- Desktop Navigation -->
-        <nav class="hidden lg:flex items-center gap-6 font-display font-bold text-[15px]" aria-label="Điều hướng chính">
-          <a href="#campus-hubs" class="hover:text-[#2D5DA1] transition-colors py-2">Không gian Trường</a>
-          <a href="#gallery" class="hover:text-[#2D5DA1] transition-colors py-2">Phòng Trưng Bày</a>
-          <a href="#feature-work" class="hover:text-[#2D5DA1] transition-colors py-2">Feature Work</a>
+        <!-- Editorial Nav -->
+        <nav class="hidden lg:flex items-center gap-9 text-xs font-semibold uppercase tracking-[0.14em] text-[#6E6A63]" aria-label="Điều hướng chính">
+          <a href="#hero" class="hover:text-[#141413] transition-colors py-2">Triển lãm</a>
+          <a href="#campus-hubs" class="hover:text-[#141413] transition-colors py-2">Không gian Trường</a>
+          <a href="#gallery" class="hover:text-[#141413] transition-colors py-2">Tác phẩm</a>
+          <a href="#feature-work" class="hover:text-[#141413] transition-colors py-2">Feature Work</a>
         </nav>
 
         <!-- Action Controls -->
-        <div class="flex items-center gap-2 sm:gap-3">
-          <button id="openBookmarksBtn" type="button" class="sketch-btn sketch-btn-sm btn-paper relative" aria-label="Mở bộ sưu tập đã lưu">
-            <svg class="w-4 h-4 shrink-0 text-[#FF4D4D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="flex items-center gap-3">
+          <button id="openBookmarksBtn" type="button" class="gallery-btn-outline gallery-btn-sm" aria-label="Mở bộ sưu tập đã lưu">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
-            <span class="hidden sm:inline">Đã lưu</span>
-            <span id="bookmarkCountBadge" class="font-mono font-bold text-xs px-1.5 py-0.5 bg-[#FFF3B0] border-[1.8px] border-[#1E1E24] rounded-full">0</span>
+            <span>Đã lưu</span>
+            <span id="bookmarkCountBadge" class="font-mono text-[11px] font-bold">0</span>
           </button>
 
-          <a href="#feature-work" class="sketch-btn sketch-btn-sm btn-postit text-sm">
-            <span>Feature Work</span>
-          </a>
-
           <!-- Mobile Menu Toggle -->
-          <button id="mobileMenuBtn" type="button" class="lg:hidden sketch-btn sketch-btn-icon btn-paper" aria-label="Mở menu điều hướng" aria-expanded="false">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <button id="mobileMenuBtn" type="button" class="lg:hidden gallery-btn-icon" aria-label="Mở menu điều hướng" aria-expanded="false">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
               <line x1="4" y1="7" x2="20" y2="7" />
               <line x1="4" y1="12" x2="20" y2="12" />
               <line x1="4" y1="17" x2="20" y2="17" />
@@ -105,281 +87,204 @@
       </div>
 
       <!-- Mobile Menu Panel -->
-      <div id="mobileMenuPanel" class="hidden lg:hidden pb-4 pt-2 border-t-2 border-dashed border-[#1E1E24]/30">
-        <nav class="flex flex-col gap-2 font-display font-bold" aria-label="Điều hướng di động">
-          <a href="#campus-hubs" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Không gian Trường</a>
-          <a href="#gallery" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Phòng Trưng Bày</a>
-          <a href="#feature-work" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Feature Work</a>
+      <div id="mobileMenuPanel" class="hidden lg:hidden pb-5 pt-2 border-t border-[#E2DDD5]">
+        <nav class="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#6E6A63]" aria-label="Điều hướng di động">
+          <a href="#hero" class="py-2 hover:text-[#141413]">Triển lãm</a>
+          <a href="#campus-hubs" class="py-2 hover:text-[#141413]">Không gian Trường</a>
+          <a href="#gallery" class="py-2 hover:text-[#141413]">Tác phẩm</a>
+          <a href="#feature-work" class="py-2 hover:text-[#141413]">Feature Work</a>
         </nav>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- ==================== 1. HERO EXHIBITION / DYNAMIC CAMPUS HUB BANNER ==================== -->
-    <section id="hero" class="py-10 sm:py-14">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ==================== 1. CURRENT EXHIBITION HERO ==================== -->
+    <section id="hero" class="py-12 sm:py-16 lg:py-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         <div id="heroContainer">
-          <!-- Populated dynamically by js/app.js for Global Explore OR active Campus Hub -->
+          <!-- Populated by js/app.js -->
         </div>
       </div>
     </section>
 
-    <!-- ==================== 2. MULTI-CAMPUS HUBS SELECTOR ==================== -->
-    <section id="campus-hubs" class="py-8 sm:py-10 bg-[#F4EFE6]/70 border-y-[2.5px] border-[#1E1E24]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
+    <!-- ==================== 2. CURATED UNIVERSITY SPACES ==================== -->
+    <section id="campus-hubs" class="py-12 sm:py-16 bg-[#F3F0EA]/65 border-y border-[#E2DDD5]">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <span class="inline-block font-hand text-base text-[#2D5DA1] font-bold tracking-wide uppercase">01 · Không gian 2 tầng bản sắc</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] mt-0.5">
-              Chọn Không Gian <span class="sketch-highlight">Trường Đại Học</span>
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Không gian 2 tầng bản sắc</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] tracking-tight mt-1">
+              Không Gian Trường Đại Học
             </h2>
-            <p class="text-sm text-[#52525B] max-w-2xl mt-1.5">
-              Ưu tiên hiển thị các trường thành viên thuộc <strong>ĐHQG-HCM</strong> cùng logo nhận diện chính thức. Chọn từng trường để xem không gian trưng bày riêng.
-            </p>
           </div>
-          <div class="flex flex-wrap items-center gap-2 shrink-0" role="group" aria-label="Bộ lọc nhóm trường đại học">
-            <button type="button" data-campus-scope="vnuhcm" class="campus-scope-btn sketch-btn sketch-btn-sm chip-active text-xs sm:text-sm">
-              Ưu tiên Khối ĐHQG-HCM (6)
+
+          <div class="flex items-center gap-6 border-b border-[#E2DDD5] self-start md:self-auto" role="group" aria-label="Bộ lọc nhóm trường đại học">
+            <button type="button" data-campus-scope="vnuhcm" class="campus-scope-btn gallery-tab gallery-tab--active">
+              Khối ĐHQG-HCM (6)
             </button>
-            <button type="button" data-campus-scope="all" class="campus-scope-btn sketch-btn sketch-btn-sm btn-paper text-xs sm:text-sm">
+            <button type="button" data-campus-scope="all" class="campus-scope-btn gallery-tab">
               Tất cả các trường (9)
             </button>
           </div>
         </div>
 
-        <div id="campusHubStrip" class="campus-strip grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 pb-2">
+        <div id="campusHubStrip" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3.5">
           <!-- Populated by js/app.js -->
         </div>
       </div>
     </section>
 
-    <!-- ==================== 3. CURATED CONCEPT GALLERY & FILTERS ==================== -->
-    <section id="gallery" class="py-12 sm:py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+    <!-- ==================== 3. AVAILABLE WORKS (CURATED 4-WORK GALLERY) ==================== -->
+    <section id="gallery" class="py-14 sm:py-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <!-- Editorial Gallery Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E2DDD5] mb-8">
           <div>
-            <span class="inline-block font-hand text-base text-[#FF4D4D] font-bold tracking-wide uppercase">02 · Pure Gallery &amp; Showcase</span>
-            <div class="flex flex-wrap items-center gap-3 mt-1">
-              <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24]">
-                Phòng Trưng Bày <span class="sketch-highlight sketch-highlight--mint">Ý Tưởng</span>
-              </h2>
-              <span id="galleryCountBadge" class="font-mono text-xs font-bold px-3 py-1 bg-[#FFF3B0] sketch-pill">4 concept</span>
-            </div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Pure Gallery · Chỉ Trưng Bày</p>
+            <h2 class="font-display text-3xl sm:text-5xl font-semibold text-[#141413] tracking-tight mt-1">
+              Tác Phẩm Trưng Bày
+            </h2>
           </div>
-          <p class="text-sm text-[#52525B] max-w-md">
-            Trưng bày phối cảnh Studio thực tế (3 góc nhìn), câu chuyện thiết kế, bảng màu chuẩn nhận diện và thông số chất liệu. Bấm vào từng mẫu để xem chi tiết.
-          </p>
-        </div>
-
-        <!-- Filter & Search Bar -->
-        <div class="sketch-box p-4 sm:p-5 mb-8 bg-white relative">
-          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <!-- Category Pills -->
-            <div id="categoryFilterBar" class="flex flex-wrap items-center gap-2" role="group" aria-label="Lọc theo loại vật phẩm">
-              <!-- Populated by js/app.js -->
-            </div>
-
-            <!-- Search & Sort -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:w-auto w-full shrink-0">
-              <div class="relative flex-1 sm:w-52">
-                <svg class="w-4 h-4 text-[#52525B] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <input id="searchInput" type="search" placeholder="Tìm tên mẫu, tag, trường..." class="sketch-input pl-10 text-sm" aria-label="Tìm kiếm thiết kế" />
-              </div>
-
-              <select id="sortSelect" class="sketch-input sm:w-48 text-sm font-semibold cursor-pointer" aria-label="Sắp xếp thiết kế">
-                <option value="featured">Thứ tự trưng bày đề xuất</option>
-                <option value="newest">Mới cập nhật gần đây</option>
-                <option value="category">Theo loại vật phẩm</option>
-                <option value="title">Tên thiết kế (A → Z)</option>
-              </select>
-            </div>
+          <div class="flex items-center gap-4">
+            <span id="galleryCountBadge" class="font-mono text-xs uppercase tracking-[0.14em] text-[#6E6A63]">04 tác phẩm · Liên trường</span>
           </div>
         </div>
 
-        <!-- Gallery Grid -->
-        <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Minimal Filter Tabs + Search & Sort Bar -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10">
+          <div id="categoryFilterBar" class="flex flex-wrap items-center gap-6 border-b border-[#E2DDD5] lg:border-b-0" role="group" aria-label="Lọc theo loại vật phẩm">
+            <!-- Populated by js/app.js -->
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
+            <div class="relative w-full sm:w-52">
+              <svg class="w-3.5 h-3.5 text-[#6E6A63] absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input id="searchInput" type="search" placeholder="Tìm tác phẩm, từ khóa..." class="gallery-input pl-6 text-sm" aria-label="Tìm kiếm thiết kế" />
+            </div>
+
+            <select id="sortSelect" class="gallery-input w-full sm:w-48 text-xs uppercase tracking-wider font-medium text-[#6E6A63] cursor-pointer" aria-label="Sắp xếp thiết kế">
+              <option value="featured">Thứ tự đề xuất</option>
+              <option value="newest">Mới cập nhật</option>
+              <option value="category">Theo loại vật phẩm</option>
+              <option value="title">Tên tác phẩm (A → Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Clean 2x2 Museum Gallery Grid -->
+        <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           <!-- Populated by js/app.js -->
         </div>
 
         <!-- Empty Search State -->
-        <div id="galleryEmptyState" class="hidden sketch-box p-10 text-center bg-white max-w-xl mx-auto mt-6">
-          <div class="w-16 h-16 mx-auto mb-4 bg-[#FFF3B0] sketch-pill flex items-center justify-center">
-            <svg class="w-8 h-8 text-[#1E1E24]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              <line x1="8" y1="11" x2="14" y2="11" />
-            </svg>
-          </div>
-          <h3 class="font-display text-xl font-bold mb-2">Chưa tìm thấy concept phù hợp</h3>
-          <p class="text-sm text-[#52525B] mb-5">Thử đổi từ khóa tìm kiếm hoặc chọn danh mục khác để xem các mẫu đang trưng bày.</p>
-          <button id="resetFiltersBtn" type="button" class="sketch-btn btn-postit text-sm">Xem tất cả thiết kế</button>
+        <div id="galleryEmptyState" class="hidden border border-[#E2DDD5] bg-white p-12 text-center max-w-xl mx-auto mt-8">
+          <h3 class="font-display text-2xl font-semibold mb-2">Không tìm thấy tác phẩm phù hợp</h3>
+          <p class="text-sm text-[#6E6A63] mb-6">Thử thay đổi từ khóa tìm kiếm hoặc quay về chế độ xem tất cả tác phẩm.</p>
+          <button id="resetFiltersBtn" type="button" class="gallery-btn-primary gallery-btn-sm">Xem tất cả tác phẩm</button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 4. FEATURE WORK & ROADMAP ==================== -->
-    <section id="feature-work" class="py-12 sm:py-16 bg-[#F4EFE6]/80 border-t-[2.5px] border-[#1E1E24]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-8">
-          <div>
-            <span class="inline-block font-hand text-base text-[#2D5DA1] font-bold tracking-wide uppercase">03 · Feature Work &amp; Roadmap</span>
-            <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24] mt-0.5">
-              Định Hướng Phát Triển <span class="sketch-highlight">(Feature Work)</span>
+    <!-- ==================== 4. FEATURE WORK ARCHITECTURAL ROADMAP ==================== -->
+    <section id="feature-work" class="py-14 sm:py-16 bg-[#F3F0EA]/65 border-t border-[#E2DDD5]">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-4 space-y-2">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Lộ trình mở rộng</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] tracking-tight">
+              Feature Work
             </h2>
+            <p class="text-sm text-[#6E6A63] leading-relaxed">
+              Phiên bản hiện tại giữ trọng tâm <strong>Chỉ trưng bày (Showcase-Only)</strong>. Các module tương tác cộng đồng sẽ được triển khai tiếp theo:
+            </p>
           </div>
-          <p class="text-sm text-[#52525B] max-w-xl">
-            Phiên bản hiện tại tập trung vào chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong> các mẫu thiết kế chuẩn nhận diện. Tính năng cho phép người dùng tự thêm mẫu và các công cụ tương tác cộng đồng sẽ được triển khai ở giai đoạn tiếp theo:
-          </p>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Feature Work Card 1 -->
-          <article class="sketch-card p-6 bg-white relative flex flex-col">
-            <div class="washi-tape -top-3 left-8 -rotate-3"></div>
-            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
-              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                FEATURE WORK · TRỌNG TÂM
-              </span>
-              <span class="font-mono text-xs text-[#52525B]">Sắp ra mắt</span>
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
-              Tính năng cho người dùng thêm thiết kế (User Concept Submission)
-            </h3>
-            <p class="text-sm text-[#52525B] leading-relaxed">
-              Mở cổng cho sinh viên tự đăng tải concept mới (áo thun, lót chuột, áo khoác, túi tote, dây đeo thẻ, mascot), tự động áp bảng màu nhận diện trường và tùy chọn đăng Ẩn danh hoặc định danh.
-            </p>
-          </article>
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <article class="border-t border-[#141413] pt-4">
+              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">01 · SẮP RA MẮT</div>
+              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Cổng Đăng Tải Concept</h3>
+              <p class="text-xs text-[#6E6A63] leading-relaxed">
+                Cho phép sinh viên tự tải mẫu thiết kế mới, tự áp bảng màu nhận diện trường và chọn chế độ Ẩn danh hoặc định danh.
+              </p>
+            </article>
 
-          <!-- Feature Work Card 2 -->
-          <article class="sketch-card-alt p-6 bg-white relative flex flex-col">
-            <div class="washi-tape washi-tape--mint -top-3 right-8 rotate-3"></div>
-            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
-              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">
-                FEATURE WORK · CÔNG CỤ
-              </span>
-              <span class="font-mono text-xs text-[#52525B]">Đang lên kế hoạch</span>
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
-              Công cụ tạo Prompt Mockup Studio (AI Mockup Generator)
-            </h3>
-            <p class="text-sm text-[#52525B] leading-relaxed">
-              Gợi ý công thức prompt chụp sản phẩm thực tế tại studio khớp với mã màu HEX và logo của từng trường đại học.
-            </p>
-          </article>
+            <article class="border-t border-[#141413] pt-4">
+              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">02 · KẾ HOẠCH</div>
+              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Đánh Giá 3 Tiêu Chí</h3>
+              <p class="text-xs text-[#6E6A63] leading-relaxed">
+                Hệ thống góp ý và chấm điểm theo độ sáng tạo, bản sắc trường học và tính ứng dụng sản xuất thực tế.
+              </p>
+            </article>
 
-          <!-- Feature Work Card 3 -->
-          <article class="sketch-card-alt p-6 bg-white relative flex flex-col">
-            <div class="washi-tape washi-tape--blue -top-3 left-8 rotate-2"></div>
-            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
-              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#E0F2FE] border-2 border-[#1E1E24] rounded-full">
-                FEATURE WORK · TƯƠNG TÁC
-              </span>
-              <span class="font-mono text-xs text-[#52525B]">Đang lên kế hoạch</span>
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
-              Đánh giá đa tiêu chí &amp; Góp ý cộng đồng (3-Criteria Rating &amp; Critique)
-            </h3>
-            <p class="text-sm text-[#52525B] leading-relaxed">
-              Hệ thống chấm điểm 1–5 sao theo 3 tiêu chí (<em>Độ sáng tạo</em>, <em>Bản sắc trường</em>, <em>Tính ứng dụng thực tế</em>) và bình luận góp ý trực tiếp trên từng mẫu.
-            </p>
-          </article>
-
-          <!-- Feature Work Card 4 -->
-          <article class="sketch-card p-6 bg-white relative flex flex-col">
-            <div class="washi-tape washi-tape--kraft -top-3 right-8 -rotate-2"></div>
-            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
-              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#FDE68A] border-2 border-[#1E1E24] rounded-full">
-                FEATURE WORK · HỆ SINH THÁI
-              </span>
-              <span class="font-mono text-xs text-[#52525B]">Tương lai</span>
-            </div>
-            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
-              Bảng Vàng định kỳ &amp; Cầu nối sản xuất (Leaderboard &amp; Production Bridge)
-            </h3>
-            <p class="text-sm text-[#52525B] leading-relaxed">
-              Bảng xếp hạng thiết kế theo Tuần/Tháng/Năm, xác thực email <code>.edu.vn</code>, thẻ chia sẻ <em>Vibe Card</em> và kết nối CLB/Đoàn-Hội đưa mẫu vào sản xuất thực tế.
-            </p>
-          </article>
+            <article class="border-t border-[#141413] pt-4">
+              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">03 · KẾ HOẠCH</div>
+              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Bảng Vàng &amp; Kết Nối CLB</h3>
+              <p class="text-xs text-[#6E6A63] leading-relaxed">
+                Xác thực email <code>.edu.vn</code>, xếp hạng định kỳ và kết nối các CLB/Đoàn-Hội đưa mẫu vào sản xuất.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-[#1E1E24] text-[#FDFBF7] border-t-[3px] border-[#1E1E24] py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+  <!-- ==================== MINIMAL EDITORIAL FOOTER ==================== -->
+  <footer class="border-t border-[#E2DDD5] bg-[#FAF8F5] py-12">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 bg-[#FFF3B0] text-[#1E1E24] sketch-pill flex items-center justify-center font-display font-extrabold text-lg">UV</div>
-            <span class="font-display font-extrabold text-2xl">UniVibe</span>
-          </div>
-          <p class="text-sm text-[#D4D4D8] leading-relaxed">
-            Phòng trưng bày (Showcase-Only) các ý tưởng vật phẩm bản sắc sinh viên với phối cảnh studio thực tế trên nền giao diện sổ phác thảo vẽ tay.
+          <div class="font-display text-xl font-semibold tracking-[0.22em] uppercase text-[#141413]">UNIVIBE</div>
+          <p class="text-xs text-[#6E6A63] mt-1">
+            Phòng trưng bày (Showcase-Only) ý tưởng vật phẩm bản sắc sinh viên · Bộ nhận diện HCMUT.
           </p>
         </div>
 
-        <div>
-          <h3 class="font-display font-bold text-base text-[#FFF3B0] mb-3">Điều hướng nhanh</h3>
-          <ul class="space-y-2 text-sm text-[#D4D4D8]">
-            <li><a href="#campus-hubs" class="hover:text-white underline decoration-dashed underline-offset-4">Không gian Trường</a></li>
-            <li><a href="#gallery" class="hover:text-white underline decoration-dashed underline-offset-4">Phòng Trưng Bày Concept</a></li>
-            <li><a href="#feature-work" class="hover:text-white underline decoration-dashed underline-offset-4">Feature Work (Tính năng thêm mẫu)</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="font-display font-bold text-base text-[#B8F2E6] mb-3">Mã nguồn &amp; Triết lý thiết kế</h3>
-          <p class="text-sm text-[#D4D4D8] mb-3">
-            Giao diện web theo phong cách <strong>Hand-Drawn Sketchbook</strong> trưng bày mockup sản phẩm thực tế tối giản. Trạng thái lưu mẫu yêu thích (Bookmarks) được lưu cục bộ trên trình duyệt của bạn.
-          </p>
-          <a href="https://github.com/ZaMinVo/UniVibe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-[#FDFBF7] text-[#1E1E24] font-display font-bold text-sm sketch-pill hover:bg-[#FFF3B0] transition-colors">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            <span>ZaMinVo / UniVibe</span>
-          </a>
+        <div class="flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.12em] text-[#6E6A63]">
+          <a href="#hero" class="hover:text-[#141413] transition-colors">Triển lãm</a>
+          <a href="#campus-hubs" class="hover:text-[#141413] transition-colors">Không gian Trường</a>
+          <a href="#gallery" class="hover:text-[#141413] transition-colors">Tác phẩm</a>
+          <a href="https://github.com/ZaMinVo/UniVibe" target="_blank" rel="noopener noreferrer" class="font-mono text-[#141413] underline underline-offset-4">GitHub ↗</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ==================== MODAL 1: CONCEPT DETAIL SHOWCASE ==================== -->
-  <div id="conceptModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="conceptModalTitle">
+  <div id="conceptModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-4 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="conceptModalTitle">
     <div class="min-h-full flex items-center justify-center">
-      <div class="sketch-card w-full max-w-5xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
-        <button id="closeConceptModalBtn" type="button" class="sketch-btn sketch-btn-icon btn-paper absolute top-4 right-4 z-20" aria-label="Đóng chi tiết thiết kế">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+      <div class="gallery-modal-panel w-full max-w-5xl relative p-6 sm:p-10 animate-editorial">
+        <button id="closeConceptModalBtn" type="button" class="gallery-btn-icon absolute top-5 right-5 z-20" aria-label="Đóng chi tiết thiết kế">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
 
         <div id="conceptModalBody">
-          <!-- Populated dynamically by js/app.js -->
+          <!-- Populated by js/app.js -->
         </div>
       </div>
     </div>
   </div>
 
   <!-- ==================== MODAL 2: ANONYMOUS ARCHIVE PORTFOLIO ==================== -->
-  <div id="creatorModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="creatorModalTitle">
+  <div id="creatorModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-4 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="creatorModalTitle">
     <div class="min-h-full flex items-center justify-center">
-      <div class="sketch-card-alt w-full max-w-4xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
-        <button id="closeCreatorModalBtn" type="button" class="sketch-btn sketch-btn-icon btn-paper absolute top-4 right-4 z-20" aria-label="Đóng hồ sơ tác giả">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+      <div class="gallery-modal-panel w-full max-w-4xl relative p-6 sm:p-10 animate-editorial">
+        <button id="closeCreatorModalBtn" type="button" class="gallery-btn-icon absolute top-5 right-5 z-20" aria-label="Đóng hồ sơ tác giả">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
 
         <div id="creatorModalBody">
-          <!-- Populated dynamically by js/app.js -->
+          <!-- Populated by js/app.js -->
         </div>
       </div>
     </div>
@@ -387,32 +292,32 @@
 
   <!-- ==================== DRAWER: SAVED BOOKMARKS ==================== -->
   <div id="bookmarksDrawer" class="hidden fixed inset-0 z-50 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bookmarksDrawerTitle">
-    <div class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FDFBF7] border-l-[3px] border-[#1E1E24] shadow-[-6px_0_0_#1E1E24] flex flex-col animate-ink-pop">
-      <div class="p-5 border-b-[2.5px] border-[#1E1E24] bg-[#FFF3B0] flex items-center justify-between">
+    <div class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAF8F5] border-l border-[#E2DDD5] shadow-2xl flex flex-col animate-editorial">
+      <div class="p-6 border-b border-[#E2DDD5] flex items-center justify-between bg-white">
         <div>
-          <h2 id="bookmarksDrawerTitle" class="font-display text-xl font-extrabold">Bộ Sưu Tập Đã Lưu</h2>
-          <p class="text-xs font-hand text-[#1E1E24]/80">Lưu lại các thiết kế ưng ý để tham khảo hoặc gợi ý cho CLB</p>
+          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Personal Collection</p>
+          <h2 id="bookmarksDrawerTitle" class="font-display text-2xl font-semibold text-[#141413]">Bộ Sưu Tập Đã Lưu</h2>
         </div>
-        <button id="closeBookmarksBtn" type="button" class="sketch-btn sketch-btn-icon btn-paper" aria-label="Đóng danh sách đã lưu">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+        <button id="closeBookmarksBtn" type="button" class="gallery-btn-icon" aria-label="Đóng danh sách đã lưu">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
       </div>
 
-      <div id="bookmarksList" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <div id="bookmarksList" class="flex-1 overflow-y-auto p-6 space-y-4">
         <!-- Populated by js/app.js -->
       </div>
     </div>
   </div>
 
-  <!-- ==================== TOAST NOTIFICATION ==================== -->
-  <div id="toastBanner" class="hidden fixed bottom-5 right-5 z-[60] sketch-box bg-[#FFF3B0] px-4 py-3 flex items-center gap-2.5 max-w-sm animate-ink-pop" role="status" aria-live="polite">
-    <svg class="w-5 h-5 text-[#1E1E24] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <!-- ==================== SUBTLE TOAST NOTIFICATION ==================== -->
+  <div id="toastBanner" class="hidden fixed bottom-6 right-6 z-[60] bg-[#141413] text-[#FAF8F5] px-5 py-3 text-xs font-medium tracking-wide flex items-center gap-2.5 max-w-sm shadow-lg animate-editorial" role="status" aria-live="polite">
+    <svg class="w-4 h-4 text-[#1488DB] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <polyline points="20 6 9 17 4 12" />
     </svg>
-    <span id="toastText" class="font-display font-bold text-sm"></span>
+    <span id="toastText"></span>
   </div>
 
   <!-- Scripts -->
