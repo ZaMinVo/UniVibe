@@ -225,7 +225,7 @@
       galleryImages: [
         'assets/products/hcmut-polo-white.png',
         null,
-        'assets/products/hcmut-merch-kit.jpg',
+        null,
       ],
       palette: ['#FFFFFF', '#1488DB', '#030391', '#D5D7DC'],
       tags: ['Áo Polo #1', 'HCMUT Shop', 'Bo viền xanh', 'BK TP.HCM', 'Nguồn HCMUT'],

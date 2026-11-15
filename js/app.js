@@ -665,7 +665,7 @@
         ? [
             { idx: 0, label: 'Áo Polo Trắng #1' },
             { idx: 1, label: 'Mặt Sau & Tay BK' },
-            { idx: 2, label: 'Bộ Merch Kit' },
+            { idx: 2, label: 'Thông Số Nhận Diện' },
           ]
         : concept.id === 'c-hcmut-tee-02'
           ? [
