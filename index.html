@@ -82,14 +82,14 @@
 
         <!-- Action Controls -->
         <div class="flex items-center gap-2 sm:gap-3">
-          <button id="openPromptModalBtn" type="button" class="hidden md:inline-flex sketch-btn sketch-btn-sm btn-paper text-sm" title="Tạo Prompt Phác Thảo Vẽ Tay">
+          <button id="openPromptModalBtn" type="button" class="hidden md:inline-flex sketch-btn sketch-btn-sm btn-paper text-sm" title="Tạo Prompt Mockup Sản Phẩm Thực Tế">
             <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 19l7-7 3 3-7 7-3-3z" />
               <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
               <path d="M2 2l7.586 7.586" />
               <circle cx="11" cy="11" r="2" />
             </svg>
-            <span>Prompt Vẽ Tay</span>
+            <span>Prompt Mockup</span>
           </button>
 
           <button id="openBookmarksBtn" type="button" class="sketch-btn sketch-btn-sm btn-paper relative" aria-label="Mở bộ sưu tập đã lưu">
@@ -126,7 +126,7 @@
           <a href="#gallery" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Phòng Trưng Bày</a>
           <a href="#leaderboard" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Bảng Vàng</a>
           <a href="#creators" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Tác Giả &amp; Kết Nối</a>
-          <button id="mobilePromptBtn" type="button" class="text-left px-3 py-2.5 rounded-lg hover:bg-[#B8F2E6]">Công thức Prompt Vẽ Tay</button>
+          <button id="mobilePromptBtn" type="button" class="text-left px-3 py-2.5 rounded-lg hover:bg-[#B8F2E6]">Công thức Prompt Mockup Thực Tế</button>
         </nav>
       </div>
     </div>
@@ -399,12 +399,12 @@
             <div>
               <label for="newCategory" class="block font-display font-bold text-sm mb-1.5">Loại vật phẩm *</label>
               <select id="newCategory" name="category" required class="sketch-input cursor-pointer">
+                <option value="tee">Áo thun (T-Shirt)</option>
+                <option value="mousepad">Lót chuột (Deskpad)</option>
                 <option value="jacket">Áo khoác (Varsity / Hoodie)</option>
-                <option value="polo">Áo thun / Polo</option>
                 <option value="tote">Túi Tote / Balo</option>
                 <option value="lanyard">Dây đeo thẻ (Lanyard)</option>
                 <option value="mascot">Linh vật (Mascot)</option>
-                <option value="sticker">Sticker &amp; Pin</option>
               </select>
             </div>
           </div>
@@ -433,19 +433,19 @@
             </div>
             <div class="grid grid-cols-4 gap-3">
               <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color1" type="color" value="#1D4ED8" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
+                <input id="color1" type="color" value="#1488DB" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
                 <span>Chính</span>
               </label>
               <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color2" type="color" value="#FFF3B0" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
+                <input id="color2" type="color" value="#030391" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
                 <span>Phụ</span>
               </label>
               <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color3" type="color" value="#FF4D4D" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
+                <input id="color3" type="color" value="#FFFFFF" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
                 <span>Nhấn</span>
               </label>
               <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color4" type="color" value="#FDFBF7" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
+                <input id="color4" type="color" value="#F4F6F9" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
                 <span>Nền</span>
               </label>
             </div>
@@ -455,28 +455,28 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="sm:col-span-3">
               <label for="newImageUrl" class="block font-display font-bold text-sm mb-1.5">
-                Link ảnh thiết kế ngoài (Tùy chọn — bỏ trống để tự tạo bản phác thảo vẽ tay SVG)
+                Link ảnh mockup thực tế (Tùy chọn — bỏ trống để tự tạo mockup studio chuẩn)
               </label>
               <input id="newImageUrl" name="imageUrl" type="url" placeholder="https://..." class="sketch-input" />
             </div>
 
             <div>
-              <label for="newCreatorName" class="block font-display font-bold text-sm mb-1.5">Tên tác giả *</label>
-              <input id="newCreatorName" name="creatorName" type="text" required placeholder="Nguyễn Văn A" class="sketch-input" />
+              <label for="newCreatorName" class="block font-display font-bold text-sm mb-1.5">Tên tác giả (mặc định Ẩn danh)</label>
+              <input id="newCreatorName" name="creatorName" type="text" value="Ẩn danh" placeholder="Ẩn danh" class="sketch-input" />
             </div>
             <div>
-              <label for="newCreatorFaculty" class="block font-display font-bold text-sm mb-1.5">Khoa / Khóa</label>
-              <input id="newCreatorFaculty" name="creatorFaculty" type="text" placeholder="Thiết kế · K23" class="sketch-input" />
+              <label for="newCreatorFaculty" class="block font-display font-bold text-sm mb-1.5">Khoa / Khóa (Tùy chọn)</label>
+              <input id="newCreatorFaculty" name="creatorFaculty" type="text" placeholder="VD: Khoa KH&amp;KT Máy tính" class="sketch-input" />
             </div>
             <div>
-              <label for="newCreatorEmail" class="block font-display font-bold text-sm mb-1.5">Email liên hệ hợp tác</label>
-              <input id="newCreatorEmail" name="creatorEmail" type="email" placeholder="tenban@truong.edu.vn" class="sketch-input" />
+              <label for="newCreatorEmail" class="block font-display font-bold text-sm mb-1.5">Email liên hệ (Tùy chọn)</label>
+              <input id="newCreatorEmail" name="creatorEmail" type="email" placeholder="Bỏ trống nếu đăng ẩn danh" class="sketch-input" />
             </div>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
             <button type="button" id="switchToPromptBtn" class="sketch-btn sketch-btn-sm btn-paper text-sm">
-              Chưa có hình? Lấy Prompt vẽ tay
+              Chưa có ảnh? Lấy Prompt Mockup
             </button>
             <button type="submit" class="sketch-btn btn-postit">
               Đăng lên Phòng Trưng Bày
@@ -499,10 +499,10 @@
         </button>
 
         <div class="mb-5 pr-12">
-          <span class="inline-block font-hand text-sm font-bold text-[#FF4D4D] uppercase">Cảm hứng từ threerocks/hand-drawn-styles</span>
-          <h2 id="promptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24]">Công Thức Prompt Phác Thảo Vẽ Tay</h2>
+          <span class="inline-block font-hand text-sm font-bold text-[#2D5DA1] uppercase">Studio Product Mockup</span>
+          <h2 id="promptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24]">Công Thức Prompt Mockup Thực Tế</h2>
           <p class="text-sm text-[#52525B] mt-1">
-            Chọn phong cách vẽ tay và điền ý tưởng vật phẩm để xuất prompt phác thảo concept cho các công cụ vẽ AI hoặc tự lấy bảng moodboard vẽ tay.
+            Chọn phong cách chụp studio thực tế và điền sản phẩm mong muốn để xuất prompt tạo ảnh mockup sắc nét theo bộ nhận diện trường bạn.
           </p>
         </div>
 
@@ -514,7 +514,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
             <div class="sm:col-span-2">
               <label for="promptSubjectInput" class="block font-display font-bold text-xs mb-1">Chủ thể vật phẩm</label>
-              <input id="promptSubjectInput" type="text" value="varsity jacket with campus clock tower patch" class="sketch-input text-sm" />
+              <input id="promptSubjectInput" type="text" value="minimalist cotton t-shirt with hexagon university crest" class="sketch-input text-sm" />
             </div>
             <div>
               <label for="promptCampusSelect" class="block font-display font-bold text-xs mb-1">Trường học</label>

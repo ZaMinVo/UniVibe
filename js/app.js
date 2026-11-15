@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'univibe_gallery_state_v1';
+  const STORAGE_KEY = 'univibe_gallery_state_v2';
 
   const { CAMPUSES, CATEGORIES, CREATORS, INITIAL_CONCEPTS } = window.UniVibeData;
   const { renderMerchIllustration, renderCampusEmblem, HAND_DRAWN_RECIPES } =
@@ -15,7 +15,7 @@
   const state = {
     concepts: [],
     creators: [],
-    bookmarks: ['c-01', 'c-03'],
+    bookmarks: [],
     activeCampus: 'all',
     activeCategory: 'all',
     searchQuery: '',
@@ -116,6 +116,7 @@
   function loadState() {
     let saved = null;
     try {
+      localStorage.removeItem('univibe_gallery_state_v1');
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) saved = JSON.parse(raw);
     } catch (_) {
@@ -288,7 +289,7 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#52525B] max-w-2xl leading-relaxed">
-              Không gian mở dành riêng cho sinh viên trưng bày concept <strong>áo khoác, túi tote, dây đeo thẻ, sticker &amp; linh vật mascot</strong>. Chấm điểm 3 tiêu chí minh bạch và kết nối trực tiếp tác giả để đưa ý tưởng ra đời thật.
+              Không gian mở dành riêng cho sinh viên trưng bày concept <strong>áo thun, lót chuột, áo khoác, túi tote, dây đeo thẻ &amp; linh vật mascot</strong>. Chấm điểm 3 tiêu chí minh bạch và bình chọn cho bản sắc trường mình.
             </p>
 
             <div class="flex flex-wrap items-center gap-3.5 pt-1">
@@ -329,14 +330,14 @@
 
               <div class="flex items-center justify-between gap-2 mb-3">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                  ★ SPOTLIGHT TUẦN NÀY
+                  ★ CONCEPT NỔI BẬT
                 </span>
                 <span class="px-2.5 py-1 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background-color: ${escapeHtml(campus.color)}">
                   ${escapeHtml(campus.shortName)}
                 </span>
               </div>
 
-              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="block w-full text-left group cursor-pointer rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#FDFBF7]">
+              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="block w-full text-left group cursor-pointer rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9]">
                 <div class="aspect-[4/3] w-full overflow-hidden">
                   ${renderMerchIllustration(featured, 0)}
                 </div>
@@ -399,8 +400,7 @@
     const campusCreators = state.creators.filter((cr) => cr.campusId === campus.id);
     const campusVotes = campusConcepts.reduce((s, c) => s + (c.ratings.count || 0), 0);
     const topDesign =
-      [...campusConcepts].sort((a, b) => getCompositeScore(b) - getCompositeScore(a))[0] ||
-      state.concepts[0];
+      [...campusConcepts].sort((a, b) => getCompositeScore(b) - getCompositeScore(a))[0] || null;
 
     container.innerHTML = `
       <div class="sketch-card p-6 sm:p-8 bg-white relative overflow-hidden">
@@ -463,7 +463,7 @@
                   <span class="text-xs font-mono font-bold px-2.5 py-0.5 bg-[#FFF3B0] border border-[#1E1E24] rounded-full">TOP #1 TẠI ${escapeHtml(campus.shortName)}</span>
                   <span class="font-mono text-sm font-bold text-[#FF4D4D]">${getCompositeScore(topDesign).toFixed(1)} ★</span>
                 </div>
-                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] bg-white cursor-pointer mb-3">
+                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] bg-[#F4F6F9] cursor-pointer mb-3">
                   ${renderMerchIllustration(topDesign, 0)}
                 </button>
                 <div class="flex items-center justify-between gap-3">
@@ -472,7 +472,13 @@
                 </div>
               </div>
               `
-                : ''
+                : `
+              <div class="p-6 bg-[#FDFBF7] border-[2.5px] border-dashed border-[#1E1E24] rounded-2xl text-center space-y-3">
+                <div class="font-display font-bold text-base">Không gian ${escapeHtml(campus.shortName)} đang chờ mẫu đầu tiên!</div>
+                <p class="text-xs text-[#52525B]">Hãy tự tay đăng concept áo thun, lót chuột hay vật phẩm mang đậm chất ${escapeHtml(campus.name)}.</p>
+                <button type="button" id="emptyCampusSubmitBtn" class="sketch-btn sketch-btn-sm btn-postit text-xs">+ Gửi Concept Cho ${escapeHtml(campus.shortName)}</button>
+              </div>
+              `
             }
           </div>
         </div>
@@ -485,6 +491,10 @@
         state.activeCampus = 'all';
         renderAll();
       });
+    }
+    const emptyCampusSubmitBtn = document.getElementById('emptyCampusSubmitBtn');
+    if (emptyCampusSubmitBtn) {
+      emptyCampusSubmitBtn.addEventListener('click', openSubmitModal);
     }
   }
 
@@ -522,7 +532,7 @@
             ${renderCampusEmblem(campus)}
             <div class="min-w-0">
               <div class="font-display font-extrabold text-sm truncate">${escapeHtml(campus.shortName)}</div>
-              <div class="text-xs font-mono text-[#52525B]">${count} mẫu · ${campus.memberCount} SV</div>
+              <div class="text-xs font-mono text-[#52525B]">${count > 0 ? `${count} concept` : 'Sẵn sàng đón mẫu'}</div>
             </div>
           </div>
           <p class="text-xs text-[#52525B] line-clamp-2">${escapeHtml(campus.name)}</p>
@@ -603,8 +613,8 @@
               </button>
             </div>
 
-            <!-- Hand-Drawn Artwork Frame -->
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#FDFBF7] relative group cursor-pointer mb-3.5">
+            <!-- Realistic Studio Artwork Frame -->
+            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9] relative group cursor-pointer mb-3.5">
               ${renderMerchIllustration(item, 0)}
               <span class="absolute bottom-2 right-2 px-2 py-0.5 text-[10px] font-mono font-bold bg-white/95 border border-[#1E1E24] rounded-md opacity-90 group-hover:bg-[#FFF3B0] transition-colors">
                 3 góc xem
@@ -841,6 +851,16 @@
         ? state.creators
         : state.creators.filter((cr) => cr.campusId === state.activeCampus);
 
+    if (list.length === 0) {
+      grid.innerHTML = `
+        <div class="sketch-box p-6 bg-white md:col-span-2 lg:col-span-3 text-center">
+          <p class="font-display font-bold text-base mb-1">Chưa có tác giả nào đóng góp ở không gian trường này</p>
+          <p class="text-sm text-[#52525B]">Nhấn <strong>+ Đăng Concept</strong> để đóng góp thiết kế đầu tiên (có thể chọn đăng Ẩn danh).</p>
+        </div>
+      `;
+      return;
+    }
+
     grid.innerHTML = list
       .map((creator, idx) => {
         const campus = getCampusById(creator.campusId);
@@ -879,7 +899,7 @@
             <div class="mt-auto pt-3 border-t-2 border-dashed border-[#1E1E24]/25 flex items-center justify-between gap-2">
               <span class="text-xs font-mono font-bold text-[#52525B]">${works.length} mẫu · ${totalVotes} lượt chấm</span>
               <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-postit text-xs">
-                Xem Portfolio &amp; Liên hệ
+                ${creator.id === 'cr-anonymous' ? 'Xem Bộ Sưu Tập Ẩn Danh' : 'Xem Portfolio & Liên hệ'}
               </button>
             </div>
           </article>
@@ -977,9 +997,9 @@
     const isBookmarked = state.bookmarks.includes(concept.id);
 
     const viewButtons = [
-      { idx: 0, label: 'Bản phối chính' },
-      { idx: 1, label: 'Mặt sau & Chi tiết' },
-      { idx: 2, label: 'Phác thảo Sketch' },
+      { idx: 0, label: 'Mockup Mặt Trước' },
+      { idx: 1, label: 'Mặt Sau & Chi Tiết' },
+      { idx: 2, label: 'Thông Số Nhận Diện' },
     ];
 
     body.innerHTML = `
@@ -988,7 +1008,7 @@
         <div class="lg:col-span-6 space-y-4">
           <div class="sketch-box p-3 bg-white relative">
             <div class="washi-tape washi-tape--mint -top-3 left-8 -rotate-3"></div>
-            <div id="detailArtworkFrame" class="aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#FDFBF7]">
+            <div id="detailArtworkFrame" class="aspect-[4/3] rounded-xl overflow-hidden border-[2.5px] border-[#1E1E24] bg-[#F4F6F9]">
               ${renderMerchIllustration(concept, state.activeDetailView)}
             </div>
             <div class="grid grid-cols-3 gap-2 mt-3">
@@ -1112,7 +1132,7 @@
 
               <div class="flex items-center gap-2">
                 <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-mint text-xs">
-                  Liên hệ sản xuất
+                  ${creator.id === 'cr-anonymous' ? 'Hồ sơ Ẩn danh' : 'Liên hệ sản xuất'}
                 </button>
                 <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-paper'} text-xs">
                   ${iconBookmark(isBookmarked)}
@@ -1342,24 +1362,35 @@
           </div>
 
           <div class="p-4 bg-[#B8F2E6]/50 border-2 border-[#1E1E24] rounded-2xl space-y-2.5">
-            <div class="font-display font-bold text-sm">Kết nối trực tiếp để hợp tác sản xuất (CLB / Khoa / Nhóm SV)</div>
-            <div class="flex flex-wrap gap-2">
-              ${
-                creator.contacts && creator.contacts.email
-                  ? `<button type="button" data-copy-email="${escapeHtml(creator.contacts.email)}" class="sketch-btn sketch-btn-sm btn-paper text-xs">Email: ${escapeHtml(creator.contacts.email)}</button>`
-                  : ''
-              }
-              ${
-                creator.contacts && creator.contacts.facebook
-                  ? `<a href="${escapeHtml(creator.contacts.facebook)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-blue text-xs">Facebook</a>`
-                  : ''
-              }
-              ${
-                creator.contacts && creator.contacts.behance
-                  ? `<a href="${escapeHtml(creator.contacts.behance)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-ink text-xs">Behance</a>`
-                  : ''
-              }
-            </div>
+            ${
+              creator.contacts && (creator.contacts.email || creator.contacts.facebook || creator.contacts.behance)
+                ? `
+              <div class="font-display font-bold text-sm">Kết nối trực tiếp để hợp tác sản xuất (CLB / Khoa / Nhóm SV)</div>
+              <div class="flex flex-wrap gap-2">
+                ${
+                  creator.contacts.email
+                    ? `<button type="button" data-copy-email="${escapeHtml(creator.contacts.email)}" class="sketch-btn sketch-btn-sm btn-paper text-xs">Email: ${escapeHtml(creator.contacts.email)}</button>`
+                    : ''
+                }
+                ${
+                  creator.contacts.facebook
+                    ? `<a href="${escapeHtml(creator.contacts.facebook)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-blue text-xs">Facebook</a>`
+                    : ''
+                }
+                ${
+                  creator.contacts.behance
+                    ? `<a href="${escapeHtml(creator.contacts.behance)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-ink text-xs">Behance</a>`
+                    : ''
+                }
+              </div>
+            `
+                : `
+              <div class="font-display font-bold text-sm">Đóng góp Ẩn danh cho Cộng đồng</div>
+              <p class="text-xs text-[#1E1E24]/85 leading-relaxed">
+                Các mẫu được chia sẻ công khai dưới danh nghĩa <strong>Ẩn danh</strong> để sinh viên và các CLB tự do tham khảo, bình chọn và phát triển theo chuẩn nhận diện thương hiệu của trường.
+              </p>
+            `
+            }
           </div>
         </div>
 
@@ -1435,61 +1466,64 @@
     const c3 = document.getElementById('color3');
     const c4 = document.getElementById('color4');
     if (c1) c1.value = campus.color;
-    if (c2) c2.value = sanitizeColor(campus.secondaryColor, '#FFF3B0');
-    if (c3) c3.value = '#FF4D4D';
-    if (c4) c4.value = '#FDFBF7';
+    if (c2) c2.value = sanitizeColor(campus.secondaryColor, '#1488DB');
+    if (c3) c3.value = '#FFFFFF';
+    if (c4) c4.value = '#F4F6F9';
   }
 
   function handleSubmitNewConcept(e) {
     e.preventDefault();
     const title = (document.getElementById('newTitle')?.value || '').trim();
     const campusId = document.getElementById('newCampus')?.value || 'hcmut';
-    const category = document.getElementById('newCategory')?.value || 'jacket';
+    const category = document.getElementById('newCategory')?.value || 'tee';
     const story = (document.getElementById('newStory')?.value || '').trim();
-    const specs = (document.getElementById('newSpecs')?.value || '').trim() || 'Phác thảo ý tưởng cộng đồng UniVibe.';
+    const specs = (document.getElementById('newSpecs')?.value || '').trim() || 'Thông số sản phẩm tối giản UniVibe.';
     const tagsRaw = (document.getElementById('newTags')?.value || '').trim();
     const imageUrl = sanitizeImageUrl(document.getElementById('newImageUrl')?.value || '');
-    const creatorName = (document.getElementById('newCreatorName')?.value || '').trim() || 'Sinh viên Sáng tạo';
-    const creatorFaculty = (document.getElementById('newCreatorFaculty')?.value || '').trim() || 'Sinh viên trường';
-    const creatorEmail = (document.getElementById('newCreatorEmail')?.value || '').trim() || 'contact@univibe.vn';
+    const creatorName = (document.getElementById('newCreatorName')?.value || '').trim() || 'Ẩn danh';
+    const creatorFaculty = (document.getElementById('newCreatorFaculty')?.value || '').trim();
+    const creatorEmail = (document.getElementById('newCreatorEmail')?.value || '').trim();
 
     if (!title || !story) return;
 
     const campus = getCampusById(campusId);
     const palette = [
       sanitizeColor(document.getElementById('color1')?.value, campus.color),
-      sanitizeColor(document.getElementById('color2')?.value, '#FFF3B0'),
-      sanitizeColor(document.getElementById('color3')?.value, '#FF4D4D'),
-      sanitizeColor(document.getElementById('color4')?.value, '#FDFBF7'),
+      sanitizeColor(document.getElementById('color2')?.value, '#1488DB'),
+      sanitizeColor(document.getElementById('color3')?.value, '#FFFFFF'),
+      sanitizeColor(document.getElementById('color4')?.value, '#F4F6F9'),
     ];
 
-    const initials = creatorName
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(-2)
-      .map((w) => w[0].toUpperCase())
-      .join('') || 'SV';
+    const isDefaultAnon =
+      creatorName.toLowerCase() === 'ẩn danh' && !creatorFaculty && !creatorEmail;
 
-    const creatorId = 'cr-custom-' + Date.now();
-    const newCreator = {
-      id: creatorId,
-      name: creatorName,
-      handle: '@' + creatorName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12) || '@student',
-      campusId,
-      faculty: creatorFaculty,
-      verifiedEdu: creatorEmail.endsWith('.edu.vn'),
-      avatarBg: '#FFF3B0',
-      initials,
-      bio: `Tác giả đóng góp concept "${title}" cho không gian ${campus.name}.`,
-      skills: [getCategoryLabel(category), 'Concept Design'],
-      badges: ['Tác giả Mới'],
-      contacts: {
-        email: creatorEmail,
-        facebook: 'https://facebook.com',
-        behance: '',
-        instagram: '',
-      },
-    };
+    let creatorId = 'cr-anonymous';
+    if (!isDefaultAnon) {
+      const initials =
+        creatorName
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(-2)
+          .map((w) => w[0].toUpperCase())
+          .join('') || 'AD';
+
+      creatorId = 'cr-custom-' + Date.now();
+      const newCreator = {
+        id: creatorId,
+        name: creatorName,
+        handle: '@' + (creatorName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12) || 'anonymous'),
+        campusId,
+        faculty: creatorFaculty || campus.name,
+        verifiedEdu: creatorEmail.endsWith('.edu.vn'),
+        avatarBg: '#E2E8F0',
+        initials,
+        bio: `Tác giả đóng góp concept "${title}" cho không gian ${campus.name}.`,
+        skills: [getCategoryLabel(category), 'Concept Design'],
+        badges: [creatorName.toLowerCase() === 'ẩn danh' ? 'Ẩn danh' : 'Tác giả Mới'],
+        contacts: creatorEmail ? { email: creatorEmail } : {},
+      };
+      state.creators.unshift(newCreator);
+    }
 
     const todayIso = new Date().toISOString().slice(0, 10);
     const conceptId = 'c-custom-' + Date.now();
@@ -1521,7 +1555,6 @@
       comments: [],
     };
 
-    state.creators.unshift(newCreator);
     state.concepts.unshift(newConcept);
     state.sortBy = 'newest';
     const sortEl = document.getElementById('sortSelect');
@@ -1568,9 +1601,9 @@
 
     const activeRecipe =
       HAND_DRAWN_RECIPES.find((r) => r.id === state.activeRecipeId) || HAND_DRAWN_RECIPES[0];
-    const subject = (subjectEl && subjectEl.value.trim()) || 'campus varsity jacket';
+    const subject = (subjectEl && subjectEl.value.trim()) || 'minimalist cotton t-shirt with university emblem';
     const campus = getCampusById((campusEl && campusEl.value) || 'hcmut');
-    const colors = `${campus.color} and ${campus.secondaryColor} with warm cream accents`;
+    const colors = `${campus.color} and ${campus.secondaryColor} with crisp white`;
 
     outputEl.textContent = activeRecipe.template
       .replace('{subject}', subject)
@@ -1764,7 +1797,7 @@
     document.getElementById('promptCampusSelect')?.addEventListener('change', renderPromptStudio);
     document.getElementById('copyPromptBtn')?.addEventListener('click', () => {
       const text = document.getElementById('generatedPromptOutput')?.textContent || '';
-      copyToClipboard(text, 'Đã sao chép Prompt vẽ tay!');
+      copyToClipboard(text, 'Đã sao chép Prompt Mockup!');
     });
 
     // Mobile nav toggle
