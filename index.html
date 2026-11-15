@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UNIVIBE — Galerie Bản Sắc Sinh Viên</title>
-  <meta name="description" content="Phòng trưng bày concept vật phẩm sinh viên tối giản theo bộ nhận diện thương hiệu đại học — theo tinh thần editorial gallery." />
+  <title>UNIVIBE — Triển Lãm Vật Phẩm Bản Sắc Sinh Viên</title>
+  <meta name="description" content="Phòng trưng bày concept vật phẩm sinh viên tối giản theo bộ nhận diện thương hiệu đại học — phong cách editorial gallery." />
 
   <!-- OpenGraph Preview -->
-  <meta property="og:title" content="UNIVIBE — Galerie Bản Sắc Sinh Viên" />
+  <meta property="og:title" content="UNIVIBE — Triển Lãm Vật Phẩm Bản Sắc Sinh Viên" />
   <meta property="og:description" content="Trưng bày 4 thiết kế vật phẩm thực tế tối giản chuẩn nhận diện thương hiệu đại học (Nguồn: HCMUT)." />
   <meta property="og:type" content="website" />
 
-  <!-- Vietnamese-Safe Editorial Gallery Google Fonts -->
+  <!-- Exact Typography from uupm.cc/demo/nft-art-gallery (Playfair Display + Inter with Vietnamese support) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,61 +23,59 @@
       theme: {
         extend: {
           colors: {
-            alabaster: '#FAF8F5',
-            wash: '#F3F0EA',
-            ink: '#141413',
-            stoneMuted: '#6E6A63',
-            hairline: '#E2DDD5',
+            galleryBg: '#FAFAFA',
+            galleryAlt: '#FFFFFF',
+            ink: '#1A1A1A',
+            stoneMuted: '#666666',
+            stoneSubtle: '#999999',
+            hairline: '#E5E5E5',
             hcmutRoyal: '#030391',
             hcmutSky: '#1488DB',
           },
           fontFamily: {
-            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['"Be Vietnam Pro"', 'sans-serif'],
-            mono: ['"Space Mono"', 'monospace'],
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
           },
         },
       },
     };
   </script>
 
-  <!-- Custom Editorial Gallery Stylesheet -->
+  <!-- Editorial Gallery Stylesheet -->
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="bg-[#FAF8F5] text-[#141413] font-sans antialiased selection:bg-[#141413] selection:text-[#FAF8F5]">
+<body class="bg-[#FAFAFA] text-[#1A1A1A] font-sans antialiased selection:bg-[#1A1A1A] selection:text-white">
 
-  <!-- ==================== MINIMAL EDITORIAL HEADER ==================== -->
-  <header class="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E2DDD5]">
+  <!-- ==================== MINIMAL EDITORIAL HEADER (GALERIE) ==================== -->
+  <header class="navbar-gallery sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
       <div class="flex items-center justify-between h-20 gap-4">
-        <!-- Brand Lockup -->
-        <a href="#hero" class="flex items-center gap-3 shrink-0 group" aria-label="UniVibe Trang chủ">
-          <span class="font-display text-2xl font-semibold tracking-[0.22em] uppercase text-[#141413]">UNIVIBE</span>
-          <span class="hidden sm:inline-block h-4 w-px bg-[#D5CFC7]" aria-hidden="true"></span>
-          <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.18em] uppercase text-[#6E6A63]">Galerie · Showcase</span>
+        <!-- Brand Wordmark -->
+        <a href="#hero" class="flex items-center shrink-0" aria-label="UniVibe Trang chủ">
+          <span class="font-display text-2xl font-bold text-[#1A1A1A]">UNIVIBE</span>
         </a>
 
-        <!-- Editorial Nav -->
-        <nav class="hidden lg:flex items-center gap-9 text-xs font-semibold uppercase tracking-[0.14em] text-[#6E6A63]" aria-label="Điều hướng chính">
-          <a href="#hero" class="hover:text-[#141413] transition-colors py-2">Triển lãm</a>
-          <a href="#campus-hubs" class="hover:text-[#141413] transition-colors py-2">Không gian Trường</a>
-          <a href="#gallery" class="hover:text-[#141413] transition-colors py-2">Tác phẩm</a>
-          <a href="#feature-work" class="hover:text-[#141413] transition-colors py-2">Feature Work</a>
+        <!-- Center Editorial Navigation -->
+        <nav class="hidden md:flex items-center gap-10 text-sm tracking-widest uppercase font-normal text-[#666666]" aria-label="Điều hướng chính">
+          <a href="#hero" class="hover:text-[#1A1A1A] transition-colors py-2">Triển lãm</a>
+          <a href="#campus-hubs" class="hover:text-[#1A1A1A] transition-colors py-2">Trường ĐH</a>
+          <a href="#gallery" class="hover:text-[#1A1A1A] transition-colors py-2">Tác phẩm</a>
+          <a href="#feature-work" class="hover:text-[#1A1A1A] transition-colors py-2">Lộ trình</a>
         </nav>
 
         <!-- Action Controls -->
         <div class="flex items-center gap-3">
           <button id="openBookmarksBtn" type="button" class="gallery-btn-outline gallery-btn-sm" aria-label="Mở bộ sưu tập đã lưu">
-            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
             <span>Đã lưu</span>
-            <span id="bookmarkCountBadge" class="font-mono text-[11px] font-bold">0</span>
+            <span id="bookmarkCountBadge" class="tabular-nums font-semibold">0</span>
           </button>
 
           <!-- Mobile Menu Toggle -->
-          <button id="mobileMenuBtn" type="button" class="lg:hidden gallery-btn-icon" aria-label="Mở menu điều hướng" aria-expanded="false">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <button id="mobileMenuBtn" type="button" class="md:hidden gallery-btn-icon" aria-label="Mở menu điều hướng" aria-expanded="false">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
               <line x1="4" y1="7" x2="20" y2="7" />
               <line x1="4" y1="12" x2="20" y2="12" />
               <line x1="4" y1="17" x2="20" y2="17" />
@@ -87,12 +85,12 @@
       </div>
 
       <!-- Mobile Menu Panel -->
-      <div id="mobileMenuPanel" class="hidden lg:hidden pb-5 pt-2 border-t border-[#E2DDD5]">
-        <nav class="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#6E6A63]" aria-label="Điều hướng di động">
-          <a href="#hero" class="py-2 hover:text-[#141413]">Triển lãm</a>
-          <a href="#campus-hubs" class="py-2 hover:text-[#141413]">Không gian Trường</a>
-          <a href="#gallery" class="py-2 hover:text-[#141413]">Tác phẩm</a>
-          <a href="#feature-work" class="py-2 hover:text-[#141413]">Feature Work</a>
+      <div id="mobileMenuPanel" class="hidden md:hidden pb-5 pt-2 border-t border-[#E5E5E5]">
+        <nav class="flex flex-col gap-2 text-xs tracking-widest uppercase text-[#666666]" aria-label="Điều hướng di động">
+          <a href="#hero" class="py-2 hover:text-[#1A1A1A]">Triển lãm</a>
+          <a href="#campus-hubs" class="py-2 hover:text-[#1A1A1A]">Trường ĐH</a>
+          <a href="#gallery" class="py-2 hover:text-[#1A1A1A]">Tác phẩm</a>
+          <a href="#feature-work" class="py-2 hover:text-[#1A1A1A]">Lộ trình</a>
         </nav>
       </div>
     </div>
@@ -109,17 +107,17 @@
     </section>
 
     <!-- ==================== 2. CURATED UNIVERSITY SPACES ==================== -->
-    <section id="campus-hubs" class="py-12 sm:py-16 bg-[#F3F0EA]/65 border-y border-[#E2DDD5]">
+    <section id="campus-hubs" class="py-14 sm:py-20 bg-[#FFFFFF] border-y border-[#E5E5E5]">
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Không gian 2 tầng bản sắc</p>
-            <h2 class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] tracking-tight mt-1">
-              Không Gian Trường Đại Học
+            <p class="gallery-badge mb-2">Không gian trường học</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">
+              Các trường <span class="italic font-semibold">Đại học</span>
             </h2>
           </div>
 
-          <div class="flex items-center gap-6 border-b border-[#E2DDD5] self-start md:self-auto" role="group" aria-label="Bộ lọc nhóm trường đại học">
+          <div class="flex items-center gap-6 border-b border-[#E5E5E5] self-start md:self-auto" role="group" aria-label="Bộ lọc nhóm trường đại học">
             <button type="button" data-campus-scope="vnuhcm" class="campus-scope-btn gallery-tab gallery-tab--active">
               Khối ĐHQG-HCM (6)
             </button>
@@ -129,102 +127,102 @@
           </div>
         </div>
 
-        <div id="campusHubStrip" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3.5">
+        <div id="campusHubStrip" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           <!-- Populated by js/app.js -->
         </div>
       </div>
     </section>
 
-    <!-- ==================== 3. AVAILABLE WORKS (CURATED 4-WORK GALLERY) ==================== -->
-    <section id="gallery" class="py-14 sm:py-20">
+    <!-- ==================== 3. SELECTED WORKS GALLERY ==================== -->
+    <section id="gallery" class="py-16 sm:py-20">
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        <!-- Editorial Gallery Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E2DDD5] mb-8">
+        <!-- Editorial Section Heading -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E5E5E5] mb-8">
           <div>
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Pure Gallery · Chỉ Trưng Bày</p>
-            <h2 class="font-display text-3xl sm:text-5xl font-semibold text-[#141413] tracking-tight mt-1">
-              Tác Phẩm Trưng Bày
+            <p class="gallery-badge mb-2">Phòng trưng bày</p>
+            <h2 class="font-display text-3xl sm:text-5xl font-bold text-[#1A1A1A]">
+              Tác phẩm <span class="italic font-semibold">Tuyển chọn</span>
             </h2>
           </div>
-          <div class="flex items-center gap-4">
-            <span id="galleryCountBadge" class="font-mono text-xs uppercase tracking-[0.14em] text-[#6E6A63]">04 tác phẩm · Liên trường</span>
+          <div>
+            <span id="galleryCountBadge" class="text-xs uppercase tracking-widest text-[#666666]">4 tác phẩm — Liên trường</span>
           </div>
         </div>
 
-        <!-- Minimal Filter Tabs + Search & Sort Bar -->
+        <!-- Clean Underline Tabs + Search & Sort -->
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-10">
-          <div id="categoryFilterBar" class="flex flex-wrap items-center gap-6 border-b border-[#E2DDD5] lg:border-b-0" role="group" aria-label="Lọc theo loại vật phẩm">
+          <div id="categoryFilterBar" class="flex flex-wrap items-center gap-6 border-b border-[#E5E5E5] lg:border-b-0" role="group" aria-label="Lọc theo loại vật phẩm">
             <!-- Populated by js/app.js -->
           </div>
 
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
             <div class="relative w-full sm:w-52">
-              <svg class="w-3.5 h-3.5 text-[#6E6A63] absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg class="w-3.5 h-3.5 text-[#666666] absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
-              <input id="searchInput" type="search" placeholder="Tìm tác phẩm, từ khóa..." class="gallery-input pl-6 text-sm" aria-label="Tìm kiếm thiết kế" />
+              <input id="searchInput" type="search" placeholder="Tìm tác phẩm..." class="gallery-input pl-6 text-sm" aria-label="Tìm kiếm thiết kế" />
             </div>
 
-            <select id="sortSelect" class="gallery-input w-full sm:w-48 text-xs uppercase tracking-wider font-medium text-[#6E6A63] cursor-pointer" aria-label="Sắp xếp thiết kế">
+            <select id="sortSelect" class="gallery-input w-full sm:w-48 text-xs uppercase tracking-wider font-medium text-[#666666] cursor-pointer" aria-label="Sắp xếp thiết kế">
               <option value="featured">Thứ tự đề xuất</option>
               <option value="newest">Mới cập nhật</option>
               <option value="category">Theo loại vật phẩm</option>
-              <option value="title">Tên tác phẩm (A → Z)</option>
+              <option value="title">Tên tác phẩm (A - Z)</option>
             </select>
           </div>
         </div>
 
-        <!-- Clean 2x2 Museum Gallery Grid -->
+        <!-- Clean 2x2 Editorial Art Grid -->
         <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           <!-- Populated by js/app.js -->
         </div>
 
         <!-- Empty Search State -->
-        <div id="galleryEmptyState" class="hidden border border-[#E2DDD5] bg-white p-12 text-center max-w-xl mx-auto mt-8">
-          <h3 class="font-display text-2xl font-semibold mb-2">Không tìm thấy tác phẩm phù hợp</h3>
-          <p class="text-sm text-[#6E6A63] mb-6">Thử thay đổi từ khóa tìm kiếm hoặc quay về chế độ xem tất cả tác phẩm.</p>
+        <div id="galleryEmptyState" class="hidden border border-[#E5E5E5] bg-white p-12 text-center max-w-xl mx-auto mt-8">
+          <h3 class="font-display text-2xl font-bold mb-2">Không tìm thấy tác phẩm phù hợp</h3>
+          <p class="text-sm text-[#666666] mb-6">Thử thay đổi từ khóa tìm kiếm hoặc quay về chế độ xem tất cả tác phẩm.</p>
           <button id="resetFiltersBtn" type="button" class="gallery-btn-primary gallery-btn-sm">Xem tất cả tác phẩm</button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 4. FEATURE WORK ARCHITECTURAL ROADMAP ==================== -->
-    <section id="feature-work" class="py-14 sm:py-16 bg-[#F3F0EA]/65 border-t border-[#E2DDD5]">
+    <!-- ==================== 4. FEATURE WORK ROADMAP ==================== -->
+    <section id="feature-work" class="py-16 sm:py-20 bg-[#FFFFFF] border-t border-[#E5E5E5]">
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div class="lg:col-span-4 space-y-2">
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#6E6A63]">Lộ trình mở rộng</p>
-            <h2 class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] tracking-tight">
-              Feature Work
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div class="lg:col-span-4 space-y-3">
+            <p class="gallery-badge">Lộ trình phát triển</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">
+              Feature <span class="italic font-semibold">Work</span>
             </h2>
-            <p class="text-sm text-[#6E6A63] leading-relaxed">
-              Phiên bản hiện tại giữ trọng tâm <strong>Chỉ trưng bày (Showcase-Only)</strong>. Các module tương tác cộng đồng sẽ được triển khai tiếp theo:
+            <p class="text-sm text-[#666666] leading-relaxed">
+              Phiên bản hiện tại tập trung cho trải nghiệm trưng bày tĩnh. Các tính năng mở rộng cho cộng đồng sẽ được triển khai ở giai đoạn tiếp theo.
             </p>
           </div>
 
-          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <article class="border-t border-[#141413] pt-4">
-              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">01 · SẮP RA MẮT</div>
-              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Cổng Đăng Tải Concept</h3>
-              <p class="text-xs text-[#6E6A63] leading-relaxed">
-                Cho phép sinh viên tự tải mẫu thiết kế mới, tự áp bảng màu nhận diện trường và chọn chế độ Ẩn danh hoặc định danh.
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <article class="border-t border-[#1A1A1A] pt-5">
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2">01 / Sắp ra mắt</div>
+              <h3 class="font-display text-xl font-bold text-[#1A1A1A] mb-2">Cổng đăng tải</h3>
+              <p class="text-sm text-[#666666] leading-relaxed">
+                Cho phép sinh viên tự đăng tải mẫu thiết kế, chọn hệ màu nhận diện trường và tùy chọn chế độ Ẩn danh hoặc định danh.
               </p>
             </article>
 
-            <article class="border-t border-[#141413] pt-4">
-              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">02 · KẾ HOẠCH</div>
-              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Đánh Giá 3 Tiêu Chí</h3>
-              <p class="text-xs text-[#6E6A63] leading-relaxed">
-                Hệ thống góp ý và chấm điểm theo độ sáng tạo, bản sắc trường học và tính ứng dụng sản xuất thực tế.
+            <article class="border-t border-[#1A1A1A] pt-5">
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2">02 / Kế hoạch</div>
+              <h3 class="font-display text-xl font-bold text-[#1A1A1A] mb-2">Đánh giá thiết kế</h3>
+              <p class="text-sm text-[#666666] leading-relaxed">
+                Góp ý chuyên môn theo độ sáng tạo, mức độ đồng bộ bản sắc trường và tính khả thi khi sản xuất thực tế.
               </p>
             </article>
 
-            <article class="border-t border-[#141413] pt-4">
-              <div class="font-mono text-[11px] text-[#6E6A63] mb-2">03 · KẾ HOẠCH</div>
-              <h3 class="font-display text-xl font-semibold text-[#141413] mb-2">Bảng Vàng &amp; Kết Nối CLB</h3>
-              <p class="text-xs text-[#6E6A63] leading-relaxed">
-                Xác thực email <code>.edu.vn</code>, xếp hạng định kỳ và kết nối các CLB/Đoàn-Hội đưa mẫu vào sản xuất.
+            <article class="border-t border-[#1A1A1A] pt-5">
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2">03 / Kế hoạch</div>
+              <h3 class="font-display text-xl font-bold text-[#1A1A1A] mb-2">Kết nối CLB</h3>
+              <p class="text-sm text-[#666666] leading-relaxed">
+                Xác thực email sinh viên, xếp hạng tác phẩm tiêu biểu và kết nối các CLB đưa bản thiết kế vào sản xuất.
               </p>
             </article>
           </div>
@@ -233,23 +231,47 @@
     </section>
   </main>
 
-  <!-- ==================== MINIMAL EDITORIAL FOOTER ==================== -->
-  <footer class="border-t border-[#E2DDD5] bg-[#FAF8F5] py-12">
+  <!-- ==================== EDITORIAL FOOTER (GALERIE 4-COLUMN PATTERN) ==================== -->
+  <footer class="border-t border-[#E5E5E5] bg-[#FAFAFA] py-12 sm:py-16">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="grid md:grid-cols-4 gap-8 sm:gap-12 mb-10">
         <div>
-          <div class="font-display text-xl font-semibold tracking-[0.22em] uppercase text-[#141413]">UNIVIBE</div>
-          <p class="text-xs text-[#6E6A63] mt-1">
-            Phòng trưng bày (Showcase-Only) ý tưởng vật phẩm bản sắc sinh viên · Bộ nhận diện HCMUT.
+          <span class="font-display text-2xl font-bold text-[#1A1A1A]">UNIVIBE</span>
+          <p class="text-sm text-[#666666] mt-4 leading-relaxed">
+            Phòng trưng bày ý tưởng vật phẩm bản sắc sinh viên theo chuẩn nhận diện đại học.
           </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.12em] text-[#6E6A63]">
-          <a href="#hero" class="hover:text-[#141413] transition-colors">Triển lãm</a>
-          <a href="#campus-hubs" class="hover:text-[#141413] transition-colors">Không gian Trường</a>
-          <a href="#gallery" class="hover:text-[#141413] transition-colors">Tác phẩm</a>
-          <a href="https://github.com/ZaMinVo/UniVibe" target="_blank" rel="noopener noreferrer" class="font-mono text-[#141413] underline underline-offset-4">GitHub ↗</a>
+        <div>
+          <h4 class="font-semibold text-[#1A1A1A] mb-4 text-xs uppercase tracking-widest font-sans">Triển lãm</h4>
+          <ul class="space-y-3 text-sm text-[#666666]">
+            <li><a href="#hero" class="hover:text-[#1A1A1A] transition-colors">Tâm điểm</a></li>
+            <li><a href="#campus-hubs" class="hover:text-[#1A1A1A] transition-colors">Trường ĐH</a></li>
+            <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Tác phẩm</a></li>
+          </ul>
         </div>
+
+        <div>
+          <h4 class="font-semibold text-[#1A1A1A] mb-4 text-xs uppercase tracking-widest font-sans">Bộ sưu tập</h4>
+          <ul class="space-y-3 text-sm text-[#666666]">
+            <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Áo Polo HCMUT</a></li>
+            <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Lót Chuột Deskpad</a></li>
+            <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Túi Tote &amp; Nón</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-[#1A1A1A] mb-4 text-xs uppercase tracking-widest font-sans">Thông tin</h4>
+          <ul class="space-y-3 text-sm text-[#666666]">
+            <li><a href="#feature-work" class="hover:text-[#1A1A1A] transition-colors">Feature Work</a></li>
+            <li><a href="https://hcmut.edu.vn/hcmut-shop/product/1" target="_blank" rel="noopener noreferrer" class="hover:text-[#1A1A1A] transition-colors">Nguồn HCMUT Shop</a></li>
+            <li><a href="https://github.com/ZaMinVo/UniVibe" target="_blank" rel="noopener noreferrer" class="hover:text-[#1A1A1A] transition-colors">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-[#E5E5E5] text-center text-sm text-[#666666]">
+        © 2026 UniVibe Showcase Gallery.
       </div>
     </div>
   </footer>
@@ -259,7 +281,7 @@
     <div class="min-h-full flex items-center justify-center">
       <div class="gallery-modal-panel w-full max-w-5xl relative p-6 sm:p-10 animate-editorial">
         <button id="closeConceptModalBtn" type="button" class="gallery-btn-icon absolute top-5 right-5 z-20" aria-label="Đóng chi tiết thiết kế">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -272,12 +294,12 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 2: ANONYMOUS ARCHIVE PORTFOLIO ==================== -->
+  <!-- ==================== MODAL 2: CREATOR / ARCHIVE PROFILE ==================== -->
   <div id="creatorModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-4 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="creatorModalTitle">
     <div class="min-h-full flex items-center justify-center">
       <div class="gallery-modal-panel w-full max-w-4xl relative p-6 sm:p-10 animate-editorial">
         <button id="closeCreatorModalBtn" type="button" class="gallery-btn-icon absolute top-5 right-5 z-20" aria-label="Đóng hồ sơ tác giả">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -292,14 +314,14 @@
 
   <!-- ==================== DRAWER: SAVED BOOKMARKS ==================== -->
   <div id="bookmarksDrawer" class="hidden fixed inset-0 z-50 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bookmarksDrawerTitle">
-    <div class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAF8F5] border-l border-[#E2DDD5] shadow-2xl flex flex-col animate-editorial">
-      <div class="p-6 border-b border-[#E2DDD5] flex items-center justify-between bg-white">
+    <div class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAFAFA] border-l border-[#E5E5E5] shadow-2xl flex flex-col animate-editorial">
+      <div class="p-6 border-b border-[#E5E5E5] flex items-center justify-between bg-white">
         <div>
-          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Personal Collection</p>
-          <h2 id="bookmarksDrawerTitle" class="font-display text-2xl font-semibold text-[#141413]">Bộ Sưu Tập Đã Lưu</h2>
+          <p class="gallery-badge mb-1">Personal Archive</p>
+          <h2 id="bookmarksDrawerTitle" class="font-display text-2xl font-bold text-[#1A1A1A]">Bộ sưu tập đã lưu</h2>
         </div>
-        <button id="closeBookmarksBtn" type="button" class="gallery-btn-icon" aria-label="Đóng danh sách đã lưu">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <button id="closeBookmarksDrawerBtn" type="button" class="gallery-btn-icon" aria-label="Đóng danh sách đã lưu">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -312,17 +334,12 @@
     </div>
   </div>
 
-  <!-- ==================== SUBTLE TOAST NOTIFICATION ==================== -->
-  <div id="toastBanner" class="hidden fixed bottom-6 right-6 z-[60] bg-[#141413] text-[#FAF8F5] px-5 py-3 text-xs font-medium tracking-wide flex items-center gap-2.5 max-w-sm shadow-lg animate-editorial" role="status" aria-live="polite">
-    <svg class="w-4 h-4 text-[#1488DB] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-    <span id="toastText"></span>
-  </div>
+  <!-- ==================== EDITORIAL TOAST NOTIFICATION ==================== -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
 
   <!-- Scripts -->
-  <script src="js/illustrations.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/illustrations.js?v=2026111602"></script>
+  <script src="js/data.js?v=2026111602"></script>
+  <script src="js/app.js?v=2026111602"></script>
 </body>
 </html>

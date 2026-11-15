@@ -10,7 +10,7 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 
 - **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **4 concept chủ lực** được tuyển chọn kỹ lưỡng (**Áo Polo Trắng #1, Lót Chuột Deskpad 900×400×4mm, Túi Tote Canvas & Nón Lưỡi Trai Navy**), 100% hiển thị bằng phối cảnh Studio 3D thực tế chuẩn [HCMUT Shop (#1)](https://hcmut.edu.vn/hcmut-shop/product/1) (`#030391`, `#1488DB`, `#FFFFFF`, wordmark `HCMUT` + huy hiệu lập phương `BK TP.HCM` trên nền studio trung tính, ghi rõ **Nguồn: HCMUT**).
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
-- **Đăng tải ẩn danh (*Ẩn danh*):** Toàn bộ mẫu trưng bày hiện tại được xuất bản công khai dưới danh nghĩa **Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** để sinh viên và các CLB tự do tham khảo, không chứa dữ liệu demo cũ.
+- **Ghi nhận tác giả (*Attribution*):** Bộ 3 vật phẩm chủ lực **Áo Polo Trắng #1, Túi Tote Canvas và Nón Lưỡi Trai** được ghi nhận **by HCMUT** theo hệ thống nhận diện [HCMUT Shop](https://hcmut.edu.vn/hcmut-shop/product/1); mẫu **Lót Chuột Deskpad** được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT**, không chứa dữ liệu demo cũ.
 - **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---
@@ -45,7 +45,7 @@ Các tính năng tương tác cộng đồng và cho phép người dùng tự �
 
 ## 4. Hiện thực Giao diện & Triển khai GitHub Pages
 
-- **Phong cách Giao diện:** Bố cục phòng tranh tinh giản theo [uupm.cc/demo/nft-art-gallery](https://uupm.cc/demo/nft-art-gallery) (nền Alabaster `#FAF8F5`, typography editorial serif `Cormorant Garamond`, đường viền mảnh `1px` kết hợp dấu góc kiến trúc thủ công, tác phẩm studio thực tế không bị che khuất bởi nhãn dán).
+- **Phong cách Giao diện:** Bố cục phòng tranh tinh giản theo [uupm.cc/demo/nft-art-gallery](https://uupm.cc/demo/nft-art-gallery) (nền `#FAFAFA`, bảng màu mực `#1A1A1A` / `#666666`, hệ chữ **Playfair Display** + **Inter**, đường viền mảnh `1px` `#E5E5E5`, tác phẩm studio thực tế hiển thị trọn vẹn).
 - **Kiến trúc Static Zero-Build:** Chạy thuần bằng HTML5, Tailwind CSS CDN, CSS tùy biến ([css/styles.css](css/styles.css)) và Vanilla JavaScript ([js/illustrations.js](js/illustrations.js), [js/data.js](js/data.js), [js/app.js](js/app.js)).
 - **Chạy thử tại máy (Local):**
   ```bash

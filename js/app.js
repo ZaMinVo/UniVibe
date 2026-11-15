@@ -64,14 +64,16 @@
   }
 
   function showToast(message) {
-    const banner = document.getElementById('toastBanner');
-    const text = document.getElementById('toastText');
-    if (!banner || !text) return;
-    text.textContent = message;
-    banner.classList.remove('hidden');
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="bg-[#1A1A1A] text-white px-5 py-3 text-xs tracking-wider uppercase shadow-xl animate-editorial">
+        ${escapeHtml(message)}
+      </div>
+    `;
     if (toastTimer) clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
-      banner.classList.add('hidden');
+      container.innerHTML = '';
     }, 3200);
   }
 
@@ -123,7 +125,7 @@
   // -------------------- SVG Icon Helpers --------------------
   function iconBookmark(saved) {
     return `
-      <svg class="w-4 h-4 ${saved ? 'text-[#030391] fill-[#030391]' : 'text-[#141413]'}" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="w-4 h-4 ${saved ? 'text-[#1A1A1A] fill-[#1A1A1A]' : 'text-[#1A1A1A]'}" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
       </svg>
     `;
@@ -181,41 +183,41 @@
       container.innerHTML = `
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <!-- Left Editorial Statement (GALERIE Hero) -->
-          <div class="lg:col-span-6 space-y-7">
-            <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[#6E6A63]">
-              Current Exhibition · Showcase Only
+          <div class="lg:col-span-6 space-y-6">
+            <p class="gallery-badge">
+              Triển lãm hiện tại
             </p>
 
-            <h1 class="font-display text-5xl sm:text-6xl lg:text-[64px] font-semibold leading-[1.04] tracking-tight text-[#141413]">
-              Bản Sắc <em class="italic font-normal text-[#030391]">Sinh Viên</em> Trong Không Gian Tối Giản
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.06] text-[#1A1A1A]">
+              Bản sắc <span class="italic font-semibold">Sinh viên</span>
             </h1>
 
-            <p class="text-base sm:text-lg text-[#6E6A63] max-w-xl leading-relaxed">
-              Tuyển chọn <strong class="font-semibold text-[#141413]">0${totalConcepts} thiết kế vật phẩm</strong> thực tế tối giản (Áo Polo, Lót chuột Deskpad, Túi Tote, Nón lưỡi trai) đồng bộ hệ thống nhận diện thương hiệu đại học — Nguồn <strong class="font-semibold text-[#141413]">HCMUT</strong>.
+            <p class="text-base sm:text-lg text-[#666666] max-w-xl leading-relaxed font-normal">
+              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Áo Polo, Lót chuột Deskpad, Túi Tote và Nón lưỡi trai theo hệ nhận diện chuẩn HCMUT.
             </p>
 
-            <div class="flex flex-wrap items-center gap-4 pt-1">
+            <div class="flex flex-wrap items-center gap-4 pt-2">
               <a href="#gallery" class="gallery-btn-primary">
-                Xem Phòng Trưng Bày
+                Xem triển lãm
               </a>
               <a href="#campus-hubs" class="gallery-btn-outline">
-                Chọn Trường ĐH
+                Chọn trường ĐH
               </a>
             </div>
 
-            <!-- Quiet Curatorial Metrics -->
-            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-[#E2DDD5] max-w-lg">
+            <!-- Quiet Curatorial Summary -->
+            <div class="grid grid-cols-3 gap-6 pt-8 border-t border-[#E5E5E5] max-w-lg">
               <div>
-                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">${padCount(totalConcepts)}</div>
-                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Tác phẩm</div>
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">${padCount(totalConcepts)}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Tác phẩm</div>
               </div>
               <div>
-                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">03</div>
-                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Góc Studio / mẫu</div>
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">03</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Góc nhìn studio</div>
               </div>
               <div>
-                <div class="font-display text-3xl sm:text-4xl font-semibold text-[#141413]">${padCount(vnuCount)}</div>
-                <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Trường ĐHQG-HCM</div>
+                <div class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A]">${padCount(vnuCount)}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Trường ĐHQG</div>
               </div>
             </div>
           </div>
@@ -223,36 +225,34 @@
           <!-- Right Framed Spotlight Artwork -->
           <div class="lg:col-span-6">
             <article class="gallery-card group">
-              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="sketch-frame block w-full aspect-[4/3] overflow-hidden bg-[#F3F0EA] cursor-pointer">
+              <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="art-frame block w-full aspect-[4/3] bg-[#F5F5F5] cursor-pointer">
                 ${renderMerchIllustration(featured, 0)}
               </button>
 
-              <div class="p-5 sm:p-6 bg-white">
+              <div class="p-6 bg-white border-t border-[#E5E5E5]">
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
                   <div class="sm:col-span-8">
-                    <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1">
-                      Featured Work · Sản phẩm #01
-                    </div>
-                    <h2 class="font-display text-2xl font-semibold text-[#141413] leading-snug">
-                      <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="text-left hover:text-[#030391] transition-colors cursor-pointer">
+                    <div class="gallery-badge mb-1.5">Featured</div>
+                    <h2 class="font-display text-2xl font-bold text-[#1A1A1A] leading-snug">
+                      <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="text-left hover:text-[#666666] transition-colors cursor-pointer">
                         ${escapeHtml(featured.title)}
                       </button>
                     </h2>
-                    <div class="text-xs text-[#6E6A63] mt-1.5">
-                      Tác giả:
-                      <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-[#141413] underline underline-offset-4 decoration-[#E2DDD5] hover:decoration-[#141413] cursor-pointer">
+                    <div class="text-sm text-[#666666] mt-1">
+                      by
+                      <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="hover:text-[#1A1A1A] transition-colors cursor-pointer">
                         ${escapeHtml(creator.name)}
                       </button>
                     </div>
                   </div>
 
-                  <div class="sm:col-span-4 sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2DDD5]">
+                  <div class="sm:col-span-4 sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-2 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#E5E5E5]">
                     <div>
-                      <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Nguồn</div>
-                      <div class="font-mono text-sm font-bold text-[#030391]">${escapeHtml(featured.source || 'HCMUT')}</div>
+                      <div class="text-xs uppercase tracking-wider text-[#666666]">Nguồn</div>
+                      <div class="font-semibold text-sm text-[#1A1A1A]">${escapeHtml(featured.source || 'HCMUT')}</div>
                     </div>
-                    <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="font-mono text-[11px] uppercase tracking-[0.14em] text-[#141413] hover:text-[#030391] underline underline-offset-4 cursor-pointer">
-                      Xem chi tiết →
+                    <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="text-xs uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] transition-colors cursor-pointer">
+                      Chi tiết →
                     </button>
                   </div>
                 </div>
@@ -268,54 +268,56 @@
     const campus = getCampusById(state.activeCampus);
     const campusConcepts = state.concepts.filter((c) => c.campusId === campus.id);
     const topDesign = campusConcepts.find((c) => c.featured) || campusConcepts[0] || null;
+    const topCreator = topDesign ? getCreatorById(topDesign.creatorId) : null;
+    const uniqueCreatorCount = new Set(campusConcepts.map((c) => c.creatorId)).size;
 
     container.innerHTML = `
-      <div class="border border-[#E2DDD5] bg-white p-6 sm:p-10">
+      <div class="border border-[#E5E5E5] bg-white p-6 sm:p-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div class="lg:col-span-7 space-y-5">
             <div class="flex flex-wrap items-center gap-4">
               <button type="button" id="backToGlobalBtn" class="gallery-btn-outline gallery-btn-sm">
-                ← Triển lãm Chung
+                ← Triển lãm chung
               </button>
-              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6E6A63]">
-                Campus Archive · ${escapeHtml(campus.city)}
+              <span class="gallery-badge">
+                Không gian trường — ${escapeHtml(campus.city)}
               </span>
             </div>
 
             <div class="flex items-start sm:items-center gap-4 pt-1">
               ${renderCampusEmblem(campus)}
               <div>
-                <h1 class="font-display text-3xl sm:text-5xl font-semibold text-[#141413] tracking-tight">
+                <h1 class="font-display text-3xl sm:text-5xl font-bold text-[#1A1A1A]">
                   ${escapeHtml(campus.name)}
                 </h1>
-                <p class="font-display italic text-lg text-[#6E6A63] mt-0.5">“${escapeHtml(campus.motto)}”</p>
+                <p class="font-display italic text-lg text-[#666666] mt-0.5">“${escapeHtml(campus.motto)}”</p>
               </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-[#6E6A63]">
+            <div class="flex flex-wrap items-center gap-4 pt-1 text-xs text-[#666666]">
               <span class="uppercase tracking-wider">Màu bản sắc:</span>
-              <span class="inline-flex items-center gap-2 text-[#141413]">
-                <span class="w-3 h-3 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(campus.color)}"></span>
+              <span class="inline-flex items-center gap-2 text-[#1A1A1A] tabular-nums">
+                <span class="w-3 h-3 rounded-full border border-[#E5E5E5]" style="background:${escapeHtml(campus.color)}"></span>
                 ${escapeHtml(campus.color)}
               </span>
-              <span class="inline-flex items-center gap-2 text-[#141413]">
-                <span class="w-3 h-3 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(campus.secondaryColor)}"></span>
+              <span class="inline-flex items-center gap-2 text-[#1A1A1A] tabular-nums">
+                <span class="w-3 h-3 rounded-full border border-[#E5E5E5]" style="background:${escapeHtml(campus.secondaryColor)}"></span>
                 ${escapeHtml(campus.secondaryColor)}
               </span>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 pt-5 border-t border-[#E2DDD5] max-w-lg">
+            <div class="grid grid-cols-3 gap-6 pt-5 border-t border-[#E5E5E5] max-w-lg">
               <div>
-                <div class="font-display text-3xl font-semibold">${padCount(campusConcepts.length)}</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Tác phẩm</div>
+                <div class="font-display text-3xl font-bold text-[#1A1A1A]">${padCount(campusConcepts.length)}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Tác phẩm</div>
               </div>
               <div>
-                <div class="font-display text-3xl font-semibold text-[#030391]">03</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Góc Studio</div>
+                <div class="font-display text-3xl font-bold text-[#1A1A1A]">03</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">Góc studio</div>
               </div>
               <div>
-                <div class="font-display text-2xl sm:text-3xl font-semibold">Ẩn danh</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63] mt-1">Lưu trữ</div>
+                <div class="font-display text-2xl sm:text-3xl font-bold text-[#1A1A1A]">${campusConcepts.length > 0 ? padCount(uniqueCreatorCount) : '—'}</div>
+                <div class="text-xs uppercase tracking-wider text-[#666666] mt-1">${campusConcepts.length > 0 ? 'Đóng góp' : 'Đang mở'}</div>
               </div>
             </div>
           </div>
@@ -324,27 +326,27 @@
             ${
               topDesign
                 ? `
-              <div class="border border-[#E2DDD5] bg-[#FAF8F5] p-4">
-                <div class="flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.14em] text-[#6E6A63] mb-3">
-                  <span>Tiêu biểu · ${escapeHtml(campus.shortName)}</span>
-                  <span>Ẩn danh</span>
+              <div class="border border-[#E5E5E5] bg-[#FAFAFA] p-5">
+                <div class="flex items-center justify-between text-xs uppercase tracking-wider text-[#666666] mb-3">
+                  <span>Tiêu biểu — ${escapeHtml(campus.shortName)}</span>
+                  <span>${topCreator ? `by ${escapeHtml(topCreator.name)}` : 'Showcase'}</span>
                 </div>
-                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="sketch-frame block w-full aspect-[4/3] overflow-hidden bg-[#F3F0EA] cursor-pointer mb-3">
+                <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="art-frame block w-full aspect-[4/3] bg-[#F5F5F5] cursor-pointer mb-4">
                   ${renderMerchIllustration(topDesign, 0)}
                 </button>
                 <div class="flex items-center justify-between gap-3">
-                  <h3 class="font-display text-lg font-semibold truncate">${escapeHtml(topDesign.title)}</h3>
-                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="font-mono text-[11px] uppercase tracking-wider text-[#030391] underline underline-offset-4 shrink-0 cursor-pointer">
+                  <h3 class="font-display text-lg font-bold text-[#1A1A1A] truncate">${escapeHtml(topDesign.title)}</h3>
+                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="text-xs uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] shrink-0 cursor-pointer">
                     Chi tiết →
                   </button>
                 </div>
               </div>
               `
                 : `
-              <div class="p-8 bg-[#FAF8F5] border border-[#E2DDD5] text-center space-y-4">
-                <div class="font-display text-2xl font-semibold text-[#141413]">${escapeHtml(campus.shortName)} đang biên tập</div>
-                <p class="text-xs text-[#6E6A63] leading-relaxed">
-                  Phòng trưng bày hiện tập trung vào bộ sưu tập chuẩn của <strong>HCMUT</strong>. Cổng tự thêm mẫu cho các trường thành viên khác nằm trong lộ trình <strong>Feature Work</strong>.
+              <div class="p-8 bg-[#FAFAFA] border border-[#E5E5E5] text-center space-y-4">
+                <div class="font-display text-2xl font-bold text-[#1A1A1A]">${escapeHtml(campus.shortName)} đang biên tập</div>
+                <p class="text-sm text-[#666666] leading-relaxed">
+                  Phòng trưng bày hiện tập trung vào bộ sưu tập chuẩn của <strong>HCMUT</strong>. Cổng tự thêm mẫu cho các trường thành viên nằm trong lộ trình Feature Work.
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
                   <button type="button" id="viewHcmutShowcaseBtn" class="gallery-btn-primary gallery-btn-sm">Xem bộ sưu tập HCMUT</button>
@@ -393,19 +395,19 @@
 
     const allActive = state.activeCampus === 'all';
     const allCard = `
-      <button type="button" data-campus-id="all" class="text-left p-4 bg-white border transition-all flex flex-col cursor-pointer ${
-        allActive ? 'border-[#141413] ring-1 ring-[#141413]' : 'border-[#E2DDD5] hover:border-[#141413]'
+      <button type="button" data-campus-id="all" class="text-left p-4 bg-white border transition-colors flex flex-col cursor-pointer ${
+        allActive ? 'border-[#1A1A1A] ring-1 ring-[#1A1A1A]' : 'border-[#E5E5E5] hover:border-[#1A1A1A]'
       }">
         <div class="flex items-center gap-3 mb-2.5">
-          <div class="w-10 h-10 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xs font-bold tracking-wider shrink-0">
+          <div class="w-10 h-10 bg-[#1A1A1A] text-white flex items-center justify-center text-xs font-medium tracking-wider shrink-0">
             ALL
           </div>
           <div class="min-w-0">
-            <div class="font-display font-semibold text-base leading-tight text-[#141413]">Liên Trường</div>
-            <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63] mt-0.5">${padCount(state.concepts.length)} tác phẩm</div>
+            <div class="font-display font-bold text-base leading-tight text-[#1A1A1A]">Liên Trường</div>
+            <div class="text-[11px] text-[#666666] mt-0.5 whitespace-nowrap">${state.concepts.length} tác phẩm</div>
           </div>
         </div>
-        <p class="text-xs text-[#6E6A63] line-clamp-2 mt-auto">Toàn bộ tác phẩm trưng bày.</p>
+        <p class="text-xs text-[#666666] line-clamp-2 mt-auto">Toàn bộ tác phẩm trưng bày.</p>
       </button>
     `;
 
@@ -413,25 +415,25 @@
       .map((campus) => {
         const count = state.concepts.filter((c) => c.campusId === campus.id).length;
         const isActive = state.activeCampus === campus.id;
-        const statusText = count > 0 ? `${padCount(count)} tác phẩm` : 'Đang biên tập';
+        const statusText = count > 0 ? `${count} tác phẩm` : 'Sắp cập nhật';
         const vnuLabel = campus.isVnuHcm
-          ? `<span class="font-mono text-[9px] uppercase tracking-[0.14em] text-[#030391]">ĐHQG-HCM</span>`
+          ? `<span class="text-[11px] uppercase tracking-wider text-[#666666]">ĐHQG-HCM</span>`
           : '';
 
         return `
-          <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-4 bg-white border transition-all flex flex-col cursor-pointer ${
-            isActive ? 'border-[#141413] ring-1 ring-[#141413]' : 'border-[#E2DDD5] hover:border-[#141413]'
+          <button type="button" data-campus-id="${escapeHtml(campus.id)}" class="text-left p-4 bg-white border transition-colors flex flex-col cursor-pointer ${
+            isActive ? 'border-[#1A1A1A] ring-1 ring-[#1A1A1A]' : 'border-[#E5E5E5] hover:border-[#1A1A1A]'
           }">
             <div class="flex items-center gap-3 mb-2.5">
               ${renderCampusEmblem(campus)}
               <div class="min-w-0">
-                <div class="font-display font-semibold text-base leading-tight text-[#141413] truncate">${escapeHtml(campus.shortName)}</div>
-                <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63] mt-0.5">${statusText}</div>
+                <div class="font-display font-bold text-base leading-tight text-[#1A1A1A] truncate">${escapeHtml(campus.shortName)}</div>
+                <div class="text-[11px] text-[#666666] mt-0.5 whitespace-nowrap">${statusText}</div>
               </div>
             </div>
             <div class="mt-auto space-y-0.5">
               ${vnuLabel}
-              <p class="text-xs text-[#6E6A63] line-clamp-2">${escapeHtml(campus.name)}</p>
+              <p class="text-xs text-[#666666] line-clamp-2">${escapeHtml(campus.name)}</p>
             </div>
           </button>
         `;
@@ -468,7 +470,7 @@
     const items = getFilteredConcepts();
     const campusLabel =
       state.activeCampus === 'all' ? 'Liên trường' : getCampusById(state.activeCampus).shortName;
-    countBadge.textContent = `${padCount(items.length)} tác phẩm · ${campusLabel}`;
+    countBadge.textContent = `${items.length} tác phẩm — ${campusLabel}`;
 
     if (items.length === 0) {
       grid.innerHTML = '';
@@ -480,58 +482,54 @@
 
     grid.innerHTML = items
       .map((item) => {
-        const campus = getCampusById(item.campusId);
         const creator = getCreatorById(item.creatorId);
         const isBookmarked = state.bookmarks.includes(item.id);
 
         return `
           <article class="gallery-card group flex flex-col">
-            <!-- Pure Studio Artwork Frame (Zero Sticker Clutter) -->
-            <div class="relative aspect-[4/3] overflow-hidden bg-[#F3F0EA]">
-              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="sketch-frame block w-full h-full cursor-pointer" aria-label="Mở chi tiết ${escapeHtml(item.title)}">
+            <!-- Pure Editorial Art Frame -->
+            <div class="relative aspect-[4/3] overflow-hidden bg-[#F5F5F5]">
+              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="art-frame block w-full h-full cursor-pointer" aria-label="Mở chi tiết ${escapeHtml(item.title)}">
                 ${renderMerchIllustration(item, 0)}
               </button>
 
               <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="gallery-btn-icon absolute top-3.5 right-3.5 z-10 ${
-                isBookmarked ? '!bg-white !border-[#141413]' : ''
+                isBookmarked ? '!bg-white !border-[#1A1A1A]' : ''
               }" aria-label="${isBookmarked ? 'Bỏ lưu tác phẩm' : 'Lưu tác phẩm'}" title="${isBookmarked ? 'Đã lưu' : 'Lưu tác phẩm'}">
                 ${iconBookmark(isBookmarked)}
               </button>
             </div>
 
-            <!-- Quiet Museum Placard -->
-            <div class="p-5 sm:p-6 flex-1 flex flex-col bg-white">
+            <!-- GALERIE Style Museum Placard -->
+            <div class="p-6 flex-1 flex flex-col bg-white">
               <div class="flex items-center justify-between gap-3 mb-2">
-                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#6E6A63]">
-                  ${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}
+                <span class="text-xs uppercase tracking-[0.14em] text-[#666666] font-medium">
+                  ${escapeHtml(getCategoryLabel(item.category))}
                 </span>
                 <div class="flex items-center gap-1.5" aria-label="Bảng màu sản phẩm">
                   ${(item.palette || [])
                     .slice(0, 4)
                     .map(
                       (hex) =>
-                        `<span class="w-2.5 h-2.5 rounded-full border border-[#E2DDD5]" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
+                        `<span class="w-2.5 h-2.5 rounded-full border border-[#E5E5E5]" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
                     )
                     .join('')}
                 </div>
               </div>
 
-              <h3 class="font-display text-2xl font-semibold leading-snug text-[#141413]">
-                <button type="button" data-open-concept="${escapeHtml(item.id)}" class="text-left hover:text-[#030391] transition-colors cursor-pointer">
+              <h3 class="font-display text-xl sm:text-2xl font-bold leading-snug text-[#1A1A1A] mb-1">
+                <button type="button" data-open-concept="${escapeHtml(item.id)}" class="text-left hover:text-[#666666] transition-colors cursor-pointer">
                   ${escapeHtml(item.title)}
                 </button>
               </h3>
 
-              <div class="mt-auto pt-4 mt-4 border-t border-[#E2DDD5] flex items-center justify-between gap-3 text-xs text-[#6E6A63]">
-                <div>
-                  <span>Tác giả:</span>
-                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-[#141413] underline underline-offset-4 decoration-[#E2DDD5] hover:decoration-[#141413] font-medium cursor-pointer ml-1">
-                    ${escapeHtml(creator.name)}
-                  </button>
-                </div>
-                <div class="font-mono text-[11px] uppercase tracking-wider">
-                  Nguồn: <span class="text-[#141413] font-bold">${escapeHtml(item.source || 'HCMUT')}</span>
-                </div>
+              <p class="text-sm text-[#666666] mb-5">
+                by <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="hover:text-[#1A1A1A] transition-colors cursor-pointer">${escapeHtml(creator.name)}</button>
+              </p>
+
+              <div class="mt-auto pt-4 border-t border-[#E5E5E5] flex items-center justify-between">
+                <span class="text-xs text-[#666666] uppercase tracking-wider">Nguồn</span>
+                <span class="font-semibold text-sm text-[#1A1A1A]">${escapeHtml(item.source || 'HCMUT')}</span>
               </div>
             </div>
           </article>
@@ -550,9 +548,9 @@
     const bookmarkedItems = state.concepts.filter((c) => state.bookmarks.includes(c.id));
     if (bookmarkedItems.length === 0) {
       list.innerHTML = `
-        <div class="border border-[#E2DDD5] bg-white p-8 text-center">
-          <p class="font-display text-xl font-semibold text-[#141413] mb-1">Chưa lưu tác phẩm nào</p>
-          <p class="text-xs text-[#6E6A63] leading-relaxed">Nhấn biểu tượng lưu ở góc trên bên phải mỗi tác phẩm để tổng hợp thành bộ sưu tập cá nhân.</p>
+        <div class="border border-[#E5E5E5] bg-white p-8 text-center">
+          <p class="font-display text-xl font-bold text-[#1A1A1A] mb-1">Chưa lưu tác phẩm nào</p>
+          <p class="text-xs text-[#666666] leading-relaxed">Nhấn biểu tượng lưu ở góc trên bên phải mỗi tác phẩm để tổng hợp thành bộ sưu tập cá nhân.</p>
         </div>
       `;
       return;
@@ -562,18 +560,18 @@
       .map((item) => {
         const campus = getCampusById(item.campusId);
         return `
-          <div class="border border-[#E2DDD5] bg-white p-3.5 flex items-center gap-3.5">
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-15 aspect-[4/3] overflow-hidden border border-[#E2DDD5] shrink-0 cursor-pointer bg-[#F3F0EA]">
+          <div class="border border-[#E5E5E5] bg-white p-3.5 flex items-center gap-3.5">
+            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-15 aspect-[4/3] overflow-hidden border border-[#E5E5E5] shrink-0 cursor-pointer bg-[#F5F5F5]">
               ${renderMerchIllustration(item, 0)}
             </button>
             <div class="min-w-0 flex-1">
-              <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6E6A63]">${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}</div>
-              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-semibold text-base text-left line-clamp-2 hover:text-[#030391] cursor-pointer text-[#141413]">
+              <div class="text-xs uppercase tracking-wider text-[#666666]">${escapeHtml(campus.shortName)} — ${escapeHtml(getCategoryLabel(item.category))}</div>
+              <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-bold text-base text-left line-clamp-2 hover:text-[#666666] cursor-pointer text-[#1A1A1A]">
                 ${escapeHtml(item.title)}
               </button>
             </div>
             <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="gallery-btn-icon shrink-0" aria-label="Xóa khỏi đã lưu">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -618,18 +616,18 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         <!-- Left Column: Multi-Angle Studio Artwork -->
         <div class="lg:col-span-6 space-y-4">
-          <div class="border border-[#E2DDD5] bg-white p-3">
-            <div id="detailArtworkFrame" class="sketch-frame aspect-[4/3] overflow-hidden bg-[#F3F0EA]">
+          <div class="border border-[#E5E5E5] bg-white p-3">
+            <div id="detailArtworkFrame" class="art-frame aspect-[4/3] bg-[#F5F5F5]">
               ${renderMerchIllustration(concept, state.activeDetailView)}
             </div>
-            <div class="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-[#E2DDD5]">
+            <div class="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-[#E5E5E5]">
               ${viewButtons
                 .map(
                   (vb) => `
-                <button type="button" data-detail-view="${vb.idx}" class="py-2 px-2 text-[11px] font-medium border transition-colors cursor-pointer ${
+                <button type="button" data-detail-view="${vb.idx}" class="py-2 px-2 text-xs font-medium border transition-colors cursor-pointer ${
                     state.activeDetailView === vb.idx
-                      ? 'bg-[#141413] text-[#FAF8F5] border-[#141413]'
-                      : 'bg-white text-[#6E6A63] border-[#E2DDD5] hover:border-[#141413] hover:text-[#141413]'
+                      ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
+                      : 'bg-white text-[#666666] border-[#E5E5E5] hover:border-[#1A1A1A] hover:text-[#1A1A1A]'
                   }">
                   ${escapeHtml(vb.label)}
                 </button>
@@ -655,28 +653,28 @@
         <!-- Right Column: Curatorial Placard Info -->
         <div class="lg:col-span-6 space-y-6 pr-2">
           <div class="pr-8">
-            <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-2">
-              <span class="text-[#030391] font-bold">${escapeHtml(campus.shortName)}</span>
-              <span>·</span>
+            <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-[#666666] mb-2">
+              <span class="font-semibold text-[#1A1A1A]">${escapeHtml(campus.shortName)}</span>
+              <span>/</span>
               <span>${escapeHtml(getCategoryLabel(concept.category))}</span>
-              <span>·</span>
+              <span>/</span>
               <span>Nguồn: ${escapeHtml(concept.source || 'HCMUT')}</span>
             </div>
 
-            <h2 id="conceptModalTitle" class="font-display text-3xl sm:text-4xl font-semibold text-[#141413] leading-tight">
+            <h2 id="conceptModalTitle" class="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A] leading-tight">
               ${escapeHtml(concept.title)}
             </h2>
 
-            <div class="flex items-center justify-between gap-3 mt-4 py-3 border-y border-[#E2DDD5]">
+            <div class="flex items-center justify-between gap-3 mt-4 py-3 border-y border-[#E5E5E5]">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xs font-bold">
+                <div class="w-9 h-9 text-white flex items-center justify-center text-xs font-semibold shrink-0" style="background:${escapeHtml(creator.avatarBg || '#1A1A1A')}">
                   ${escapeHtml(creator.initials)}
                 </div>
                 <div>
-                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-sm font-medium text-[#141413] hover:text-[#030391] underline underline-offset-4 decoration-[#E2DDD5] cursor-pointer block text-left">
-                    ${escapeHtml(creator.name)}
+                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="text-sm font-medium text-[#1A1A1A] hover:text-[#666666] transition-colors cursor-pointer block text-left">
+                    by ${escapeHtml(creator.name)}
                   </button>
-                  <div class="text-[11px] text-[#6E6A63]">${escapeHtml(creator.faculty)} · ${formatDateDisplay(concept.createdAt)}</div>
+                  <div class="text-xs text-[#666666]">${escapeHtml(creator.faculty)} · ${formatDateDisplay(concept.createdAt)}</div>
                 </div>
               </div>
 
@@ -688,20 +686,20 @@
 
           <!-- Curatorial Note -->
           <div>
-            <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1.5">Câu chuyện thiết kế</div>
-            <p class="text-sm text-[#141413]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
+            <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-1.5">Câu chuyện thiết kế</div>
+            <p class="text-sm text-[#1A1A1A]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
           </div>
 
           <!-- Palette & Material Specs -->
-          <div class="bg-white border border-[#E2DDD5] p-5 space-y-4">
+          <div class="bg-white border border-[#E5E5E5] p-5 space-y-4">
             <div>
-              <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-2.5">Bảng màu chuẩn nhận diện (Bấm để sao chép HEX)</div>
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2.5">Bảng màu chuẩn nhận diện (Bấm để sao chép HEX)</div>
               <div class="flex flex-wrap gap-2">
                 ${(concept.palette || [])
                   .map(
                     (hex) => `
-                  <button type="button" data-copy-hex="${escapeHtml(hex)}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FAF8F5] border border-[#E2DDD5] hover:border-[#141413] text-xs font-mono cursor-pointer transition-colors">
-                    <span class="w-3.5 h-3.5 rounded-full border border-[#D5CFC7]" style="background:${escapeHtml(hex)}"></span>
+                  <button type="button" data-copy-hex="${escapeHtml(hex)}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#1A1A1A] text-xs tabular-nums font-medium cursor-pointer transition-colors">
+                    <span class="w-3.5 h-3.5 rounded-full border border-[#D4D4D4]" style="background:${escapeHtml(hex)}"></span>
                     ${escapeHtml(hex)}
                   </button>
                 `
@@ -710,16 +708,16 @@
               </div>
             </div>
 
-            <div class="border-t border-[#E2DDD5] pt-4">
-              <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63] mb-1.5">Thông số chất liệu</div>
-              <p class="text-xs sm:text-sm text-[#6E6A63] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số.')}</p>
+            <div class="border-t border-[#E5E5E5] pt-4">
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-1.5">Thông số chất liệu</div>
+              <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số.')}</p>
             </div>
           </div>
 
           <!-- Minimal Feature Work Notice -->
-          <div class="border-t border-[#E2DDD5] pt-4 flex items-center justify-between gap-4 text-xs text-[#6E6A63]">
-            <span>Chế độ Chỉ Trưng Bày · Tương tác &amp; Góp ý nằm trong Feature Work.</span>
-            <a href="#feature-work" data-jump-feature-work="true" class="font-mono uppercase tracking-wider text-[#141413] underline underline-offset-4 shrink-0">Lộ trình →</a>
+          <div class="border-t border-[#E5E5E5] pt-4 flex items-center justify-between gap-4 text-xs text-[#666666]">
+            <span>Chế độ Chỉ Trưng Bày — Tương tác nằm trong Feature Work.</span>
+            <a href="#feature-work" data-jump-feature-work="true" class="uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] shrink-0">Lộ trình →</a>
           </div>
         </div>
       </div>
@@ -752,32 +750,32 @@
 
     body.innerHTML = `
       <div class="space-y-8">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-5 pr-8 border-b border-[#E2DDD5] pb-6">
-          <div class="w-16 h-16 bg-[#141413] text-[#FAF8F5] flex items-center justify-center font-mono text-xl font-bold shrink-0">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-5 pr-8 border-b border-[#E5E5E5] pb-6">
+          <div class="w-16 h-16 text-white flex items-center justify-center font-display text-xl font-bold shrink-0" style="background:${escapeHtml(creator.avatarBg || '#1A1A1A')}">
             ${escapeHtml(creator.initials)}
           </div>
           <div class="space-y-1">
-            <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6E6A63]">Showcase Archive · ${escapeHtml(campus.name)}</div>
-            <h2 id="creatorModalTitle" class="font-display text-3xl font-semibold text-[#141413]">${escapeHtml(creator.name)}</h2>
-            <p class="text-xs font-mono text-[#6E6A63]">${escapeHtml(creator.handle)} · ${escapeHtml(creator.faculty)}</p>
+            <div class="gallery-badge">Hồ sơ lưu trữ — ${escapeHtml(campus.name)}</div>
+            <h2 id="creatorModalTitle" class="font-display text-3xl font-bold text-[#1A1A1A]">${escapeHtml(creator.name)}</h2>
+            <p class="text-xs text-[#666666]">${escapeHtml(creator.handle)} · ${escapeHtml(creator.faculty)}</p>
           </div>
         </div>
 
-        <p class="text-sm text-[#6E6A63] leading-relaxed">${escapeHtml(creator.bio)}</p>
+        <p class="text-sm text-[#666666] leading-relaxed">${escapeHtml(creator.bio)}</p>
 
         <div>
-          <h3 class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6E6A63] mb-4">Tác phẩm đang trưng bày (${padCount(works.length)})</h3>
+          <h3 class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-4">Tác phẩm đang trưng bày (${works.length})</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             ${works
               .map(
                 (w) => `
               <button type="button" data-open-concept="${escapeHtml(w.id)}" class="gallery-card text-left p-3 cursor-pointer flex items-center gap-3.5">
-                <div class="w-24 aspect-[4/3] overflow-hidden bg-[#F3F0EA] border border-[#E2DDD5] shrink-0">
+                <div class="w-24 aspect-[4/3] overflow-hidden bg-[#F5F5F5] border border-[#E5E5E5] shrink-0">
                   ${renderMerchIllustration(w, 0)}
                 </div>
                 <div class="min-w-0">
-                  <div class="font-mono text-[10px] uppercase tracking-wider text-[#6E6A63]">${escapeHtml(getCategoryLabel(w.category))}</div>
-                  <div class="font-display font-semibold text-base text-[#141413] line-clamp-2 mt-0.5">${escapeHtml(w.title)}</div>
+                  <div class="text-xs uppercase tracking-wider text-[#666666]">${escapeHtml(getCategoryLabel(w.category))}</div>
+                  <div class="font-display font-bold text-base text-[#1A1A1A] line-clamp-2 mt-0.5">${escapeHtml(w.title)}</div>
                 </div>
               </button>
             `
@@ -926,7 +924,7 @@
     document.getElementById('closeConceptModalBtn')?.addEventListener('click', closeConceptModal);
     document.getElementById('closeCreatorModalBtn')?.addEventListener('click', closeCreatorModal);
     document.getElementById('openBookmarksBtn')?.addEventListener('click', openBookmarksDrawer);
-    document.getElementById('closeBookmarksBtn')?.addEventListener('click', closeBookmarksDrawer);
+    document.getElementById('closeBookmarksDrawerBtn')?.addEventListener('click', closeBookmarksDrawer);
 
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mobilePanel = document.getElementById('mobileMenuPanel');
