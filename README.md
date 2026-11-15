@@ -1,89 +1,51 @@
 # UniVibe
 
-> **UniVibe** là không gian mở để sinh viên tự tay thiết kế, bình chọn và lan tỏa những ý tưởng vật phẩm mang đậm bản sắc trường mình — từ áo khoác, túi tote, dây đeo thẻ cho đến linh vật (mascot).
+> **UniVibe** là phòng trưng bày số (*Showcase-Only*) giới thiệu các ý tưởng vật phẩm mang đậm bản sắc sinh viên đại học — kết hợp giao diện web phong cách **Hand-Drawn Sketchbook** với các mockup sản phẩm thực tế tối giản.
 
 ---
 
-## 1. Định vị Sản phẩm (Product Positioning)
+## 1. Định vị & Phiên bản hiện tại (Pure Showcase Gallery — Chỉ trưng bày)
 
-**UniVibe** được định vị như **"Behance / Dribbble dành riêng cho văn hóa và vật phẩm sinh viên các trường đại học"** — một phòng trưng bày số (*Pure Gallery & Showcase*) nơi sinh viên đăng tải các concept thiết kế mang đậm bản sắc trường mình, nhận đánh giá đa chiều từ cộng đồng, đua top trên bảng xếp hạng và kết nối tự nhiên qua hồ sơ cá nhân (*Profile*).
+Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán, gom đơn hay trực tiếp sản xuất.
-- **Giá trị cốt lõi:** Tập trung nguồn cảm hứng sáng tạo của sinh viên, giúp các ý tưởng (áo khoác, túi tote, dây đeo thẻ, sticker, linh vật/mascot...) được nhìn thấy, được công nhận và tạo tín hiệu uy tín trước khi tác giả hoặc các CLB/Đoàn-Hội tự liên hệ đem đi sản xuất thực tế bên ngoài.
-
----
-
-## 2. Cấu trúc Không gian: Đa trường với Bản sắc riêng (Multi-Campus Hubs)
-
-Nền tảng được tổ chức thành **2 tầng không gian**:
-
-1. **Trang Khám phá Chung (Global / Inter-Uni Explore):**
-   - Hội tụ những thiết kế nổi bật nhất từ mọi trường đại học.
-   - Giúp sinh viên trường này chiêm ngưỡng văn hóa thiết kế của trường khác, tạo sự giao thoa và cạnh tranh tích cực liên trường.
-2. **Không gian Riêng từng Trường (Campus Hub):**
-   - Mỗi trường có một không gian riêng mang nhận diện đặc trưng (logo, màu sắc chủ đạo, khẩu hiệu/văn hóa riêng).
-   - Có luồng bài đăng (*Feed*) và Bảng xếp hạng (*Leaderboard*) độc lập cho từng trường.
+- **Không gian trưng bày tinh gọn:** Giới thiệu bộ sưu tập mockup sản phẩm thực tế tối giản (**Áo thun & Lót chuột**) lấy cảm hứng từ bộ nhận diện thương hiệu chính thức của **Trường ĐH Bách Khoa — ĐHQG-HCM (HCMUT)** (`#1488DB`, `#030391`, `#FFFFFF`, logo lục giác 3D chuẩn & phiên bản viền trắng).
+- **Đăng tải ẩn danh (*Ẩn danh*):** Toàn bộ mẫu trưng bày hiện tại được xuất bản công khai dưới danh nghĩa **Ẩn danh** để sinh viên và các CLB tự do tham khảo, không chứa dữ liệu demo cũ.
+- **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---
 
-## 3. Cấu trúc một Tác phẩm Trưng bày (Concept Post)
+## 2. Trải nghiệm Trưng bày hiện có
 
-Sinh viên tự sáng tạo bằng các công cụ bên ngoài (Photoshop, Illustrator, Canva, Procreate, 3D, vẽ tay...) và đăng tải lên UniVibe dưới dạng một **Project trưng bày** gồm:
-
-- **Bộ sưu tập hình ảnh (Gallery):** Ảnh bìa nổi bật, các góc phối cảnh (mockup mặt trước/sau, chi tiết bo cổ, khóa kéo, hoặc các biểu cảm của Mascot).
-- **Câu chuyện Bản sắc (The Vibe Story):** Ý nghĩa đằng sau thiết kế, nguồn cảm hứng từ kỷ niệm, kiến trúc, câu nói cửa miệng hay nét đặc trưng của trường/khoa.
-- **Danh mục & Thông số tham khảo:**
-  - Phân loại vật phẩm: *Áo khoác (Jacket/Hoodie)*, *Áo thun/Polo*, *Túi Tote/Balo*, *Dây đeo thẻ (Lanyard)*, *Linh vật (Mascot)*, *Phụ kiện/Sticker*.
-  - Bảng mã màu (*Color Palette*) chủ đạo của thiết kế.
-  - Thẻ phân loại (*Tags*) và Trường đại học tương ứng.
-
----
-
-## 4. Cơ chế Bình chọn Đa tiêu chí & Tương tác (Multi-Criteria Rating)
-
-Thay vì chỉ bấm "Like" đơn điệu, người xem đánh giá một thiết kế qua **3 thang điểm cốt lõi (1–5 sao)**:
-
-1. **Độ sáng tạo & Thẩm mỹ (Creativity):** Thiết kế có độc đáo, bắt mắt và chỉn chu không?
-2. **Bản sắc trường (Campus Identity):** Có "ra chất" của trường đó không? Sinh viên nhìn vào có thấy tự hào/đồng cảm không?
-3. **Tính ứng dụng thực tế (Practicality):** Khi may/in ra đời thật có dễ mặc, dễ mang đi học hằng ngày và khả thi để sản xuất không?
-
-**Trải nghiệm đi kèm:**
-- **Biểu đồ điểm trực quan:** Mỗi bài đăng hiển thị điểm trung bình tổng hợp cùng thanh điểm chi tiết của 3 tiêu chí.
-- **Bình luận & Góp ý (Critique & Feedback):** Thảo luận để tác giả hoàn thiện mẫu thiết kế.
-- **Lưu trữ (Bookmark / Save):** Lưu các thiết kế yêu thích vào danh sách cá nhân để tham khảo.
+1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
+2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo loại vật phẩm (*Áo thun*, *Lót chuột*, *Áo khoác*, *Túi Tote*, *Dây đeo thẻ*, *Mascot*), tìm kiếm theo từ khóa/tag và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
+3. **Chi tiết Tác phẩm 3 Góc nhìn Studio:**
+   - **Mockup Mặt Trước**
+   - **Mặt Sau & Chi Tiết**
+   - **Thông Số Nhận Diện**
+4. **Bảng mã màu & Chất liệu:** Xem *Câu chuyện bản sắc (The Vibe Story)*, sao chép nhanh mã màu HEX chuẩn nhận diện và tham khảo thông số chất liệu dự kiến.
+5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào bộ sưu tập cá nhân trên trình duyệt (`localStorage`).
 
 ---
 
-## 5. Bảng xếp hạng Định kỳ (Evergreen Leaderboards)
+## 3. Feature Work (Định hướng phát triển tính năng cho người dùng)
 
-Mọi bài đăng đều mở tự do (không bị bó buộc theo đợt cuộc thi) và được hệ thống tự động vinh danh qua:
+Các tính năng tương tác cộng đồng và cho phép người dùng tự đóng góp thiết kế được tách thành lộ trình **Feature Work**:
 
-- **Top Thiết kế Tuần / Tháng / Mùa (hoặc Năm):** Xếp hạng dựa trên điểm đánh giá đa tiêu chí và lượng tương tác.
-- **Bảng vàng theo Trường & Liên trường:** Vinh danh cả tác phẩm (*Top Designs*) lẫn tác giả nổi bật (*Top Creators*) của trường.
-
----
-
-## 6. Hồ sơ Tác giả & Cầu nối Hợp tác (Creator Profile)
-
-Vì bài đăng giữ sự tinh gọn thuần trưng bày (*Pure Gallery*), **Profile cá nhân của sinh viên** đóng vai trò như một Portfolio chính thức:
-
-- Trưng bày toàn bộ các thiết kế đã đăng và các danh hiệu đạt được (VD: *Top 1 Thiết kế Tháng tại trường*).
-- Thông tin giới thiệu (Trường/Khoa, kỹ năng thiết kế).
-- **Nút/Liên kết liên hệ trực tiếp** (Email, Facebook, Instagram, Behance...) để các CLB, Khoa/Viện hoặc nhóm sinh viên muốn hợp tác sản xuất có thể chủ động kết nối.
+1. **Cho phép người dùng thêm thiết kế (*User Concept Submission*):**
+   - Mở cổng để sinh viên tự đăng tải concept vật phẩm mới, chọn không gian trường, tùy chỉnh bảng màu 4 mã HEX, gắn ảnh mockup và lựa chọn đăng **Ẩn danh** hoặc định danh cá nhân.
+2. **Công cụ tạo Prompt Mockup Studio (*AI Mockup Studio*):**
+   - Tự động sinh công thức prompt chụp sản phẩm thực tế trong studio khớp với màu sắc, chất liệu và logo nhận diện của từng trường đại học.
+3. **Bình chọn đa tiêu chí & Phản biện (*3-Criteria Rating & Critique*):**
+   - Đánh giá 1–5 sao theo 3 tiêu chí (*Độ sáng tạo & Thẩm mỹ*, *Bản sắc trường*, *Tính ứng dụng thực tế*) kèm bình luận góp ý tinh chỉnh chi tiết.
+4. **Bảng xếp hạng Định kỳ & Hồ sơ Tác giả (*Leaderboards & Creator Bridge*):**
+   - Vinh danh Top Thiết kế / Tác giả theo Tuần/Tháng/Năm, xác thực email `.edu.vn`, xuất thẻ chia sẻ *Vibe Card* và cầu nối giúp CLB/Đoàn-Hội liên hệ tác giả hợp tác sản xuất.
 
 ---
 
-## 7. Định hướng Mở rộng (Future Expansion)
+## 4. Hiện thực Giao diện & Triển khai GitHub Pages
 
-1. **Định danh sinh viên (`.edu.vn`):** Giai đoạn đầu cho phép đăng nhập nhanh (GitHub/Google) và tự chọn trường để dễ trải nghiệm; về sau bổ sung xác thực email `.edu.vn` để cấp huy hiệu *"Sinh viên chính thức"* và tăng độ tin cậy cho điểm chấm Bản sắc trường.
-2. **Công cụ Lan tỏa (Sharing):** Giai đoạn đầu hỗ trợ chia sẻ link tiêu chuẩn (*OpenGraph preview* đẹp mắt khi gửi qua Facebook/Zalo); về sau nâng cấp thêm tính năng tự động xuất ảnh *Vibe Card* kèm mã QR để đăng Story kêu gọi bình chọn.
-
----
-
-## 8. Hiện thực Giao diện & Triển khai GitHub Pages
-
-- **Phong cách Giao diện:** Kết hợp **Hand-Drawn Sketchbook** (`ui-ux-pro-max`) với bố cục triển lãm **Curated Gallery** (`Galerie`) và bộ minh họa SVG đa góc độ lấy cảm hứng từ `threerocks/hand-drawn-styles`.
-- **Kiến trúc Static Zero-Build:** Chạy thuần bằng HTML5, Tailwind CSS CDN, CSS tùy biến ([css/styles.css](css/styles.css)) và Vanilla JavaScript ([js/illustrations.js](js/illustrations.js), [js/data.js](js/data.js), [js/app.js](js/app.js)) cùng lưu trữ cục bộ qua `localStorage`.
+- **Phong cách Giao diện:** Web UI giữ nguyên chất **Hand-Drawn Sketchbook**, trong khi phần tác phẩm trưng bày sử dụng SVG **Realistic Studio Product Mockups** trên nền studio sáng sạch (`#F4F6F9`).
+- **Kiến trúc Static Zero-Build:** Chạy thuần bằng HTML5, Tailwind CSS CDN, CSS tùy biến ([css/styles.css](css/styles.css)) và Vanilla JavaScript ([js/illustrations.js](js/illustrations.js), [js/data.js](js/data.js), [js/app.js](js/app.js)).
 - **Chạy thử tại máy (Local):**
   ```bash
   python3 -m http.server 8123
@@ -93,4 +55,3 @@ Vì bài đăng giữ sự tinh gọn thuần trưng bày (*Pure Gallery*), **Pr
   1. Đẩy mã nguồn lên nhánh `main` của repository (`https://github.com/ZaMinVo/UniVibe`).
   2. Trên GitHub, vào **Settings → Pages → Build and deployment → Source** và chọn **GitHub Actions**.
   3. Workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) sẽ tự động build và xuất bản trang web lên GitHub Pages (`https://zaminvo.github.io/UniVibe/`).
-

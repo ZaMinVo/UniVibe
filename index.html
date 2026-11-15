@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UniVibe — Phòng Trưng Bày Ý Tưởng Vật Phẩm Bản Sắc Sinh Viên</title>
-  <meta name="description" content="UniVibe là không gian mở để sinh viên tự tay thiết kế, bình chọn đa tiêu chí và lan tỏa những ý tưởng vật phẩm mang đậm bản sắc trường mình — từ áo khoác, túi tote, dây đeo thẻ đến linh vật mascot." />
+  <meta name="description" content="Không gian trưng bày concept vật phẩm sinh viên theo bộ nhận diện thương hiệu trường đại học — từ áo thun, lót chuột đến các vật phẩm bản sắc tối giản." />
 
   <!-- OpenGraph Preview for Social Sharing (Facebook / Zalo / Threads) -->
   <meta property="og:title" content="UniVibe — Triển Lãm Ý Tưởng Vật Phẩm Sinh Viên" />
-  <meta property="og:description" content="Không gian trưng bày concept merch & mascot đậm chất trường đại học. Xem bộ sưu tập, chấm điểm 3 tiêu chí và kết nối tác giả." />
+  <meta property="og:description" content="Không gian trưng bày concept vật phẩm sinh viên theo bộ nhận diện thương hiệu trường đại học. Xem phối cảnh Studio 3 góc nhìn, bảng màu chuẩn và thông số chất liệu." />
   <meta property="og:type" content="website" />
 
   <!-- Vietnamese-Safe Hand-Drawn Google Fonts -->
@@ -76,22 +76,11 @@
         <nav class="hidden lg:flex items-center gap-6 font-display font-bold text-[15px]" aria-label="Điều hướng chính">
           <a href="#campus-hubs" class="hover:text-[#2D5DA1] transition-colors py-2">Không gian Trường</a>
           <a href="#gallery" class="hover:text-[#2D5DA1] transition-colors py-2">Phòng Trưng Bày</a>
-          <a href="#leaderboard" class="hover:text-[#2D5DA1] transition-colors py-2">Bảng Vàng</a>
-          <a href="#creators" class="hover:text-[#2D5DA1] transition-colors py-2">Tác Giả</a>
+          <a href="#feature-work" class="hover:text-[#2D5DA1] transition-colors py-2">Feature Work</a>
         </nav>
 
         <!-- Action Controls -->
         <div class="flex items-center gap-2 sm:gap-3">
-          <button id="openPromptModalBtn" type="button" class="hidden md:inline-flex sketch-btn sketch-btn-sm btn-paper text-sm" title="Tạo Prompt Mockup Sản Phẩm Thực Tế">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 19l7-7 3 3-7 7-3-3z" />
-              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-              <path d="M2 2l7.586 7.586" />
-              <circle cx="11" cy="11" r="2" />
-            </svg>
-            <span>Prompt Mockup</span>
-          </button>
-
           <button id="openBookmarksBtn" type="button" class="sketch-btn sketch-btn-sm btn-paper relative" aria-label="Mở bộ sưu tập đã lưu">
             <svg class="w-4 h-4 shrink-0 text-[#FF4D4D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -100,13 +89,9 @@
             <span id="bookmarkCountBadge" class="font-mono font-bold text-xs px-1.5 py-0.5 bg-[#FFF3B0] border-[1.8px] border-[#1E1E24] rounded-full">0</span>
           </button>
 
-          <button id="openSubmitModalBtn" type="button" class="sketch-btn sketch-btn-sm btn-postit text-sm">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            <span>Đăng Concept</span>
-          </button>
+          <a href="#feature-work" class="sketch-btn sketch-btn-sm btn-postit text-sm">
+            <span>Feature Work</span>
+          </a>
 
           <!-- Mobile Menu Toggle -->
           <button id="mobileMenuBtn" type="button" class="lg:hidden sketch-btn sketch-btn-icon btn-paper" aria-label="Mở menu điều hướng" aria-expanded="false">
@@ -124,9 +109,7 @@
         <nav class="flex flex-col gap-2 font-display font-bold" aria-label="Điều hướng di động">
           <a href="#campus-hubs" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Không gian Trường</a>
           <a href="#gallery" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Phòng Trưng Bày</a>
-          <a href="#leaderboard" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Bảng Vàng</a>
-          <a href="#creators" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Tác Giả &amp; Kết Nối</a>
-          <button id="mobilePromptBtn" type="button" class="text-left px-3 py-2.5 rounded-lg hover:bg-[#B8F2E6]">Công thức Prompt Mockup Thực Tế</button>
+          <a href="#feature-work" class="px-3 py-2.5 rounded-lg hover:bg-[#FFF3B0]">Feature Work</a>
         </nav>
       </div>
     </div>
@@ -153,7 +136,7 @@
             </h2>
           </div>
           <p class="text-sm text-[#52525B] max-w-md">
-            Chuyển nhanh giữa <strong>Khám phá Chung liên trường</strong> hoặc bước vào không gian riêng của từng trường để xem Feed &amp; Bảng Vàng độc lập.
+            Chuyển nhanh giữa <strong>Khám phá Chung liên trường</strong> hoặc xem không gian trưng bày riêng của từng trường đại học.
           </p>
         </div>
 
@@ -174,11 +157,11 @@
               <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24]">
                 Phòng Trưng Bày <span class="sketch-highlight sketch-highlight--mint">Ý Tưởng</span>
               </h2>
-              <span id="galleryCountBadge" class="font-mono text-xs font-bold px-3 py-1 bg-[#FFF3B0] sketch-pill">12 concept</span>
+              <span id="galleryCountBadge" class="font-mono text-xs font-bold px-3 py-1 bg-[#FFF3B0] sketch-pill">4 concept</span>
             </div>
           </div>
           <p class="text-sm text-[#52525B] max-w-md">
-            Chấm điểm 1–5 sao theo <strong>3 tiêu chí</strong>: Độ sáng tạo, Bản sắc trường và Tính ứng dụng thực tế. Bấm vào thẻ để xem góc sau &amp; câu chuyện thiết kế.
+            Trưng bày phối cảnh Studio thực tế (3 góc nhìn), câu chuyện thiết kế, bảng màu chuẩn nhận diện và thông số chất liệu. Bấm vào từng mẫu để xem chi tiết.
           </p>
         </div>
 
@@ -201,12 +184,10 @@
               </div>
 
               <select id="sortSelect" class="sketch-input sm:w-56 text-sm font-semibold cursor-pointer" aria-label="Sắp xếp thiết kế">
-                <option value="composite">Điểm tổng hợp cao nhất</option>
-                <option value="identity">Đậm bản sắc trường nhất</option>
-                <option value="creativity">Độ sáng tạo cao nhất</option>
-                <option value="practicality">Tính ứng dụng cao nhất</option>
-                <option value="votes">Nhiều lượt chấm nhất</option>
-                <option value="newest">Mới đăng gần đây</option>
+                <option value="featured">Thứ tự trưng bày đề xuất</option>
+                <option value="newest">Mới cập nhật gần đây</option>
+                <option value="category">Theo loại vật phẩm</option>
+                <option value="title">Tên thiết kế (A → Z)</option>
               </select>
             </div>
           </div>
@@ -227,63 +208,95 @@
             </svg>
           </div>
           <h3 class="font-display text-xl font-bold mb-2">Chưa tìm thấy concept phù hợp</h3>
-          <p class="text-sm text-[#52525B] mb-5">Thử đổi từ khóa tìm kiếm, chọn danh mục khác hoặc tự tay đăng concept đầu tiên cho trường mình nhé!</p>
+          <p class="text-sm text-[#52525B] mb-5">Thử đổi từ khóa tìm kiếm hoặc chọn danh mục khác để xem các mẫu đang trưng bày.</p>
           <button id="resetFiltersBtn" type="button" class="sketch-btn btn-postit text-sm">Xem tất cả thiết kế</button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 4. EVERGREEN LEADERBOARD SECTION ==================== -->
-    <section id="leaderboard" class="py-12 sm:py-16 bg-[#F4EFE6]/80 border-y-[2.5px] border-[#1E1E24]">
+    <!-- ==================== 4. FEATURE WORK & ROADMAP ==================== -->
+    <section id="feature-work" class="py-12 sm:py-16 bg-[#F4EFE6]/80 border-t-[2.5px] border-[#1E1E24]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-8">
           <div>
-            <span class="inline-block font-hand text-base text-[#2D5DA1] font-bold tracking-wide uppercase">03 · Vinh danh tự do mỗi kỳ</span>
+            <span class="inline-block font-hand text-base text-[#2D5DA1] font-bold tracking-wide uppercase">03 · Feature Work &amp; Roadmap</span>
             <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24] mt-0.5">
-              Bảng Vàng <span class="sketch-highlight">UniVibe</span>
-              <span id="leaderboardScopeLabel" class="inline-block ml-2 text-base font-hand font-bold px-3 py-0.5 bg-white sketch-pill align-middle">Liên trường</span>
+              Định Hướng Phát Triển <span class="sketch-highlight">(Feature Work)</span>
             </h2>
           </div>
-
-          <!-- Leaderboard Tabs -->
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="flex items-center gap-1.5 bg-white p-1.5 sketch-pill" role="tablist" aria-label="Chu kỳ bảng xếp hạng">
-              <button type="button" data-lb-period="all" class="lb-period-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer chip-active">Tất cả</button>
-              <button type="button" data-lb-period="week" class="lb-period-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer hover:bg-[#FFF3B0]">Top Tuần</button>
-              <button type="button" data-lb-period="month" class="lb-period-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer hover:bg-[#FFF3B0]">Top Tháng</button>
-              <button type="button" data-lb-period="year" class="lb-period-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer hover:bg-[#FFF3B0]">Top Năm</button>
-            </div>
-
-            <div class="flex items-center gap-1.5 bg-white p-1.5 sketch-pill" role="tablist" aria-label="Loại bảng xếp hạng">
-              <button type="button" data-lb-mode="designs" class="lb-mode-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer chip-active">Tác phẩm</button>
-              <button type="button" data-lb-mode="creators" class="lb-mode-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-display font-bold cursor-pointer hover:bg-[#B8F2E6]">Tác giả</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="leaderboardContent">
-          <!-- Populated dynamically by js/app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 5. FEATURED CREATORS & COLLABORATION BRIDGE ==================== -->
-    <section id="creators" class="py-12 sm:py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <span class="inline-block font-hand text-base text-[#FF4D4D] font-bold tracking-wide uppercase">04 · Cầu nối hợp tác sản xuất</span>
-            <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-[#1E1E24] mt-0.5">
-              Hồ Sơ <span class="sketch-highlight sketch-highlight--mint">Tác Giả</span> Sinh Viên
-            </h2>
-          </div>
-          <p class="text-sm text-[#52525B] max-w-md">
-            UniVibe không bán hàng trực tiếp — CLB, Khoa/Viện hay nhóm bạn có thể xem Portfolio và liên hệ thẳng với tác giả để cùng đưa thiết kế ra đời thật.
+          <p class="text-sm text-[#52525B] max-w-xl">
+            Phiên bản hiện tại tập trung vào chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong> các mẫu thiết kế chuẩn nhận diện. Tính năng cho phép người dùng tự thêm mẫu và các công cụ tương tác cộng đồng sẽ được triển khai ở giai đoạn tiếp theo:
           </p>
         </div>
 
-        <div id="creatorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Populated dynamically by js/app.js -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Feature Work Card 1 -->
+          <article class="sketch-card p-6 bg-white relative flex flex-col">
+            <div class="washi-tape -top-3 left-8 -rotate-3"></div>
+            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
+              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
+                FEATURE WORK · TRỌNG TÂM
+              </span>
+              <span class="font-mono text-xs text-[#52525B]">Sắp ra mắt</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
+              Tính năng cho người dùng thêm thiết kế (User Concept Submission)
+            </h3>
+            <p class="text-sm text-[#52525B] leading-relaxed">
+              Mở cổng cho sinh viên tự đăng tải concept mới (áo thun, lót chuột, áo khoác, túi tote, dây đeo thẻ, mascot), tự động áp bảng màu nhận diện trường và tùy chọn đăng Ẩn danh hoặc định danh.
+            </p>
+          </article>
+
+          <!-- Feature Work Card 2 -->
+          <article class="sketch-card-alt p-6 bg-white relative flex flex-col">
+            <div class="washi-tape washi-tape--mint -top-3 right-8 rotate-3"></div>
+            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
+              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">
+                FEATURE WORK · CÔNG CỤ
+              </span>
+              <span class="font-mono text-xs text-[#52525B]">Đang lên kế hoạch</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
+              Công cụ tạo Prompt Mockup Studio (AI Mockup Generator)
+            </h3>
+            <p class="text-sm text-[#52525B] leading-relaxed">
+              Gợi ý công thức prompt chụp sản phẩm thực tế tại studio khớp với mã màu HEX và logo của từng trường đại học.
+            </p>
+          </article>
+
+          <!-- Feature Work Card 3 -->
+          <article class="sketch-card-alt p-6 bg-white relative flex flex-col">
+            <div class="washi-tape washi-tape--blue -top-3 left-8 rotate-2"></div>
+            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
+              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#E0F2FE] border-2 border-[#1E1E24] rounded-full">
+                FEATURE WORK · TƯƠNG TÁC
+              </span>
+              <span class="font-mono text-xs text-[#52525B]">Đang lên kế hoạch</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
+              Đánh giá đa tiêu chí &amp; Góp ý cộng đồng (3-Criteria Rating &amp; Critique)
+            </h3>
+            <p class="text-sm text-[#52525B] leading-relaxed">
+              Hệ thống chấm điểm 1–5 sao theo 3 tiêu chí (<em>Độ sáng tạo</em>, <em>Bản sắc trường</em>, <em>Tính ứng dụng thực tế</em>) và bình luận góp ý trực tiếp trên từng mẫu.
+            </p>
+          </article>
+
+          <!-- Feature Work Card 4 -->
+          <article class="sketch-card p-6 bg-white relative flex flex-col">
+            <div class="washi-tape washi-tape--kraft -top-3 right-8 -rotate-2"></div>
+            <div class="flex items-center justify-between gap-2 mb-3 pt-1">
+              <span class="px-3 py-1 text-xs font-mono font-bold bg-[#FDE68A] border-2 border-[#1E1E24] rounded-full">
+                FEATURE WORK · HỆ SINH THÁI
+              </span>
+              <span class="font-mono text-xs text-[#52525B]">Tương lai</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#1E1E24] mb-2">
+              Bảng Vàng định kỳ &amp; Cầu nối sản xuất (Leaderboard &amp; Production Bridge)
+            </h3>
+            <p class="text-sm text-[#52525B] leading-relaxed">
+              Bảng xếp hạng thiết kế theo Tuần/Tháng/Năm, xác thực email <code>.edu.vn</code>, thẻ chia sẻ <em>Vibe Card</em> và kết nối CLB/Đoàn-Hội đưa mẫu vào sản xuất thực tế.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -299,24 +312,23 @@
             <span class="font-display font-extrabold text-2xl">UniVibe</span>
           </div>
           <p class="text-sm text-[#D4D4D8] leading-relaxed">
-            Không gian mở để sinh viên tự tay thiết kế, bình chọn đa tiêu chí và lan tỏa những ý tưởng vật phẩm mang đậm bản sắc trường mình.
+            Phòng trưng bày (Showcase-Only) các ý tưởng vật phẩm bản sắc sinh viên với phối cảnh studio thực tế trên nền giao diện sổ phác thảo vẽ tay.
           </p>
         </div>
 
         <div>
           <h3 class="font-display font-bold text-base text-[#FFF3B0] mb-3">Điều hướng nhanh</h3>
           <ul class="space-y-2 text-sm text-[#D4D4D8]">
-            <li><a href="#campus-hubs" class="hover:text-white underline decoration-dashed underline-offset-4">Không gian Riêng từng Trường</a></li>
+            <li><a href="#campus-hubs" class="hover:text-white underline decoration-dashed underline-offset-4">Không gian Trường</a></li>
             <li><a href="#gallery" class="hover:text-white underline decoration-dashed underline-offset-4">Phòng Trưng Bày Concept</a></li>
-            <li><a href="#leaderboard" class="hover:text-white underline decoration-dashed underline-offset-4">Bảng Vàng Định Kỳ</a></li>
-            <li><a href="#creators" class="hover:text-white underline decoration-dashed underline-offset-4">Hồ Sơ Tác Giả &amp; Kết Nối</a></li>
+            <li><a href="#feature-work" class="hover:text-white underline decoration-dashed underline-offset-4">Feature Work (Tính năng thêm mẫu)</a></li>
           </ul>
         </div>
 
         <div>
           <h3 class="font-display font-bold text-base text-[#B8F2E6] mb-3">Mã nguồn &amp; Triết lý thiết kế</h3>
           <p class="text-sm text-[#D4D4D8] mb-3">
-            Xây dựng theo phong cách <strong>Hand-Drawn Sketchbook</strong> kết hợp cấu trúc triển lãm <strong>Curated Gallery</strong>. Dữ liệu đánh giá &amp; bộ sưu tập mới được lưu trực tiếp trên trình duyệt của bạn.
+            Giao diện web theo phong cách <strong>Hand-Drawn Sketchbook</strong> trưng bày mockup sản phẩm thực tế tối giản. Trạng thái lưu mẫu yêu thích (Bookmarks) được lưu cục bộ trên trình duyệt của bạn.
           </p>
           <a href="https://github.com/ZaMinVo/UniVibe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-[#FDFBF7] text-[#1E1E24] font-display font-bold text-sm sketch-pill hover:bg-[#FFF3B0] transition-colors">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -329,7 +341,7 @@
     </div>
   </footer>
 
-  <!-- ==================== MODAL 1: CONCEPT DETAIL & 3-CRITERIA RATING ==================== -->
+  <!-- ==================== MODAL 1: CONCEPT DETAIL SHOWCASE ==================== -->
   <div id="conceptModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="conceptModalTitle">
     <div class="min-h-full flex items-center justify-center">
       <div class="sketch-card w-full max-w-5xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
@@ -347,7 +359,7 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 2: CREATOR PORTFOLIO & COLLABORATION ==================== -->
+  <!-- ==================== MODAL 2: ANONYMOUS ARCHIVE PORTFOLIO ==================== -->
   <div id="creatorModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="creatorModalTitle">
     <div class="min-h-full flex items-center justify-center">
       <div class="sketch-card-alt w-full max-w-4xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
@@ -360,177 +372,6 @@
 
         <div id="creatorModalBody">
           <!-- Populated dynamically by js/app.js -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== MODAL 3: SUBMIT NEW CONCEPT ==================== -->
-  <div id="submitModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="submitModalTitle">
-    <div class="min-h-full flex items-center justify-center">
-      <div class="sketch-card w-full max-w-3xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
-        <button id="closeSubmitModalBtn" type="button" class="sketch-btn sketch-btn-icon btn-paper absolute top-4 right-4 z-20" aria-label="Đóng biểu mẫu đăng concept">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-
-        <div class="mb-6 pr-12">
-          <span class="inline-block font-hand text-sm font-bold text-[#2D5DA1] uppercase">Trưng bày tác phẩm mới</span>
-          <h2 id="submitModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24]">Đăng Concept Lên UniVibe</h2>
-          <p class="text-sm text-[#52525B] mt-1">Đưa ý tưởng vật phẩm trường bạn lên phòng trưng bày để nhận đánh giá đa tiêu chí từ cộng đồng.</p>
-        </div>
-
-        <form id="submitConceptForm" class="space-y-5">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="sm:col-span-2">
-              <label for="newTitle" class="block font-display font-bold text-sm mb-1.5">Tên tác phẩm / Concept *</label>
-              <input id="newTitle" name="title" type="text" required placeholder="VD: Áo Khoác Varsity Kỷ Niệm Sân C6..." class="sketch-input" />
-            </div>
-
-            <div>
-              <label for="newCampus" class="block font-display font-bold text-sm mb-1.5">Trường đại học *</label>
-              <select id="newCampus" name="campusId" required class="sketch-input cursor-pointer">
-                <!-- Populated by js/app.js -->
-              </select>
-            </div>
-
-            <div>
-              <label for="newCategory" class="block font-display font-bold text-sm mb-1.5">Loại vật phẩm *</label>
-              <select id="newCategory" name="category" required class="sketch-input cursor-pointer">
-                <option value="tee">Áo thun (T-Shirt)</option>
-                <option value="mousepad">Lót chuột (Deskpad)</option>
-                <option value="jacket">Áo khoác (Varsity / Hoodie)</option>
-                <option value="tote">Túi Tote / Balo</option>
-                <option value="lanyard">Dây đeo thẻ (Lanyard)</option>
-                <option value="mascot">Linh vật (Mascot)</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label for="newStory" class="block font-display font-bold text-sm mb-1.5">Câu chuyện bản sắc (The Vibe Story) *</label>
-            <textarea id="newStory" name="story" rows="3" required placeholder="Ý tưởng này lấy cảm hứng từ kỷ niệm, kiến trúc hay nét văn hóa nào của trường bạn?" class="sketch-input py-2.5"></textarea>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="newSpecs" class="block font-display font-bold text-sm mb-1.5">Thông số chất liệu dự kiến</label>
-              <input id="newSpecs" name="specs" type="text" placeholder="VD: Canvas 16oz, thêu nổi Chenille, móc hợp kim..." class="sketch-input" />
-            </div>
-            <div>
-              <label for="newTags" class="block font-display font-bold text-sm mb-1.5">Thẻ phân loại (cách nhau dấu phẩy)</label>
-              <input id="newTags" name="tags" type="text" placeholder="Varsity, Sinh viên, K23" class="sketch-input" />
-            </div>
-          </div>
-
-          <!-- Palette Picker -->
-          <div class="p-4 bg-white sketch-box">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <span class="font-display font-bold text-sm">Bảng màu chủ đạo (4 mã màu)</span>
-              <button type="button" id="applyCampusColorsBtn" class="text-xs font-display font-bold text-[#2D5DA1] underline cursor-pointer">Lấy theo màu trường đã chọn</button>
-            </div>
-            <div class="grid grid-cols-4 gap-3">
-              <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color1" type="color" value="#1488DB" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
-                <span>Chính</span>
-              </label>
-              <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color2" type="color" value="#030391" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
-                <span>Phụ</span>
-              </label>
-              <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color3" type="color" value="#FFFFFF" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
-                <span>Nhấn</span>
-              </label>
-              <label class="flex flex-col items-center gap-1 text-xs font-mono cursor-pointer">
-                <input id="color4" type="color" value="#F4F6F9" class="w-12 h-10 p-0 border-2 border-[#1E1E24] rounded-lg cursor-pointer" />
-                <span>Nền</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Optional Custom Image URL + Creator Info -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="sm:col-span-3">
-              <label for="newImageUrl" class="block font-display font-bold text-sm mb-1.5">
-                Link ảnh mockup thực tế (Tùy chọn — bỏ trống để tự tạo mockup studio chuẩn)
-              </label>
-              <input id="newImageUrl" name="imageUrl" type="url" placeholder="https://..." class="sketch-input" />
-            </div>
-
-            <div>
-              <label for="newCreatorName" class="block font-display font-bold text-sm mb-1.5">Tên tác giả (mặc định Ẩn danh)</label>
-              <input id="newCreatorName" name="creatorName" type="text" value="Ẩn danh" placeholder="Ẩn danh" class="sketch-input" />
-            </div>
-            <div>
-              <label for="newCreatorFaculty" class="block font-display font-bold text-sm mb-1.5">Khoa / Khóa (Tùy chọn)</label>
-              <input id="newCreatorFaculty" name="creatorFaculty" type="text" placeholder="VD: Khoa KH&amp;KT Máy tính" class="sketch-input" />
-            </div>
-            <div>
-              <label for="newCreatorEmail" class="block font-display font-bold text-sm mb-1.5">Email liên hệ (Tùy chọn)</label>
-              <input id="newCreatorEmail" name="creatorEmail" type="email" placeholder="Bỏ trống nếu đăng ẩn danh" class="sketch-input" />
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-            <button type="button" id="switchToPromptBtn" class="sketch-btn sketch-btn-sm btn-paper text-sm">
-              Chưa có ảnh? Lấy Prompt Mockup
-            </button>
-            <button type="submit" class="sketch-btn btn-postit">
-              Đăng lên Phòng Trưng Bày
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== MODAL 4: HAND-DRAWN PROMPT STUDIO (threerocks/hand-drawn-styles) ==================== -->
-  <div id="promptModal" class="hidden fixed inset-0 z-50 modal-backdrop overflow-y-auto p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="promptModalTitle">
-    <div class="min-h-full flex items-center justify-center">
-      <div class="sketch-card-alt w-full max-w-3xl bg-[#FDFBF7] relative p-5 sm:p-8 animate-ink-pop">
-        <button id="closePromptModalBtn" type="button" class="sketch-btn sketch-btn-icon btn-paper absolute top-4 right-4 z-20" aria-label="Đóng công cụ tạo prompt vẽ tay">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-
-        <div class="mb-5 pr-12">
-          <span class="inline-block font-hand text-sm font-bold text-[#2D5DA1] uppercase">Studio Product Mockup</span>
-          <h2 id="promptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24]">Công Thức Prompt Mockup Thực Tế</h2>
-          <p class="text-sm text-[#52525B] mt-1">
-            Chọn phong cách chụp studio thực tế và điền sản phẩm mong muốn để xuất prompt tạo ảnh mockup sắc nét theo bộ nhận diện trường bạn.
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <div id="promptRecipeList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <!-- Populated by js/app.js -->
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-            <div class="sm:col-span-2">
-              <label for="promptSubjectInput" class="block font-display font-bold text-xs mb-1">Chủ thể vật phẩm</label>
-              <input id="promptSubjectInput" type="text" value="minimalist cotton t-shirt with hexagon university crest" class="sketch-input text-sm" />
-            </div>
-            <div>
-              <label for="promptCampusSelect" class="block font-display font-bold text-xs mb-1">Trường học</label>
-              <select id="promptCampusSelect" class="sketch-input text-sm cursor-pointer">
-                <!-- Populated by js/app.js -->
-              </select>
-            </div>
-          </div>
-
-          <div class="p-4 bg-white sketch-box">
-            <div class="flex items-center justify-between gap-2 mb-2">
-              <span class="font-display font-bold text-sm">Prompt hoàn chỉnh sẵn sàng sao chép:</span>
-              <button id="copyPromptBtn" type="button" class="sketch-btn sketch-btn-sm btn-mint text-xs">Sao chép Prompt</button>
-            </div>
-            <p id="generatedPromptOutput" class="font-mono text-xs sm:text-sm text-[#1E1E24] bg-[#F4EFE6] p-3 rounded-lg border-2 border-dashed border-[#1E1E24]/40 leading-relaxed select-all"></p>
-          </div>
         </div>
       </div>
     </div>

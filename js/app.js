@@ -5,11 +5,10 @@
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'univibe_gallery_state_v2';
+  const STORAGE_KEY = 'univibe_gallery_state_v3';
 
   const { CAMPUSES, CATEGORIES, CREATORS, INITIAL_CONCEPTS } = window.UniVibeData;
-  const { renderMerchIllustration, renderCampusEmblem, HAND_DRAWN_RECIPES } =
-    window.UniVibeIllustrations;
+  const { renderMerchIllustration, renderCampusEmblem } = window.UniVibeIllustrations;
 
   // -------------------- Application State --------------------
   const state = {
@@ -19,18 +18,9 @@
     activeCampus: 'all',
     activeCategory: 'all',
     searchQuery: '',
-    sortBy: 'composite',
-    lbPeriod: 'all',
-    lbMode: 'designs',
+    sortBy: 'featured',
     activeConceptId: null,
     activeDetailView: 0,
-    showVibeCard: false,
-    userDraftRating: {
-      creativity: 5,
-      identity: 5,
-      practicality: 5,
-    },
-    activeRecipeId: HAND_DRAWN_RECIPES[0].id,
   };
 
   let toastTimer = null;
@@ -43,28 +33,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
-  }
-
-  function sanitizeImageUrl(url) {
-    const trimmed = String(url || '').trim();
-    if (!trimmed) return '';
-    if (
-      trimmed.startsWith('https://') ||
-      trimmed.startsWith('http://') ||
-      trimmed.startsWith('data:image/')
-    ) {
-      return trimmed;
-    }
-    return '';
-  }
-
-  function sanitizeColor(hex, fallback) {
-    return /^#[0-9A-Fa-f]{6}$/.test(String(hex || '').trim()) ? hex.trim() : fallback;
-  }
-
-  function getCompositeScore(concept) {
-    const r = concept.ratings || { creativity: 0, identity: 0, practicality: 0 };
-    return Number(((r.creativity + r.identity + r.practicality) / 3).toFixed(2));
   }
 
   function getCampusById(campusId) {
@@ -112,81 +80,33 @@
     }
   }
 
-  // -------------------- Persistence --------------------
+  // -------------------- Persistence (Bookmarks Only — Showcase Mode) --------------------
   function loadState() {
     let saved = null;
     try {
       localStorage.removeItem('univibe_gallery_state_v1');
+      localStorage.removeItem('univibe_gallery_state_v2');
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) saved = JSON.parse(raw);
     } catch (_) {
       saved = null;
     }
 
-    const baseConcepts = INITIAL_CONCEPTS.map((c) => ({
-      ...c,
-      ratings: { ...c.ratings },
-      comments: Array.isArray(c.comments) ? c.comments.map((cm) => ({ ...cm })) : [],
-    }));
-    const baseCreators = CREATORS.map((cr) => ({ ...cr, contacts: { ...cr.contacts } }));
+    state.concepts = INITIAL_CONCEPTS.map((c) => ({ ...c }));
+    state.creators = CREATORS.map((cr) => ({ ...cr, contacts: { ...cr.contacts } }));
 
-    if (saved && Array.isArray(saved.customCreators)) {
-      saved.customCreators.forEach((cr) => {
-        if (cr && cr.id && !baseCreators.some((b) => b.id === cr.id)) {
-          baseCreators.unshift(cr);
-        }
-      });
-    }
-
-    if (saved && Array.isArray(saved.customConcepts)) {
-      saved.customConcepts.forEach((cc) => {
-        if (cc && cc.id && !baseConcepts.some((b) => b.id === cc.id)) {
-          baseConcepts.unshift(cc);
-        }
-      });
-    }
-
-    if (saved && saved.ratingOverrides && typeof saved.ratingOverrides === 'object') {
-      baseConcepts.forEach((c) => {
-        const over = saved.ratingOverrides[c.id];
-        if (over && over.ratings) {
-          c.ratings = { ...over.ratings };
-        }
-        if (over && Array.isArray(over.comments)) {
-          c.comments = over.comments;
-        }
-      });
-    }
-
-    state.concepts = baseConcepts;
-    state.creators = baseCreators;
+    const validIds = new Set(state.concepts.map((c) => c.id));
     if (saved && Array.isArray(saved.bookmarks)) {
-      state.bookmarks = saved.bookmarks;
+      state.bookmarks = saved.bookmarks.filter((id) => validIds.has(id));
     }
   }
 
   function saveState() {
     try {
-      const initialIds = new Set(INITIAL_CONCEPTS.map((c) => c.id));
-      const initialCreatorIds = new Set(CREATORS.map((cr) => cr.id));
-      const customConcepts = state.concepts.filter((c) => !initialIds.has(c.id));
-      const customCreators = state.creators.filter((cr) => !initialCreatorIds.has(cr.id));
-
-      const ratingOverrides = {};
-      state.concepts.forEach((c) => {
-        ratingOverrides[c.id] = {
-          ratings: c.ratings,
-          comments: c.comments,
-        };
-      });
-
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
           bookmarks: state.bookmarks,
-          customConcepts,
-          customCreators,
-          ratingOverrides,
         })
       );
     } catch (_) {
@@ -195,30 +115,11 @@
   }
 
   // -------------------- SVG Icon Helpers --------------------
-  function iconStar(filled) {
-    return `
-      <svg class="w-4 h-4 ${filled ? 'text-[#F59E0B] fill-[#F59E0B]' : 'text-[#A1A1AA]'}" viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="#1E1E24" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
-    `;
-  }
-
   function iconBookmark(saved) {
     return `
       <svg class="w-4 h-4 ${saved ? 'text-[#FF4D4D] fill-[#FF4D4D]' : 'text-[#1E1E24]'}" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
       </svg>
-    `;
-  }
-
-  function iconVerifiedBadge() {
-    return `
-      <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono font-bold bg-[#B8F2E6] border-[1.8px] border-[#1E1E24] rounded-full" title="Đã xác thực sinh viên .edu.vn">
-        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
-        .edu.vn
-      </span>
     `;
   }
 
@@ -234,6 +135,7 @@
         const haystack = [
           c.title,
           c.story,
+          c.specs,
           c.campusShort,
           campus.name,
           creator.name,
@@ -248,12 +150,10 @@
     });
 
     filtered.sort((a, b) => {
-      if (state.sortBy === 'identity') return b.ratings.identity - a.ratings.identity;
-      if (state.sortBy === 'creativity') return b.ratings.creativity - a.ratings.creativity;
-      if (state.sortBy === 'practicality') return b.ratings.practicality - a.ratings.practicality;
-      if (state.sortBy === 'votes') return b.ratings.count - a.ratings.count;
       if (state.sortBy === 'newest') return String(b.createdAt).localeCompare(String(a.createdAt));
-      return getCompositeScore(b) - getCompositeScore(a);
+      if (state.sortBy === 'category') return String(a.category).localeCompare(String(b.category));
+      if (state.sortBy === 'title') return String(a.title).localeCompare(String(b.title), 'vi');
+      return Number(Boolean(b.featured)) - Number(Boolean(a.featured));
     });
 
     return filtered;
@@ -265,31 +165,27 @@
     if (!container) return;
 
     const totalConcepts = state.concepts.length;
-    const totalVotes = state.concepts.reduce((sum, c) => sum + (c.ratings.count || 0), 0);
 
     if (state.activeCampus === 'all') {
-      const featured =
-        state.concepts.find((c) => c.featured) ||
-        [...state.concepts].sort((a, b) => getCompositeScore(b) - getCompositeScore(a))[0];
+      const featured = state.concepts.find((c) => c.featured) || state.concepts[0];
       const creator = getCreatorById(featured.creatorId);
       const campus = getCampusById(featured.campusId);
-      const comp = getCompositeScore(featured).toFixed(1);
 
       container.innerHTML = `
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           <!-- Left Exhibition Intro -->
           <div class="lg:col-span-7 space-y-6">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFF3B0] sketch-pill text-xs sm:text-sm font-mono font-bold shadow-[3px_3px_0px_#1E1E24]">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#FF4D4D] border border-[#1E1E24]"></span>
-              TRIỂN LÃM BẢN SẮC SINH VIÊN · PURE GALLERY
+              <span class="w-2.5 h-2.5 rounded-full bg-[#2D5DA1] border border-[#1E1E24]"></span>
+              TRIỂN LÃM BẢN SẮC SINH VIÊN · CHỈ TRƯNG BÀY (SHOWCASE ONLY)
             </div>
 
             <h1 class="font-display text-3xl sm:text-5xl lg:text-[52px] font-extrabold leading-[1.15] text-[#1E1E24]">
-              Tự tay phác thảo, <span class="sketch-highlight">bình chọn</span> &amp; lan tỏa vật phẩm mang chất <span class="sketch-highlight sketch-highlight--mint">trường mình</span>
+              Không gian <span class="sketch-highlight">trưng bày</span> ý tưởng vật phẩm mang đậm bản sắc <span class="sketch-highlight sketch-highlight--mint">trường mình</span>
             </h1>
 
             <p class="text-base sm:text-lg text-[#52525B] max-w-2xl leading-relaxed">
-              Không gian mở dành riêng cho sinh viên trưng bày concept <strong>áo thun, lót chuột, áo khoác, túi tote, dây đeo thẻ &amp; linh vật mascot</strong>. Chấm điểm 3 tiêu chí minh bạch và bình chọn cho bản sắc trường mình.
+              Bộ sưu tập trưng bày các mẫu thiết kế thực tế tối giản (<strong>Áo thun &amp; Lót chuột</strong>) lấy cảm hứng từ hệ thống nhận diện thương hiệu đại học. Xem phối cảnh Studio 3 góc độ, bảng màu chuẩn và thông số chất liệu.
             </p>
 
             <div class="flex flex-wrap items-center gap-3.5 pt-1">
@@ -300,24 +196,24 @@
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </a>
-              <button type="button" id="heroSubmitBtn" class="sketch-btn btn-postit text-base">
-                <span>+ Gửi Concept Của Bạn</span>
-              </button>
+              <a href="#feature-work" class="sketch-btn btn-postit text-base">
+                <span>Feature Work (Tính năng thêm mẫu)</span>
+              </a>
             </div>
 
-            <!-- Live Metrics Strip -->
+            <!-- Showcase Metrics Strip -->
             <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-3 max-w-xl">
               <div class="sketch-box p-3 sm:p-4 bg-white">
                 <div class="font-mono text-2xl sm:text-3xl font-bold text-[#1E1E24]">${totalConcepts}</div>
                 <div class="font-hand text-sm sm:text-base text-[#52525B]">Concept trưng bày</div>
               </div>
               <div class="sketch-box p-3 sm:p-4 bg-white">
-                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#2D5DA1]">${CAMPUSES.length}</div>
-                <div class="font-hand text-sm sm:text-base text-[#52525B]">Không gian trường</div>
+                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#2D5DA1]">3 góc</div>
+                <div class="font-hand text-sm sm:text-base text-[#52525B]">Phối cảnh Studio / mẫu</div>
               </div>
               <div class="sketch-box p-3 sm:p-4 bg-white">
-                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#FF4D4D]">${totalVotes}</div>
-                <div class="font-hand text-sm sm:text-base text-[#52525B]">Lượt chấm 3 tiêu chí</div>
+                <div class="font-mono text-2xl sm:text-3xl font-bold text-[#FF4D4D]">${CAMPUSES.length}</div>
+                <div class="font-hand text-sm sm:text-base text-[#52525B]">Không gian bản sắc trường</div>
               </div>
             </div>
           </div>
@@ -330,7 +226,7 @@
 
               <div class="flex items-center justify-between gap-2 mb-3">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                  ★ CONCEPT NỔI BẬT
+                  ★ MẪU TRƯNG BÀY TIÊU BIỂU
                 </span>
                 <span class="px-2.5 py-1 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background-color: ${escapeHtml(campus.color)}">
                   ${escapeHtml(campus.shortName)}
@@ -356,51 +252,38 @@
                   </p>
                 </div>
 
-                <!-- 3-Criteria Snapshot -->
-                <div class="p-3 bg-[#FDFBF7] border-2 border-dashed border-[#1E1E24]/40 rounded-xl space-y-1.5">
-                  <div class="flex items-center justify-between text-xs font-bold">
-                    <span class="font-display">Điểm trung bình 3 tiêu chí</span>
-                    <span class="font-mono text-sm text-[#FF4D4D]">${comp} / 5.0 ★ (${featured.ratings.count} lượt)</span>
-                  </div>
-                  <div class="grid grid-cols-3 gap-2 pt-1 text-[11px] font-mono">
-                    <div>
-                      <div class="flex justify-between mb-0.5"><span>Sáng tạo</span><span>${featured.ratings.creativity.toFixed(1)}</span></div>
-                      <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#FF4D4D]" style="width:${(featured.ratings.creativity / 5) * 100}%"></div></div>
-                    </div>
-                    <div>
-                      <div class="flex justify-between mb-0.5"><span>Bản sắc</span><span>${featured.ratings.identity.toFixed(1)}</span></div>
-                      <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#2D5DA1]" style="width:${(featured.ratings.identity / 5) * 100}%"></div></div>
-                    </div>
-                    <div>
-                      <div class="flex justify-between mb-0.5"><span>Ứng dụng</span><span>${featured.ratings.practicality.toFixed(1)}</span></div>
-                      <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#10B981]" style="width:${(featured.ratings.practicality / 5) * 100}%"></div></div>
+                <!-- Palette & Material Specs Snapshot -->
+                <div class="p-3 bg-[#FDFBF7] border-2 border-dashed border-[#1E1E24]/40 rounded-xl space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-display font-bold text-xs">Bảng màu &amp; Chất liệu</span>
+                    <div class="flex items-center gap-1.5">
+                      ${(featured.palette || [])
+                        .slice(0, 4)
+                        .map(
+                          (hex) =>
+                            `<span class="w-4 h-4 rounded-full border border-[#1E1E24] inline-block" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
+                        )
+                        .join('')}
                     </div>
                   </div>
+                  <p class="text-xs text-[#52525B] leading-relaxed line-clamp-2">${escapeHtml(featured.specs)}</p>
                 </div>
 
                 <button type="button" data-open-concept="${escapeHtml(featured.id)}" class="sketch-btn btn-postit w-full text-sm">
-                  Xem chi tiết 3 góc &amp; Chấm điểm
+                  Xem phối cảnh 3 góc &amp; Thông số
                 </button>
               </div>
             </div>
           </div>
         </div>
       `;
-
-      const heroSubmitBtn = document.getElementById('heroSubmitBtn');
-      if (heroSubmitBtn) {
-        heroSubmitBtn.addEventListener('click', openSubmitModal);
-      }
       return;
     }
 
     // Active Campus Hub Dedicated Banner
     const campus = getCampusById(state.activeCampus);
     const campusConcepts = state.concepts.filter((c) => c.campusId === campus.id);
-    const campusCreators = state.creators.filter((cr) => cr.campusId === campus.id);
-    const campusVotes = campusConcepts.reduce((s, c) => s + (c.ratings.count || 0), 0);
-    const topDesign =
-      [...campusConcepts].sort((a, b) => getCompositeScore(b) - getCompositeScore(a))[0] || null;
+    const topDesign = campusConcepts.find((c) => c.featured) || campusConcepts[0] || null;
 
     container.innerHTML = `
       <div class="sketch-card p-6 sm:p-8 bg-white relative overflow-hidden">
@@ -441,15 +324,15 @@
             <div class="grid grid-cols-3 gap-3 pt-2 max-w-lg">
               <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
                 <div class="font-mono text-2xl font-bold">${campusConcepts.length}</div>
-                <div class="text-xs font-hand text-[#52525B]">Concept của trường</div>
+                <div class="text-xs font-hand text-[#52525B]">Mẫu trưng bày</div>
               </div>
               <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
-                <div class="font-mono text-2xl font-bold">${campusCreators.length}</div>
-                <div class="text-xs font-hand text-[#52525B]">Tác giả đóng góp</div>
+                <div class="font-mono text-2xl font-bold text-[#2D5DA1]">3 góc</div>
+                <div class="text-xs font-hand text-[#52525B]">Phối cảnh Studio</div>
               </div>
               <div class="p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl">
-                <div class="font-mono text-2xl font-bold text-[#FF4D4D]">${campusVotes}</div>
-                <div class="text-xs font-hand text-[#52525B]">Lượt đánh giá</div>
+                <div class="font-mono text-xl sm:text-2xl font-bold text-[#1E1E24]">Ẩn danh</div>
+                <div class="text-xs font-hand text-[#52525B]">Lưu trữ thiết kế</div>
               </div>
             </div>
           </div>
@@ -460,23 +343,28 @@
                 ? `
               <div class="p-4 bg-[#FDFBF7] border-[2.5px] border-[#1E1E24] rounded-2xl shadow-[4px_4px_0px_#1E1E24]">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-mono font-bold px-2.5 py-0.5 bg-[#FFF3B0] border border-[#1E1E24] rounded-full">TOP #1 TẠI ${escapeHtml(campus.shortName)}</span>
-                  <span class="font-mono text-sm font-bold text-[#FF4D4D]">${getCompositeScore(topDesign).toFixed(1)} ★</span>
+                  <span class="text-xs font-mono font-bold px-2.5 py-0.5 bg-[#FFF3B0] border border-[#1E1E24] rounded-full">MẪU TRƯNG BÀY TẠI ${escapeHtml(campus.shortName)}</span>
+                  <span class="text-xs font-mono font-bold text-[#52525B]">Ẩn danh</span>
                 </div>
                 <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] bg-[#F4F6F9] cursor-pointer mb-3">
                   ${renderMerchIllustration(topDesign, 0)}
                 </button>
                 <div class="flex items-center justify-between gap-3">
                   <h3 class="font-display font-bold text-base truncate">${escapeHtml(topDesign.title)}</h3>
-                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="sketch-btn sketch-btn-sm btn-postit shrink-0 text-xs">Xem</button>
+                  <button type="button" data-open-concept="${escapeHtml(topDesign.id)}" class="sketch-btn sketch-btn-sm btn-postit shrink-0 text-xs">Xem chi tiết</button>
                 </div>
               </div>
               `
                 : `
               <div class="p-6 bg-[#FDFBF7] border-[2.5px] border-dashed border-[#1E1E24] rounded-2xl text-center space-y-3">
-                <div class="font-display font-bold text-base">Không gian ${escapeHtml(campus.shortName)} đang chờ mẫu đầu tiên!</div>
-                <p class="text-xs text-[#52525B]">Hãy tự tay đăng concept áo thun, lót chuột hay vật phẩm mang đậm chất ${escapeHtml(campus.name)}.</p>
-                <button type="button" id="emptyCampusSubmitBtn" class="sketch-btn sketch-btn-sm btn-postit text-xs">+ Gửi Concept Cho ${escapeHtml(campus.shortName)}</button>
+                <div class="font-display font-bold text-base">Không gian ${escapeHtml(campus.shortName)} chưa có mẫu trưng bày</div>
+                <p class="text-xs text-[#52525B] leading-relaxed">
+                  Trang hiện tại hoạt động ở chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong> với bộ sưu tập HCMUT. Tính năng cho phép người dùng tự thêm mẫu cho các trường khác thuộc mục <strong>Feature Work</strong>.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                  <button type="button" id="viewHcmutShowcaseBtn" class="sketch-btn sketch-btn-sm btn-postit text-xs">Xem bộ sưu tập HCMUT</button>
+                  <a href="#feature-work" class="sketch-btn sketch-btn-sm btn-paper text-xs">Xem Feature Work</a>
+                </div>
               </div>
               `
             }
@@ -492,9 +380,12 @@
         renderAll();
       });
     }
-    const emptyCampusSubmitBtn = document.getElementById('emptyCampusSubmitBtn');
-    if (emptyCampusSubmitBtn) {
-      emptyCampusSubmitBtn.addEventListener('click', openSubmitModal);
+    const viewHcmutBtn = document.getElementById('viewHcmutShowcaseBtn');
+    if (viewHcmutBtn) {
+      viewHcmutBtn.addEventListener('click', () => {
+        state.activeCampus = 'hcmut';
+        renderAll();
+      });
     }
   }
 
@@ -517,7 +408,7 @@
             <div class="text-xs font-mono text-[#52525B]">${state.concepts.length} concept</div>
           </div>
         </div>
-        <p class="text-xs text-[#52525B] line-clamp-2">Khám phá giao thoa sáng tạo từ tất cả các trường.</p>
+        <p class="text-xs text-[#52525B] line-clamp-2">Khám phá các mẫu vật phẩm trưng bày từ các trường đại học.</p>
       </button>
     `;
 
@@ -532,7 +423,7 @@
             ${renderCampusEmblem(campus)}
             <div class="min-w-0">
               <div class="font-display font-extrabold text-sm truncate">${escapeHtml(campus.shortName)}</div>
-              <div class="text-xs font-mono text-[#52525B]">${count > 0 ? `${count} concept` : 'Sẵn sàng đón mẫu'}</div>
+              <div class="text-xs font-mono text-[#52525B]">${count > 0 ? `${count} concept` : 'Đang biên tập'}</div>
             </div>
           </div>
           <p class="text-xs text-[#52525B] line-clamp-2">${escapeHtml(campus.name)}</p>
@@ -585,7 +476,6 @@
       .map((item, idx) => {
         const campus = getCampusById(item.campusId);
         const creator = getCreatorById(item.creatorId);
-        const compScore = getCompositeScore(item).toFixed(1);
         const isBookmarked = state.bookmarks.includes(item.id);
         const tiltClass = idx % 2 === 0 ? 'card-tilt-left' : 'card-tilt-right';
         const cardStyle = idx % 2 === 0 ? 'sketch-card' : 'sketch-card-alt';
@@ -628,280 +518,46 @@
                   ${escapeHtml(item.title)}
                 </button>
               </h3>
-              <div class="flex flex-wrap items-center gap-1.5 mt-1.5 text-xs text-[#52525B]">
-                <span>bởi</span>
-                <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-bold text-[#2D5DA1] hover:underline cursor-pointer">
-                  ${escapeHtml(creator.name)}
-                </button>
-                ${creator.verifiedEdu ? iconVerifiedBadge() : ''}
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mt-1.5 text-xs text-[#52525B]">
+                <div>
+                  <span>bởi</span>
+                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-bold text-[#2D5DA1] hover:underline cursor-pointer">
+                    ${escapeHtml(creator.name)}
+                  </button>
+                </div>
+                <span class="font-mono">${formatDateDisplay(item.createdAt)}</span>
               </div>
             </div>
 
-            <!-- Palette Swatches -->
-            <div class="flex items-center justify-between gap-2 mb-3.5">
-              <div class="flex items-center gap-1.5" aria-label="Bảng màu thiết kế">
-                ${(item.palette || [])
-                  .slice(0, 4)
+            <!-- Specs & Brand Palette Snapshot -->
+            <div class="mt-auto p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl space-y-2 mb-3.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-display font-bold text-[#1E1E24]">Thông số &amp; Bảng màu chuẩn</span>
+                <div class="flex items-center gap-1" aria-label="Bảng màu thiết kế">
+                  ${(item.palette || [])
+                    .slice(0, 4)
+                    .map(
+                      (hex) =>
+                        `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#1E1E24] rounded text-[10px] font-mono" title="${escapeHtml(hex)}"><span class="w-2.5 h-2.5 rounded-full border border-[#1E1E24]" style="background:${escapeHtml(hex)}"></span></span>`
+                    )
+                    .join('')}
+                </div>
+              </div>
+              <p class="text-xs text-[#52525B] line-clamp-2 leading-relaxed">${escapeHtml(item.specs || 'Thiết kế tối giản chuẩn nhận diện.')}</p>
+              <div class="flex flex-wrap gap-1 pt-0.5">
+                ${(item.tags || [])
+                  .slice(0, 3)
                   .map(
-                    (hex) =>
-                      `<span class="w-5 h-5 rounded-full border-2 border-[#1E1E24] inline-block" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
+                    (tag) =>
+                      `<span class="px-2 py-0.5 text-[10px] font-hand font-bold bg-[#F4EFE6] border border-[#1E1E24] rounded-full">#${escapeHtml(tag)}</span>`
                   )
                   .join('')}
-              </div>
-              <span class="text-xs font-mono text-[#52525B]">${formatDateDisplay(item.createdAt)}</span>
-            </div>
-
-            <!-- 3-Criteria Score Summary -->
-            <div class="mt-auto p-3 bg-[#FDFBF7] border-2 border-[#1E1E24] rounded-xl space-y-2 mb-3.5">
-              <div class="flex items-center justify-between">
-                <div class="inline-flex items-center gap-1 font-mono font-bold text-sm">
-                  ${iconStar(true)}
-                  <span>${compScore}</span>
-                  <span class="text-[#52525B] text-xs font-normal">/ 5.0</span>
-                </div>
-                <span class="text-xs font-mono font-bold text-[#52525B]">${item.ratings.count} lượt chấm</span>
-              </div>
-
-              <div class="grid grid-cols-3 gap-2 text-[11px] font-mono">
-                <div>
-                  <div class="flex justify-between text-[#52525B] mb-0.5"><span>Sáng tạo</span><strong class="text-[#1E1E24]">${item.ratings.creativity.toFixed(1)}</strong></div>
-                  <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#FF4D4D]" style="width:${(item.ratings.creativity / 5) * 100}%"></div></div>
-                </div>
-                <div>
-                  <div class="flex justify-between text-[#52525B] mb-0.5"><span>Bản sắc</span><strong class="text-[#1E1E24]">${item.ratings.identity.toFixed(1)}</strong></div>
-                  <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#2D5DA1]" style="width:${(item.ratings.identity / 5) * 100}%"></div></div>
-                </div>
-                <div>
-                  <div class="flex justify-between text-[#52525B] mb-0.5"><span>Ứng dụng</span><strong class="text-[#1E1E24]">${item.ratings.practicality.toFixed(1)}</strong></div>
-                  <div class="sketch-meter-track h-2"><div class="sketch-meter-fill bg-[#10B981]" style="width:${(item.ratings.practicality / 5) * 100}%"></div></div>
-                </div>
               </div>
             </div>
 
             <button type="button" data-open-concept="${escapeHtml(item.id)}" class="sketch-btn sketch-btn-sm btn-paper w-full text-sm">
-              Xem câu chuyện &amp; Chấm điểm
+              Xem phối cảnh 3 góc &amp; Thông số
             </button>
-          </article>
-        `;
-      })
-      .join('');
-  }
-
-  // -------------------- Render: Evergreen Leaderboard --------------------
-  function renderLeaderboard() {
-    const content = document.getElementById('leaderboardContent');
-    const scopeLabel = document.getElementById('leaderboardScopeLabel');
-    if (!content || !scopeLabel) return;
-
-    const activeCampusObj =
-      state.activeCampus === 'all' ? null : getCampusById(state.activeCampus);
-    scopeLabel.textContent = activeCampusObj ? activeCampusObj.shortName : 'Liên trường';
-
-    document.querySelectorAll('.lb-period-btn').forEach((btn) => {
-      btn.classList.toggle('chip-active', btn.dataset.lbPeriod === state.lbPeriod);
-    });
-    document.querySelectorAll('.lb-mode-btn').forEach((btn) => {
-      btn.classList.toggle('chip-active', btn.dataset.lbMode === state.lbMode);
-    });
-
-    const scopedConcepts = state.concepts.filter((c) => {
-      if (state.activeCampus !== 'all' && c.campusId !== state.activeCampus) return false;
-      if (state.lbPeriod !== 'all' && c.timeframe !== state.lbPeriod) return false;
-      return true;
-    });
-
-    if (state.lbMode === 'designs') {
-      const ranked = [...scopedConcepts].sort((a, b) => {
-        const diff = getCompositeScore(b) - getCompositeScore(a);
-        return Math.abs(diff) > 0.01 ? diff : b.ratings.count - a.ratings.count;
-      });
-
-      if (ranked.length === 0) {
-        content.innerHTML = `<div class="sketch-box p-8 bg-white text-center text-sm text-[#52525B]">Chưa có thiết kế nào trong chu kỳ lọc này. Thử chọn "Tất cả" để xem bảng xếp hạng tổng hợp!</div>`;
-        return;
-      }
-
-      const top3 = ranked.slice(0, 3);
-      const rest = ranked.slice(3, 8);
-      const medalColors = ['bg-[#FFF3B0]', 'bg-[#B8F2E6]', 'bg-[#E6CCB2]'];
-
-      const podiumHtml = `
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-          ${top3
-            .map((item, idx) => {
-              const campus = getCampusById(item.campusId);
-              const creator = getCreatorById(item.creatorId);
-              return `
-                <div class="sketch-card p-4 bg-white relative flex flex-col">
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="px-3 py-1 font-display font-extrabold text-sm border-2 border-[#1E1E24] rounded-full ${medalColors[idx]}">
-                      HẠNG #${idx + 1}
-                    </span>
-                    <span class="font-mono font-bold text-base text-[#FF4D4D]">${getCompositeScore(item).toFixed(2)} ★</span>
-                  </div>
-                  <button type="button" data-open-concept="${escapeHtml(item.id)}" class="block w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] mb-3 cursor-pointer">
-                    ${renderMerchIllustration(item, 0)}
-                  </button>
-                  <h3 class="font-display font-bold text-base line-clamp-1 mb-1">${escapeHtml(item.title)}</h3>
-                  <div class="flex items-center justify-between text-xs text-[#52525B] mt-auto pt-2 border-t border-dashed border-[#1E1E24]/25">
-                    <span>${escapeHtml(creator.name)} · <strong>${escapeHtml(campus.shortName)}</strong></span>
-                    <span class="font-mono">${item.ratings.count} lượt</span>
-                  </div>
-                </div>
-              `;
-            })
-            .join('')}
-        </div>
-      `;
-
-      const listHtml =
-        rest.length > 0
-          ? `
-        <div class="sketch-box bg-white overflow-hidden">
-          <div class="divide-y-2 divide-dashed divide-[#1E1E24]/20">
-            ${rest
-              .map((item, idx) => {
-                const campus = getCampusById(item.campusId);
-                const creator = getCreatorById(item.creatorId);
-                return `
-                  <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#FDFBF7] transition-colors">
-                    <div class="flex items-center gap-3.5 min-w-0">
-                      <span class="w-9 h-9 rounded-xl bg-[#F4EFE6] border-2 border-[#1E1E24] font-mono font-bold text-sm flex items-center justify-center shrink-0">
-                        #${idx + 4}
-                      </span>
-                      <div class="min-w-0">
-                        <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-bold text-base text-left hover:text-[#2D5DA1] truncate block cursor-pointer">
-                          ${escapeHtml(item.title)}
-                        </button>
-                        <div class="text-xs text-[#52525B]">
-                          ${escapeHtml(creator.name)} · <span class="font-mono font-bold">${escapeHtml(campus.shortName)}</span> · ${escapeHtml(getCategoryLabel(item.category))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 shrink-0 text-xs font-mono">
-                      <span class="hidden md:inline text-[#52525B]">Sáng tạo ${item.ratings.creativity.toFixed(1)} · Bản sắc ${item.ratings.identity.toFixed(1)} · Ứng dụng ${item.ratings.practicality.toFixed(1)}</span>
-                      <span class="px-2.5 py-1 bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full font-bold">${getCompositeScore(item).toFixed(2)} ★</span>
-                      <button type="button" data-open-concept="${escapeHtml(item.id)}" class="sketch-btn sketch-btn-sm btn-paper text-xs">Xem</button>
-                    </div>
-                  </div>
-                `;
-              })
-              .join('')}
-          </div>
-        </div>
-      `
-          : '';
-
-      content.innerHTML = podiumHtml + listHtml;
-    } else {
-      // Top Creators Mode
-      const creatorScores = state.creators
-        .filter((cr) => state.activeCampus === 'all' || cr.campusId === state.activeCampus)
-        .map((cr) => {
-          const works = scopedConcepts.filter((c) => c.creatorId === cr.id);
-          const allWorks = state.concepts.filter((c) => c.creatorId === cr.id);
-          const targetWorks = works.length > 0 ? works : allWorks;
-          const totalVotes = targetWorks.reduce((s, c) => s + c.ratings.count, 0);
-          const avgScore =
-            targetWorks.length > 0
-              ? targetWorks.reduce((s, c) => s + getCompositeScore(c), 0) / targetWorks.length
-              : 0;
-          return { creator: cr, workCount: targetWorks.length, totalVotes, avgScore };
-        })
-        .filter((row) => row.workCount > 0)
-        .sort((a, b) => b.avgScore * 10 + b.totalVotes * 0.05 - (a.avgScore * 10 + a.totalVotes * 0.05));
-
-      content.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          ${creatorScores
-            .map((row, idx) => {
-              const campus = getCampusById(row.creator.campusId);
-              return `
-                <div class="sketch-card p-5 bg-white flex items-center justify-between gap-4">
-                  <div class="flex items-center gap-3.5 min-w-0">
-                    <div class="w-12 h-12 rounded-full border-[2.5px] border-[#1E1E24] flex items-center justify-center font-display font-extrabold text-base shrink-0" style="background:${escapeHtml(row.creator.avatarBg)}">
-                      #${idx + 1}
-                    </div>
-                    <div class="min-w-0">
-                      <button type="button" data-open-creator="${escapeHtml(row.creator.id)}" class="font-display font-bold text-base hover:text-[#2D5DA1] truncate block cursor-pointer">
-                        ${escapeHtml(row.creator.name)}
-                      </button>
-                      <div class="text-xs text-[#52525B] truncate">${escapeHtml(campus.shortName)} · ${row.workCount} concept</div>
-                      <div class="text-xs font-mono font-bold text-[#FF4D4D] mt-0.5">${row.avgScore.toFixed(2)} ★ TB · ${row.totalVotes} lượt chấm</div>
-                    </div>
-                  </div>
-                  <button type="button" data-open-creator="${escapeHtml(row.creator.id)}" class="sketch-btn sketch-btn-sm btn-paper text-xs shrink-0">Portfolio</button>
-                </div>
-              `;
-            })
-            .join('')}
-        </div>
-      `;
-    }
-  }
-
-  // -------------------- Render: Creators Section --------------------
-  function renderCreatorsSection() {
-    const grid = document.getElementById('creatorsGrid');
-    if (!grid) return;
-
-    const list =
-      state.activeCampus === 'all'
-        ? state.creators
-        : state.creators.filter((cr) => cr.campusId === state.activeCampus);
-
-    if (list.length === 0) {
-      grid.innerHTML = `
-        <div class="sketch-box p-6 bg-white md:col-span-2 lg:col-span-3 text-center">
-          <p class="font-display font-bold text-base mb-1">Chưa có tác giả nào đóng góp ở không gian trường này</p>
-          <p class="text-sm text-[#52525B]">Nhấn <strong>+ Đăng Concept</strong> để đóng góp thiết kế đầu tiên (có thể chọn đăng Ẩn danh).</p>
-        </div>
-      `;
-      return;
-    }
-
-    grid.innerHTML = list
-      .map((creator, idx) => {
-        const campus = getCampusById(creator.campusId);
-        const works = state.concepts.filter((c) => c.creatorId === creator.id);
-        const totalVotes = works.reduce((s, w) => s + w.ratings.count, 0);
-
-        return `
-          <article class="${idx % 2 === 0 ? 'sketch-card' : 'sketch-card-alt'} p-5 bg-white flex flex-col">
-            <div class="flex items-start justify-between gap-3 mb-3">
-              <div class="flex items-center gap-3 min-w-0">
-                <div class="w-12 h-12 rounded-full border-[2.5px] border-[#1E1E24] flex items-center justify-center font-display font-extrabold text-base shrink-0 shadow-[2px_2px_0px_#1E1E24]" style="background:${escapeHtml(creator.avatarBg)}">
-                  ${escapeHtml(creator.initials)}
-                </div>
-                <div class="min-w-0">
-                  <div class="flex flex-wrap items-center gap-1.5">
-                    <h3 class="font-display font-extrabold text-lg truncate">${escapeHtml(creator.name)}</h3>
-                    ${creator.verifiedEdu ? iconVerifiedBadge() : ''}
-                  </div>
-                  <p class="text-xs font-mono text-[#52525B] truncate">${escapeHtml(creator.handle)} · ${escapeHtml(campus.shortName)}</p>
-                </div>
-              </div>
-            </div>
-
-            <p class="text-xs font-semibold text-[#2D5DA1] mb-2">${escapeHtml(creator.faculty)}</p>
-            <p class="text-sm text-[#52525B] line-clamp-3 mb-4">${escapeHtml(creator.bio)}</p>
-
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              ${(creator.skills || [])
-                .map(
-                  (sk) =>
-                    `<span class="px-2.5 py-0.5 text-xs font-hand font-bold bg-[#F4EFE6] border-[1.5px] border-[#1E1E24] rounded-full">${escapeHtml(sk)}</span>`
-                )
-                .join('')}
-            </div>
-
-            <div class="mt-auto pt-3 border-t-2 border-dashed border-[#1E1E24]/25 flex items-center justify-between gap-2">
-              <span class="text-xs font-mono font-bold text-[#52525B]">${works.length} mẫu · ${totalVotes} lượt chấm</span>
-              <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-postit text-xs">
-                ${creator.id === 'cr-anonymous' ? 'Xem Bộ Sưu Tập Ẩn Danh' : 'Xem Portfolio & Liên hệ'}
-              </button>
-            </div>
           </article>
         `;
       })
@@ -931,11 +587,11 @@
         const campus = getCampusById(item.campusId);
         return `
           <div class="sketch-box p-3.5 bg-white flex items-center gap-3">
-            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-16 rounded-lg overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer">
+            <button type="button" data-open-concept="${escapeHtml(item.id)}" class="w-20 h-16 rounded-lg overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer bg-[#F4F6F9]">
               ${renderMerchIllustration(item, 0)}
             </button>
             <div class="min-w-0 flex-1">
-              <div class="text-[11px] font-mono font-bold text-[#2D5DA1]">${escapeHtml(campus.shortName)} · ${getCompositeScore(item).toFixed(1)} ★</div>
+              <div class="text-[11px] font-mono font-bold text-[#2D5DA1]">${escapeHtml(campus.shortName)} · ${escapeHtml(getCategoryLabel(item.category))}</div>
               <button type="button" data-open-concept="${escapeHtml(item.id)}" class="font-display font-bold text-sm text-left line-clamp-2 hover:text-[#2D5DA1] cursor-pointer">
                 ${escapeHtml(item.title)}
               </button>
@@ -952,30 +608,10 @@
       .join('');
   }
 
-  // -------------------- Modal 1: Concept Detail & 3-Criteria Rating --------------------
-  function renderStarRow(criterionKey, selectedVal) {
-    return `
-      <div class="flex items-center gap-1" role="radiogroup" aria-label="Chấm điểm ${escapeHtml(criterionKey)}">
-        ${[1, 2, 3, 4, 5]
-          .map(
-            (n) => `
-          <button type="button" data-rate-criterion="${escapeHtml(criterionKey)}" data-rate-value="${n}" class="star-btn" aria-label="${n} sao">
-            <svg class="w-6 h-6 ${n <= selectedVal ? 'text-[#F59E0B] fill-[#F59E0B]' : 'text-[#D4D4D8] fill-white'}" viewBox="0 0 24 24" stroke="#1E1E24" stroke-width="2.1" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          </button>
-        `
-          )
-          .join('')}
-      </div>
-    `;
-  }
-
+  // -------------------- Modal 1: Concept Detail Showcase --------------------
   function openConceptModal(conceptId) {
     state.activeConceptId = conceptId;
     state.activeDetailView = 0;
-    state.showVibeCard = false;
-    state.userDraftRating = { creativity: 5, identity: 5, practicality: 5 };
     renderConceptModal();
     document.getElementById('conceptModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -993,7 +629,6 @@
 
     const campus = getCampusById(concept.campusId);
     const creator = getCreatorById(concept.creatorId);
-    const compScore = getCompositeScore(concept).toFixed(2);
     const isBookmarked = state.bookmarks.includes(concept.id);
 
     const viewButtons = [
@@ -1004,7 +639,7 @@
 
     body.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-7">
-        <!-- Left Column: Multi-Angle Artwork + Palette + Specs + Vibe Card -->
+        <!-- Left Column: Multi-Angle Studio Artwork + Link Copy -->
         <div class="lg:col-span-6 space-y-4">
           <div class="sketch-box p-3 bg-white relative">
             <div class="washi-tape washi-tape--mint -top-3 left-8 -rotate-3"></div>
@@ -1026,10 +661,71 @@
             </div>
           </div>
 
-          <!-- Palette & Specs -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button type="button" id="copyConceptLinkBtn" class="sketch-btn sketch-btn-sm btn-paper text-xs">
+              Sao chép link mẫu trưng bày
+            </button>
+            <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-mint'} text-xs">
+              ${iconBookmark(isBookmarked)}
+              <span>${isBookmarked ? 'Đã lưu trong bộ sưu tập' : 'Lưu mẫu này'}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Showcase Info (Story + Palette + Specs + Feature Work Notice) -->
+        <div class="lg:col-span-6 space-y-5 pr-2">
+          <div class="pr-10">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-3 py-0.5 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background:${escapeHtml(campus.color)}">
+                ${escapeHtml(campus.name)}
+              </span>
+              <span class="px-3 py-0.5 text-xs font-hand font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
+                ${escapeHtml(getCategoryLabel(concept.category))}
+              </span>
+              <span class="px-3 py-0.5 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">
+                Chế độ: Chỉ Trưng Bày
+              </span>
+            </div>
+
+            <h2 id="conceptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] leading-tight">
+              ${escapeHtml(concept.title)}
+            </h2>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 mt-3 p-3 bg-white border-2 border-[#1E1E24] rounded-xl">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-full border-2 border-[#1E1E24] flex items-center justify-center font-display font-bold text-sm" style="background:${escapeHtml(creator.avatarBg)}">
+                  ${escapeHtml(creator.initials)}
+                </div>
+                <div>
+                  <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-display font-bold text-sm text-[#2D5DA1] hover:underline cursor-pointer block text-left">
+                    ${escapeHtml(creator.name)}
+                  </button>
+                  <div class="text-xs text-[#52525B]">${escapeHtml(creator.faculty)} · ${formatDateDisplay(concept.createdAt)}</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-mint text-xs">
+                  Hồ sơ Ẩn danh
+                </button>
+                <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-paper'} text-xs">
+                  ${iconBookmark(isBookmarked)}
+                  <span>${isBookmarked ? 'Đã lưu' : 'Lưu mẫu'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Vibe Story -->
+          <div class="p-4 bg-[#FFF3B0]/45 border-2 border-[#1E1E24] rounded-2xl">
+            <div class="font-display font-bold text-sm text-[#1E1E24] mb-1">Câu chuyện bản sắc (The Vibe Story)</div>
+            <p class="text-sm text-[#1E1E24]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
+          </div>
+
+          <!-- Official Palette & Material Specs -->
           <div class="sketch-box p-4 bg-white space-y-3">
             <div>
-              <div class="font-display font-bold text-sm mb-2">Bảng mã màu (Nhấn để sao chép HEX)</div>
+              <div class="font-display font-bold text-sm mb-2">Bảng mã màu chuẩn nhận diện (Nhấn để sao chép HEX)</div>
               <div class="flex flex-wrap gap-2">
                 ${(concept.palette || [])
                   .map(
@@ -1047,8 +743,8 @@
             <hr class="sketch-divider" />
 
             <div>
-              <div class="font-display font-bold text-sm mb-1">Thông số &amp; Chất liệu tham khảo</div>
-              <p class="text-sm text-[#52525B]">${escapeHtml(concept.specs || 'Đang cập nhật thông số sản xuất.')}</p>
+              <div class="font-display font-bold text-sm mb-1">Thông số kỹ thuật &amp; Chất liệu đề xuất</div>
+              <p class="text-sm text-[#52525B] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số sản xuất.')}</p>
             </div>
 
             <div class="flex flex-wrap gap-1.5 pt-1">
@@ -1061,260 +757,41 @@
             </div>
           </div>
 
-          <!-- Vibe Card Share Preview (Feature from Future Expansion / Lan tỏa) -->
-          <div class="flex flex-wrap items-center gap-2.5">
-            <button type="button" id="toggleVibeCardBtn" class="sketch-btn sketch-btn-sm btn-blue text-xs">
-              ${state.showVibeCard ? 'Ẩn Vibe Card Story' : 'Tạo Vibe Card chia sẻ Story'}
-            </button>
-            <button type="button" id="copyConceptLinkBtn" class="sketch-btn sketch-btn-sm btn-paper text-xs">
-              Sao chép link kêu gọi chấm điểm
-            </button>
-          </div>
-
-          ${
-            state.showVibeCard
-              ? `
-            <div class="sketch-box p-4 vibe-card-sheet animate-ink-pop">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-display font-extrabold text-sm">UniVibe · VIBE CARD</span>
-                <span class="px-2 py-0.5 text-[11px] font-mono font-bold text-white rounded-full border border-[#1E1E24]" style="background:${escapeHtml(campus.color)}">${escapeHtml(campus.shortName)}</span>
-              </div>
-              <div class="aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#1E1E24] bg-white mb-3">
-                ${renderMerchIllustration(concept, 0)}
-              </div>
-              <div class="flex items-center justify-between gap-3">
-                <div>
-                  <div class="font-display font-bold text-sm leading-tight">${escapeHtml(concept.title)}</div>
-                  <div class="text-xs font-hand text-[#52525B]">Bởi ${escapeHtml(creator.name)} · Hãy vào chấm điểm 3 tiêu chí nhé!</div>
-                </div>
-                <div class="px-3 py-1.5 bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-xl text-center shrink-0">
-                  <div class="font-mono font-bold text-base leading-none">${compScore}★</div>
-                  <div class="text-[10px] font-mono">${concept.ratings.count} votes</div>
-                </div>
-              </div>
+          <!-- Feature Work Notice -->
+          <div class="sketch-box p-4 bg-[#F4EFE6]/80 space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-display font-extrabold text-sm text-[#2D5DA1]">Feature Work · Định hướng mở rộng</span>
+              <a href="#feature-work" data-jump-feature-work="true" class="text-xs font-mono font-bold underline hover:text-[#FF4D4D]">Xem lộ trình →</a>
             </div>
-          `
-              : ''
-          }
-        </div>
-
-        <!-- Right Column: Vibe Story + 3-Criteria Score + Interactive Voting + Comments -->
-        <div class="lg:col-span-6 space-y-5 pr-2">
-          <div class="pr-10">
-            <div class="flex flex-wrap items-center gap-2 mb-2">
-              <span class="px-3 py-0.5 text-xs font-mono font-bold text-white border-2 border-[#1E1E24] rounded-full" style="background:${escapeHtml(campus.color)}">
-                ${escapeHtml(campus.name)}
-              </span>
-              <span class="px-3 py-0.5 text-xs font-hand font-bold bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full">
-                ${escapeHtml(getCategoryLabel(concept.category))}
-              </span>
-            </div>
-
-            <h2 id="conceptModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold text-[#1E1E24] leading-tight">
-              ${escapeHtml(concept.title)}
-            </h2>
-
-            <div class="flex flex-wrap items-center justify-between gap-3 mt-3 p-3 bg-white border-2 border-[#1E1E24] rounded-xl">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-full border-2 border-[#1E1E24] flex items-center justify-center font-display font-bold text-sm" style="background:${escapeHtml(creator.avatarBg)}">
-                  ${escapeHtml(creator.initials)}
-                </div>
-                <div>
-                  <div class="flex items-center gap-1.5">
-                    <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="font-display font-bold text-sm text-[#2D5DA1] hover:underline cursor-pointer">
-                      ${escapeHtml(creator.name)}
-                    </button>
-                    ${creator.verifiedEdu ? iconVerifiedBadge() : ''}
-                  </div>
-                  <div class="text-xs text-[#52525B]">${escapeHtml(creator.faculty)}</div>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="sketch-btn sketch-btn-sm btn-mint text-xs">
-                  ${creator.id === 'cr-anonymous' ? 'Hồ sơ Ẩn danh' : 'Liên hệ sản xuất'}
-                </button>
-                <button type="button" data-toggle-bookmark="${escapeHtml(concept.id)}" class="sketch-btn sketch-btn-sm ${isBookmarked ? 'btn-postit' : 'btn-paper'} text-xs">
-                  ${iconBookmark(isBookmarked)}
-                  <span>${isBookmarked ? 'Đã lưu' : 'Lưu'}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- The Vibe Story -->
-          <div class="p-4 bg-[#FFF3B0]/45 border-2 border-[#1E1E24] rounded-2xl">
-            <div class="font-display font-bold text-sm text-[#1E1E24] mb-1">Câu chuyện bản sắc (The Vibe Story)</div>
-            <p class="text-sm text-[#1E1E24]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
-          </div>
-
-          <!-- Current 3-Criteria Scoreboard -->
-          <div class="sketch-box p-4 bg-white space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="font-display font-extrabold text-base">Kết quả Đánh giá Đa tiêu chí</span>
-              <span class="px-3 py-1 bg-[#FFF3B0] border-2 border-[#1E1E24] rounded-full font-mono font-bold text-sm">
-                ${compScore} / 5.0 ★ (${concept.ratings.count} lượt)
-              </span>
-            </div>
-
-            <div class="space-y-2.5 text-sm">
-              <div>
-                <div class="flex justify-between font-semibold mb-1">
-                  <span>1. Độ sáng tạo &amp; Thẩm mỹ</span>
-                  <span class="font-mono font-bold">${concept.ratings.creativity.toFixed(1)} / 5</span>
-                </div>
-                <div class="sketch-meter-track"><div class="sketch-meter-fill bg-[#FF4D4D]" style="width:${(concept.ratings.creativity / 5) * 100}%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between font-semibold mb-1">
-                  <span>2. Bản sắc trường (${escapeHtml(campus.shortName)})</span>
-                  <span class="font-mono font-bold">${concept.ratings.identity.toFixed(1)} / 5</span>
-                </div>
-                <div class="sketch-meter-track"><div class="sketch-meter-fill bg-[#2D5DA1]" style="width:${(concept.ratings.identity / 5) * 100}%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between font-semibold mb-1">
-                  <span>3. Tính ứng dụng thực tế</span>
-                  <span class="font-mono font-bold">${concept.ratings.practicality.toFixed(1)} / 5</span>
-                </div>
-                <div class="sketch-meter-track"><div class="sketch-meter-fill bg-[#10B981]" style="width:${(concept.ratings.practicality / 5) * 100}%"></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Rating & Critique Form -->
-          <form id="rateConceptForm" class="sketch-box p-4 bg-[#F4EFE6]/70 space-y-3">
-            <div class="font-display font-extrabold text-base">Chấm điểm 3 tiêu chí &amp; Góp ý</div>
-
-            <div class="space-y-2 text-sm">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <span class="font-semibold">Độ sáng tạo &amp; Thẩm mỹ</span>
-                ${renderStarRow('creativity', state.userDraftRating.creativity)}
-              </div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <span class="font-semibold">Bản sắc trường (${escapeHtml(campus.shortName)})</span>
-                ${renderStarRow('identity', state.userDraftRating.identity)}
-              </div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <span class="font-semibold">Tính ứng dụng thực tế</span>
-                ${renderStarRow('practicality', state.userDraftRating.practicality)}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-2.5 pt-1">
-              <input id="reviewerNameInput" type="text" placeholder="Tên &amp; Khóa của bạn (VD: Minh Khoa · K23)" class="sketch-input text-sm" />
-              <textarea id="reviewerCommentInput" rows="2" placeholder="Nhận xét về chất liệu, màu sắc hoặc chi tiết muốn tác giả tinh chỉnh..." class="sketch-input text-sm py-2"></textarea>
-            </div>
-
-            <button type="submit" class="sketch-btn btn-postit w-full text-sm">
-              Gửi điểm đánh giá &amp; Nhận xét
-            </button>
-          </form>
-
-          <!-- Community Critique Comments -->
-          <div class="space-y-2.5">
-            <div class="font-display font-bold text-sm">Góp ý từ cộng đồng (${(concept.comments || []).length})</div>
-            ${
-              (concept.comments || []).length === 0
-                ? `<p class="text-sm text-[#52525B] italic">Chưa có bình luận nào — hãy là người đầu tiên góp ý cho tác giả!</p>`
-                : concept.comments
-                    .map(
-                      (cm) => `
-                <div class="p-3 bg-white border-2 border-[#1E1E24] rounded-xl">
-                  <div class="flex items-center justify-between text-xs mb-1">
-                    <strong class="font-display">${escapeHtml(cm.author)}</strong>
-                    <span class="font-mono text-[#52525B]">${escapeHtml(cm.score ? Number(cm.score).toFixed(1) + '★ · ' : '')}${escapeHtml(cm.date)}</span>
-                  </div>
-                  <p class="text-sm text-[#1E1E24]">${escapeHtml(cm.text)}</p>
-                </div>
-              `
-                    )
-                    .join('')
-            }
+            <p class="text-xs text-[#52525B] leading-relaxed">
+              Trang đang vận hành ở chế độ <strong>Chỉ trưng bày (Showcase-Only)</strong>. Tính năng cho người dùng thêm thiết kế mới (<em>User Concept Submission</em>), chấm điểm đa tiêu chí và bình luận góp ý sẽ được mở trong mục <strong>Feature Work</strong>.
+            </p>
           </div>
         </div>
       </div>
     `;
 
-    // Bind interactive listeners inside Concept Modal
-    const rateForm = document.getElementById('rateConceptForm');
-    if (rateForm) {
-      rateForm.addEventListener('submit', handleRatingSubmit);
-    }
-
-    const toggleVibeBtn = document.getElementById('toggleVibeCardBtn');
-    if (toggleVibeBtn) {
-      toggleVibeBtn.addEventListener('click', () => {
-        state.showVibeCard = !state.showVibeCard;
-        renderConceptModal();
-      });
-    }
-
     const copyLinkBtn = document.getElementById('copyConceptLinkBtn');
     if (copyLinkBtn) {
       copyLinkBtn.addEventListener('click', () => {
         const shareUrl = `${window.location.origin}${window.location.pathname}#concept-${concept.id}`;
-        copyToClipboard(shareUrl, 'Đã sao chép link chia sẻ concept!');
-      });
-    }
-  }
-
-  function handleRatingSubmit(e) {
-    e.preventDefault();
-    const concept = state.concepts.find((c) => c.id === state.activeConceptId);
-    if (!concept) return;
-
-    const oldCount = concept.ratings.count || 0;
-    const newCount = oldCount + 1;
-    const { creativity, identity, practicality } = state.userDraftRating;
-
-    concept.ratings.creativity = Number(
-      (((concept.ratings.creativity * oldCount + creativity) / newCount)).toFixed(2)
-    );
-    concept.ratings.identity = Number(
-      (((concept.ratings.identity * oldCount + identity) / newCount)).toFixed(2)
-    );
-    concept.ratings.practicality = Number(
-      (((concept.ratings.practicality * oldCount + practicality) / newCount)).toFixed(2)
-    );
-    concept.ratings.count = newCount;
-
-    const nameVal = (document.getElementById('reviewerNameInput')?.value || '').trim() || 'Sinh viên UniVibe';
-    const textVal = (document.getElementById('reviewerCommentInput')?.value || '').trim();
-    const avgUser = Number(((creativity + identity + practicality) / 3).toFixed(1));
-
-    if (textVal) {
-      const today = new Date();
-      const dateStr = `${String(today.getDate()).padStart(2, '0')}/${String(
-        today.getMonth() + 1
-      ).padStart(2, '0')}/${today.getFullYear()}`;
-      concept.comments = concept.comments || [];
-      concept.comments.unshift({
-        id: 'cm-' + Date.now(),
-        author: nameVal,
-        text: textVal,
-        score: avgUser,
-        date: dateStr,
+        copyToClipboard(shareUrl, 'Đã sao chép link mẫu trưng bày!');
       });
     }
 
-    saveState();
-    renderAll();
-    renderConceptModal();
-    showToast(`Đã ghi nhận đánh giá ${avgUser} ★ cho "${concept.title}"!`);
+    body.querySelectorAll('[data-jump-feature-work]').forEach((link) => {
+      link.addEventListener('click', () => {
+        closeConceptModal();
+      });
+    });
   }
 
-  // -------------------- Modal 2: Creator Profile & Portfolio --------------------
+  // -------------------- Modal 2: Anonymous Archive Portfolio --------------------
   function openCreatorModal(creatorId) {
     closeConceptModal();
     const creator = getCreatorById(creatorId);
     const campus = getCampusById(creator.campusId);
     const works = state.concepts.filter((c) => c.creatorId === creator.id);
-    const totalVotes = works.reduce((s, w) => s + w.ratings.count, 0);
-    const avgRating =
-      works.length > 0
-        ? (works.reduce((s, w) => s + getCompositeScore(w), 0) / works.length).toFixed(2)
-        : '—';
 
     const body = document.getElementById('creatorModalBody');
     if (!body) return;
@@ -1328,7 +805,7 @@
           <div class="space-y-1.5">
             <div class="flex flex-wrap items-center gap-2">
               <h2 id="creatorModalTitle" class="font-display text-2xl sm:text-3xl font-extrabold">${escapeHtml(creator.name)}</h2>
-              ${creator.verifiedEdu ? iconVerifiedBadge() : ''}
+              <span class="px-2.5 py-0.5 text-xs font-mono font-bold bg-[#B8F2E6] border-2 border-[#1E1E24] rounded-full">Showcase Archive</span>
             </div>
             <p class="text-sm font-mono text-[#52525B]">${escapeHtml(creator.handle)} · ${escapeHtml(campus.name)} (${escapeHtml(creator.faculty)})</p>
             <div class="flex flex-wrap gap-1.5 pt-1">
@@ -1344,73 +821,47 @@
 
         <p class="text-sm sm:text-base text-[#1E1E24] bg-white p-4 border-2 border-[#1E1E24] rounded-2xl">${escapeHtml(creator.bio)}</p>
 
-        <!-- Stats & Direct Production Contact Bridge -->
+        <!-- Stats & Showcase Archive Notice -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-4 bg-[#F4EFE6] border-2 border-[#1E1E24] rounded-2xl grid grid-cols-3 gap-2 text-center">
             <div>
               <div class="font-mono text-2xl font-bold">${works.length}</div>
-              <div class="text-xs font-hand text-[#52525B]">Concept</div>
+              <div class="text-xs font-hand text-[#52525B]">Concept trưng bày</div>
             </div>
             <div>
-              <div class="font-mono text-2xl font-bold text-[#FF4D4D]">${avgRating}</div>
-              <div class="text-xs font-hand text-[#52525B]">Điểm TB</div>
+              <div class="font-mono text-2xl font-bold text-[#2D5DA1]">3 Góc</div>
+              <div class="text-xs font-hand text-[#52525B]">Góc nhìn Studio</div>
             </div>
             <div>
-              <div class="font-mono text-2xl font-bold text-[#2D5DA1]">${totalVotes}</div>
-              <div class="text-xs font-hand text-[#52525B]">Lượt chấm</div>
+              <div class="font-mono text-lg sm:text-xl font-bold text-[#1E1E24]">HCMUT</div>
+              <div class="text-xs font-hand text-[#52525B]">Nhận diện chuẩn</div>
             </div>
           </div>
 
-          <div class="p-4 bg-[#B8F2E6]/50 border-2 border-[#1E1E24] rounded-2xl space-y-2.5">
-            ${
-              creator.contacts && (creator.contacts.email || creator.contacts.facebook || creator.contacts.behance)
-                ? `
-              <div class="font-display font-bold text-sm">Kết nối trực tiếp để hợp tác sản xuất (CLB / Khoa / Nhóm SV)</div>
-              <div class="flex flex-wrap gap-2">
-                ${
-                  creator.contacts.email
-                    ? `<button type="button" data-copy-email="${escapeHtml(creator.contacts.email)}" class="sketch-btn sketch-btn-sm btn-paper text-xs">Email: ${escapeHtml(creator.contacts.email)}</button>`
-                    : ''
-                }
-                ${
-                  creator.contacts.facebook
-                    ? `<a href="${escapeHtml(creator.contacts.facebook)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-blue text-xs">Facebook</a>`
-                    : ''
-                }
-                ${
-                  creator.contacts.behance
-                    ? `<a href="${escapeHtml(creator.contacts.behance)}" target="_blank" rel="noopener noreferrer" class="sketch-btn sketch-btn-sm btn-ink text-xs">Behance</a>`
-                    : ''
-                }
-              </div>
-            `
-                : `
-              <div class="font-display font-bold text-sm">Đóng góp Ẩn danh cho Cộng đồng</div>
-              <p class="text-xs text-[#1E1E24]/85 leading-relaxed">
-                Các mẫu được chia sẻ công khai dưới danh nghĩa <strong>Ẩn danh</strong> để sinh viên và các CLB tự do tham khảo, bình chọn và phát triển theo chuẩn nhận diện thương hiệu của trường.
-              </p>
-            `
-            }
+          <div class="p-4 bg-[#B8F2E6]/50 border-2 border-[#1E1E24] rounded-2xl space-y-2">
+            <div class="font-display font-bold text-sm">Đóng góp Ẩn danh · Chế độ Chỉ Trưng Bày</div>
+            <p class="text-xs text-[#1E1E24]/85 leading-relaxed">
+              Các mẫu được chia sẻ công khai dưới danh nghĩa <strong>Ẩn danh</strong> để sinh viên và các CLB tự do tham khảo theo chuẩn nhận diện thương hiệu. Cổng tác giả tự đăng &amp; cầu nối sản xuất sẽ mở trong mục <strong>Feature Work</strong>.
+            </p>
           </div>
         </div>
 
-        <!-- Creator's Designs -->
+        <!-- Archive Works -->
         <div>
-          <h3 class="font-display font-extrabold text-lg mb-3">Tác phẩm trong Portfolio (${works.length})</h3>
+          <h3 class="font-display font-extrabold text-lg mb-3">Tác phẩm đang trưng bày (${works.length})</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             ${works
               .map(
                 (w) => `
               <div class="sketch-box p-3.5 bg-white flex items-center gap-3">
-                <button type="button" data-open-concept="${escapeHtml(w.id)}" class="w-24 h-20 rounded-xl overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer">
+                <button type="button" data-open-concept="${escapeHtml(w.id)}" class="w-24 h-20 rounded-xl overflow-hidden border-2 border-[#1E1E24] shrink-0 cursor-pointer bg-[#F4F6F9]">
                   ${renderMerchIllustration(w, 0)}
                 </button>
                 <div class="min-w-0 flex-1">
-                  <div class="text-xs font-mono font-bold text-[#FF4D4D]">${getCompositeScore(w).toFixed(1)} ★ · ${w.ratings.count} lượt</div>
+                  <div class="text-xs font-mono font-bold text-[#2D5DA1]">${escapeHtml(getCategoryLabel(w.category))} · ${formatDateDisplay(w.createdAt)}</div>
                   <button type="button" data-open-concept="${escapeHtml(w.id)}" class="font-display font-bold text-sm text-left line-clamp-2 hover:text-[#2D5DA1] cursor-pointer">
                     ${escapeHtml(w.title)}
                   </button>
-                  <div class="text-xs font-hand text-[#52525B] mt-0.5">${escapeHtml(getCategoryLabel(w.category))}</div>
                 </div>
               </div>
             `
@@ -1428,187 +879,6 @@
   function closeCreatorModal() {
     document.getElementById('creatorModal').classList.add('hidden');
     document.body.style.overflow = '';
-  }
-
-  // -------------------- Modal 3: Submit New Concept --------------------
-  function populateCampusSelects() {
-    const optionsHtml = CAMPUSES.map(
-      (c) => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} (${escapeHtml(c.shortName)})</option>`
-    ).join('');
-
-    const newCampus = document.getElementById('newCampus');
-    if (newCampus) newCampus.innerHTML = optionsHtml;
-
-    const promptCampus = document.getElementById('promptCampusSelect');
-    if (promptCampus) promptCampus.innerHTML = optionsHtml;
-  }
-
-  function openSubmitModal() {
-    const newCampus = document.getElementById('newCampus');
-    if (newCampus && state.activeCampus !== 'all') {
-      newCampus.value = state.activeCampus;
-      applySelectedCampusColors();
-    }
-    document.getElementById('submitModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeSubmitModal() {
-    document.getElementById('submitModal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  function applySelectedCampusColors() {
-    const campusId = document.getElementById('newCampus')?.value || 'hcmut';
-    const campus = getCampusById(campusId);
-    const c1 = document.getElementById('color1');
-    const c2 = document.getElementById('color2');
-    const c3 = document.getElementById('color3');
-    const c4 = document.getElementById('color4');
-    if (c1) c1.value = campus.color;
-    if (c2) c2.value = sanitizeColor(campus.secondaryColor, '#1488DB');
-    if (c3) c3.value = '#FFFFFF';
-    if (c4) c4.value = '#F4F6F9';
-  }
-
-  function handleSubmitNewConcept(e) {
-    e.preventDefault();
-    const title = (document.getElementById('newTitle')?.value || '').trim();
-    const campusId = document.getElementById('newCampus')?.value || 'hcmut';
-    const category = document.getElementById('newCategory')?.value || 'tee';
-    const story = (document.getElementById('newStory')?.value || '').trim();
-    const specs = (document.getElementById('newSpecs')?.value || '').trim() || 'Thông số sản phẩm tối giản UniVibe.';
-    const tagsRaw = (document.getElementById('newTags')?.value || '').trim();
-    const imageUrl = sanitizeImageUrl(document.getElementById('newImageUrl')?.value || '');
-    const creatorName = (document.getElementById('newCreatorName')?.value || '').trim() || 'Ẩn danh';
-    const creatorFaculty = (document.getElementById('newCreatorFaculty')?.value || '').trim();
-    const creatorEmail = (document.getElementById('newCreatorEmail')?.value || '').trim();
-
-    if (!title || !story) return;
-
-    const campus = getCampusById(campusId);
-    const palette = [
-      sanitizeColor(document.getElementById('color1')?.value, campus.color),
-      sanitizeColor(document.getElementById('color2')?.value, '#1488DB'),
-      sanitizeColor(document.getElementById('color3')?.value, '#FFFFFF'),
-      sanitizeColor(document.getElementById('color4')?.value, '#F4F6F9'),
-    ];
-
-    const isDefaultAnon =
-      creatorName.toLowerCase() === 'ẩn danh' && !creatorFaculty && !creatorEmail;
-
-    let creatorId = 'cr-anonymous';
-    if (!isDefaultAnon) {
-      const initials =
-        creatorName
-          .split(/\s+/)
-          .filter(Boolean)
-          .slice(-2)
-          .map((w) => w[0].toUpperCase())
-          .join('') || 'AD';
-
-      creatorId = 'cr-custom-' + Date.now();
-      const newCreator = {
-        id: creatorId,
-        name: creatorName,
-        handle: '@' + (creatorName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12) || 'anonymous'),
-        campusId,
-        faculty: creatorFaculty || campus.name,
-        verifiedEdu: creatorEmail.endsWith('.edu.vn'),
-        avatarBg: '#E2E8F0',
-        initials,
-        bio: `Tác giả đóng góp concept "${title}" cho không gian ${campus.name}.`,
-        skills: [getCategoryLabel(category), 'Concept Design'],
-        badges: [creatorName.toLowerCase() === 'ẩn danh' ? 'Ẩn danh' : 'Tác giả Mới'],
-        contacts: creatorEmail ? { email: creatorEmail } : {},
-      };
-      state.creators.unshift(newCreator);
-    }
-
-    const todayIso = new Date().toISOString().slice(0, 10);
-    const conceptId = 'c-custom-' + Date.now();
-    const tags = tagsRaw
-      ? tagsRaw.split(',').map((t) => t.trim()).filter(Boolean).slice(0, 5)
-      : [campus.shortName, getCategoryLabel(category)];
-
-    const newConcept = {
-      id: conceptId,
-      title,
-      campusId,
-      campusShort: campus.shortName,
-      category,
-      creatorId,
-      createdAt: todayIso,
-      timeframe: 'week',
-      featured: false,
-      palette,
-      tags,
-      story,
-      specs,
-      customImageUrl: imageUrl,
-      ratings: {
-        creativity: 5.0,
-        identity: 5.0,
-        practicality: 4.8,
-        count: 1,
-      },
-      comments: [],
-    };
-
-    state.concepts.unshift(newConcept);
-    state.sortBy = 'newest';
-    const sortEl = document.getElementById('sortSelect');
-    if (sortEl) sortEl.value = 'newest';
-
-    saveState();
-    e.target.reset();
-    closeSubmitModal();
-    renderAll();
-    showToast(`Đã đăng "${title}" lên Phòng Trưng Bày ${campus.shortName}!`);
-  }
-
-  // -------------------- Modal 4: Hand-Drawn Prompt Studio --------------------
-  function openPromptModal() {
-    renderPromptStudio();
-    document.getElementById('promptModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closePromptModal() {
-    document.getElementById('promptModal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  function renderPromptStudio() {
-    const listEl = document.getElementById('promptRecipeList');
-    const outputEl = document.getElementById('generatedPromptOutput');
-    const subjectEl = document.getElementById('promptSubjectInput');
-    const campusEl = document.getElementById('promptCampusSelect');
-    if (!listEl || !outputEl) return;
-
-    listEl.innerHTML = HAND_DRAWN_RECIPES.map((rec) => {
-      const active = rec.id === state.activeRecipeId;
-      return `
-        <button type="button" data-recipe-id="${escapeHtml(rec.id)}" class="text-left p-3.5 rounded-2xl border-[2.5px] border-[#1E1E24] cursor-pointer transition-all ${
-          active ? 'bg-[#FFF3B0] shadow-[4px_4px_0px_#1E1E24]' : 'bg-white hover:bg-[#F4EFE6]'
-        }">
-          <div class="text-[11px] font-mono font-bold text-[#2D5DA1] mb-0.5">${escapeHtml(rec.badge)}</div>
-          <div class="font-display font-bold text-sm text-[#1E1E24]">${escapeHtml(rec.name)}</div>
-          <p class="text-xs text-[#52525B] mt-1">${escapeHtml(rec.desc)}</p>
-        </button>
-      `;
-    }).join('');
-
-    const activeRecipe =
-      HAND_DRAWN_RECIPES.find((r) => r.id === state.activeRecipeId) || HAND_DRAWN_RECIPES[0];
-    const subject = (subjectEl && subjectEl.value.trim()) || 'minimalist cotton t-shirt with university emblem';
-    const campus = getCampusById((campusEl && campusEl.value) || 'hcmut');
-    const colors = `${campus.color} and ${campus.secondaryColor} with crisp white`;
-
-    outputEl.textContent = activeRecipe.template
-      .replace('{subject}', subject)
-      .replace('{campus}', `${campus.name} (${campus.shortName})`)
-      .replace('{colors}', colors);
   }
 
   // -------------------- Bookmarks Drawer --------------------
@@ -1646,8 +916,6 @@
     renderCampusHubStrip();
     renderCategoryFilters();
     renderGallery();
-    renderLeaderboard();
-    renderCreatorsSection();
     renderBookmarks();
   }
 
@@ -1690,20 +958,6 @@
         return;
       }
 
-      const lbPeriodBtn = e.target.closest('[data-lb-period]');
-      if (lbPeriodBtn) {
-        state.lbPeriod = lbPeriodBtn.dataset.lbPeriod;
-        renderLeaderboard();
-        return;
-      }
-
-      const lbModeBtn = e.target.closest('[data-lb-mode]');
-      if (lbModeBtn) {
-        state.lbMode = lbModeBtn.dataset.lbMode;
-        renderLeaderboard();
-        return;
-      }
-
       const detailViewBtn = e.target.closest('[data-detail-view]');
       if (detailViewBtn) {
         state.activeDetailView = Number(detailViewBtn.dataset.detailView) || 0;
@@ -1711,35 +965,10 @@
         return;
       }
 
-      const starBtn = e.target.closest('[data-rate-criterion]');
-      if (starBtn) {
-        const key = starBtn.dataset.rateCriterion;
-        const val = Number(starBtn.dataset.rateValue) || 5;
-        if (Object.prototype.hasOwnProperty.call(state.userDraftRating, key)) {
-          state.userDraftRating[key] = val;
-          renderConceptModal();
-        }
-        return;
-      }
-
       const hexBtn = e.target.closest('[data-copy-hex]');
       if (hexBtn) {
         const hex = hexBtn.dataset.copyHex;
         copyToClipboard(hex, `Đã sao chép mã màu ${hex}`);
-        return;
-      }
-
-      const emailBtn = e.target.closest('[data-copy-email]');
-      if (emailBtn) {
-        const email = emailBtn.dataset.copyEmail;
-        copyToClipboard(email, `Đã sao chép email liên hệ: ${email}`);
-        return;
-      }
-
-      const recipeBtn = e.target.closest('[data-recipe-id]');
-      if (recipeBtn) {
-        state.activeRecipeId = recipeBtn.dataset.recipeId;
-        renderPromptStudio();
       }
     });
 
@@ -1766,7 +995,9 @@
         state.activeCampus = 'all';
         state.activeCategory = 'all';
         state.searchQuery = '';
+        state.sortBy = 'featured';
         if (searchInput) searchInput.value = '';
+        if (sortSelect) sortSelect.value = 'featured';
         renderAll();
       });
     }
@@ -1774,31 +1005,8 @@
     // Modal & Drawer Triggers
     document.getElementById('closeConceptModalBtn')?.addEventListener('click', closeConceptModal);
     document.getElementById('closeCreatorModalBtn')?.addEventListener('click', closeCreatorModal);
-    document.getElementById('openSubmitModalBtn')?.addEventListener('click', openSubmitModal);
-    document.getElementById('closeSubmitModalBtn')?.addEventListener('click', closeSubmitModal);
-    document.getElementById('openPromptModalBtn')?.addEventListener('click', openPromptModal);
-    document.getElementById('mobilePromptBtn')?.addEventListener('click', () => {
-      document.getElementById('mobileMenuPanel')?.classList.add('hidden');
-      openPromptModal();
-    });
-    document.getElementById('closePromptModalBtn')?.addEventListener('click', closePromptModal);
     document.getElementById('openBookmarksBtn')?.addEventListener('click', openBookmarksDrawer);
     document.getElementById('closeBookmarksBtn')?.addEventListener('click', closeBookmarksDrawer);
-
-    document.getElementById('switchToPromptBtn')?.addEventListener('click', () => {
-      closeSubmitModal();
-      openPromptModal();
-    });
-
-    document.getElementById('applyCampusColorsBtn')?.addEventListener('click', applySelectedCampusColors);
-    document.getElementById('submitConceptForm')?.addEventListener('submit', handleSubmitNewConcept);
-
-    document.getElementById('promptSubjectInput')?.addEventListener('input', renderPromptStudio);
-    document.getElementById('promptCampusSelect')?.addEventListener('change', renderPromptStudio);
-    document.getElementById('copyPromptBtn')?.addEventListener('click', () => {
-      const text = document.getElementById('generatedPromptOutput')?.textContent || '';
-      copyToClipboard(text, 'Đã sao chép Prompt Mockup!');
-    });
 
     // Mobile nav toggle
     const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -1817,7 +1025,7 @@
     }
 
     // Backdrop clicks & ESC key
-    ['conceptModal', 'creatorModal', 'submitModal', 'promptModal'].forEach((id) => {
+    ['conceptModal', 'creatorModal'].forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener('click', (e) => {
@@ -1841,8 +1049,6 @@
       if (e.key === 'Escape') {
         closeConceptModal();
         closeCreatorModal();
-        closeSubmitModal();
-        closePromptModal();
         closeBookmarksDrawer();
       }
     });
@@ -1851,7 +1057,6 @@
   // -------------------- Initialize --------------------
   document.addEventListener('DOMContentLoaded', () => {
     loadState();
-    populateCampusSelects();
     bindEvents();
     renderAll();
 
