@@ -539,36 +539,6 @@
   }
 
   const STUDIO_IMAGE_STYLES = {
-    'assets/products/hcmut-polo-white.png': {
-      background: '#D3D3D3',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-polo-navy.png': {
-      background: '#FFFEF8',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-tee-sport.png': {
-      background: '#CBD6EA',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-tote-studio.png': {
-      background: '#004498',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-tote-lifestyle.png': {
-      background: '#E5E7EB',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-tote.jpg': {
-      background: '#E5E7EB',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
     'assets/products/hcmut-deskpad-v2.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',
@@ -584,11 +554,6 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-cap.jpg': {
-      background: '#071B4B',
-      imgClass: 'object-cover',
-      objectPosition: 'center 52%',
-    },
     'assets/products/hcmut-bottle-studio-v3.jpg': {
       background: '#D5DCE2',
       imgClass: 'object-cover',
@@ -596,16 +561,6 @@
     },
     'assets/products/hcmut-bottle-desk-v3.jpg': {
       background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-merch-kit.jpg': {
-      background: '#040B3C',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-metal-detail.jpg': {
-      background: '#03082B',
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
