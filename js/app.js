@@ -197,7 +197,7 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#666666] max-w-xl leading-relaxed font-normal">
-              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Áo Polo, Lót chuột Deskpad, Túi Tote và Nón lưỡi trai theo hệ nhận diện chuẩn HCMUT.
+              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Bình giữ nhiệt Inox, Áo Polo, Lót chuột Deskpad, Túi Tote và Nón lưỡi trai theo hệ nhận diện chuẩn HCMUT.
             </p>
 
             <div class="flex flex-wrap items-center gap-4 pt-2">

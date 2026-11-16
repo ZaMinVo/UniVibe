@@ -8,9 +8,9 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **4 concept chủ lực** được tuyển chọn kỹ lưỡng (**Áo Polo Trắng #1, Lót Chuột Deskpad 900×400×4mm, Túi Tote Canvas & Nón Lưỡi Trai Navy**), 100% hiển thị bằng phối cảnh Studio 3D thực tế chuẩn [HCMUT Shop (#1)](https://hcmut.edu.vn/hcmut-shop/product/1) (`#030391`, `#1488DB`, `#FFFFFF`, wordmark `HCMUT` + huy hiệu lập phương `BK TP.HCM` trên nền studio trung tính, ghi rõ **Nguồn: HCMUT**).
+- **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **5 concept chủ lực** được tuyển chọn kỹ lưỡng (**Bình Giữ Nhiệt Inox 500ml, Áo Polo Trắng #1, Lót Chuột Deskpad 900×400×4mm, Túi Tote Canvas & Nón Lưỡi Trai Navy**), 100% hiển thị bằng phối cảnh Studio 3D thực tế chuẩn [HCMUT Shop (#1)](https://hcmut.edu.vn/hcmut-shop/product/1) (`#030391`, `#1488DB`, `#FFFFFF`, wordmark `HCMUT` + huy hiệu lập phương `BK TP.HCM` trên nền studio trung tính, ghi rõ **Nguồn: HCMUT**).
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
-- **Ghi nhận tác giả (*Attribution*):** Bộ 3 vật phẩm chủ lực **Áo Polo Trắng #1, Túi Tote Canvas và Nón Lưỡi Trai** được ghi nhận **by HCMUT** theo hệ thống nhận diện [HCMUT Shop](https://hcmut.edu.vn/hcmut-shop/product/1); mẫu **Lót Chuột Deskpad** được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT**, không chứa dữ liệu demo cũ.
+- **Ghi nhận tác giả (*Attribution*):** Bộ 3 vật phẩm chủ lực **Áo Polo Trắng #1, Túi Tote Canvas và Nón Lưỡi Trai** được ghi nhận **by HCMUT** theo hệ thống nhận diện [HCMUT Shop](https://hcmut.edu.vn/hcmut-shop/product/1); hai thiết kế **Bình Giữ Nhiệt Inox 500ml** và **Lót Chuột Deskpad** được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT**, không chứa dữ liệu demo cũ.
 - **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---
@@ -18,8 +18,8 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 ## 2. Trải nghiệm Trưng bày hiện có
 
 1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
-2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo 4 nhóm vật phẩm chủ lực (*Áo Polo & Thun*, *Lót Chuột Deskpad*, *Túi Tote Canvas*, *Nón Lưỡi Trai*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
-3. **Chi tiết Tác phẩm Studio Linh hoạt:** Các sản phẩm chính thức *by HCMUT* (Áo Polo, Túi Tote Canvas, Nón Lưỡi Trai) hiển thị tinh gọn 1 góc nhìn chuẩn thực tế; mẫu Lót Chuột Deskpad (*by Ẩn danh*) giữ 3 góc nhìn 3D Studio chi tiết.
+2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo 5 nhóm vật phẩm chủ lực (*Áo Polo & Thun*, *Lót Chuột Deskpad*, *Túi Tote Canvas*, *Nón Lưỡi Trai*, *Bình Giữ Nhiệt*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
+3. **Chi tiết Tác phẩm Studio Linh hoạt:** Các sản phẩm chính thức *by HCMUT* (Áo Polo, Túi Tote Canvas, Nón Lưỡi Trai) hiển thị tinh gọn 1 góc nhìn chuẩn thực tế; hai thiết kế cộng đồng (*by Ẩn danh*: Bình Giữ Nhiệt Inox 500ml và Lót Chuột Deskpad) hiển thị đầy đủ 3 góc nhìn Studio cùng câu chuyện thiết kế chi tiết.
 4. **Bảng mã màu & Chất liệu:** Xem *Câu chuyện bản sắc (The Vibe Story)*, sao chép nhanh mã màu HEX chuẩn nhận diện và tham khảo thông số chất liệu dự kiến.
 5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào bộ sưu tập cá nhân trên trình duyệt (`localStorage`).
 

@@ -117,11 +117,12 @@
   ];
 
   const CATEGORIES = [
-    { id: 'all', label: 'Tất cả (4)' },
+    { id: 'all', label: 'Tất cả (5)' },
     { id: 'tee', label: 'Áo Polo' },
     { id: 'mousepad', label: 'Lót Chuột' },
     { id: 'tote', label: 'Túi Tote' },
     { id: 'cap', label: 'Nón Lưỡi Trai' },
+    { id: 'bottle', label: 'Bình Giữ Nhiệt' },
   ];
 
   const CREATORS = [
@@ -148,14 +149,55 @@
       verifiedEdu: false,
       avatarBg: '#141413',
       initials: 'AD',
-      bio: 'Tác giả ẩn danh đóng góp mẫu Lót Chuột Deskpad theo bộ nhận diện thương hiệu chuẩn của Trường Đại học Bách khoa – ĐHQG TP.HCM (HCMUT) để cộng đồng tham khảo.',
-      skills: ['Minimalist Studio Merch', 'HCMUT Wordmark System', 'Deskpad Design'],
+      bio: 'Tác giả ẩn danh đóng góp các concept Lót Chuột Deskpad và Bình Giữ Nhiệt Inox 500ml theo bộ nhận diện thương hiệu chuẩn của Trường Đại học Bách khoa – ĐHQG TP.HCM (HCMUT) để cộng đồng tham khảo.',
+      skills: ['Minimalist Studio Merch', 'HCMUT Wordmark System', 'Deskpad & Drinkware'],
       badges: ['Ẩn danh', 'Nguồn: HCMUT'],
       contacts: {},
     },
   ];
 
   const INITIAL_CONCEPTS = [
+    {
+      id: 'c-hcmut-bottle-01',
+      title: 'Bình Giữ Nhiệt Inox HCMUT — Brushed Steel & Deep Navy (500ml)',
+      campusId: 'hcmut',
+      campusShort: 'HCMUT',
+      category: 'bottle',
+      source: 'HCMUT',
+      designVariant: 'bottle-navy',
+      useNavyStage: false,
+      creatorId: 'cr-anonymous',
+      createdAt: '2026-11-16',
+      timeframe: 'week',
+      featured: true,
+      galleryImages: [
+        'assets/products/hcmut-bottle-studio.jpg',
+        'assets/products/hcmut-bottle-closeup.jpg',
+        'assets/products/hcmut-bottle-lifestyle.jpg',
+      ],
+      viewLabels: [
+        'Phối cảnh Studio (500ml)',
+        'Cận cảnh Khắc Thép Phay Xước',
+        'Phối cảnh Bàn Kiến Trúc',
+      ],
+      palette: ['#030391', '#D4D8DF', '#1488DB', '#FFFFFF'],
+      tags: [
+        'Bình giữ nhiệt 500ml',
+        'Inox 304 phay xước',
+        'Studio Render',
+        'Khắc laser HCMUT',
+        'Nguồn HCMUT',
+      ],
+      story: 'Lấy cảm hứng từ tinh thần kỹ thuật chính xác và ngôn ngữ nhận diện tối giản của HCMUT, mẫu bình giữ nhiệt 500ml kết hợp thân trụ phủ sơn tĩnh điện Deep Navy mịn tay cùng cổ và nắp thép không gỉ 304 phay xước. Đường ron nhấn Sky Blue (#1488DB) mảnh quanh nắp tạo điểm dừng thị giác tinh tế, trong khi cụm wordmark HCMUT với nét cắt chéo đặc trưng giữa chữ U và T được cân chỉnh tỷ lệ theo chuẩn nhận diện nhà trường.',
+      specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm giữ nhiệt nóng 12h / lạnh 24h; cổ bình thép phay xước chống bám vân tay kết hợp ron silicone Sky Blue; logo HCMUT in lụa kỹ thuật cao trên thân navy và khắc chìm sâu trên đai kim loại.',
+      ratings: {
+        creativity: 5.0,
+        identity: 5.0,
+        practicality: 5.0,
+        count: 1,
+      },
+      comments: [],
+    },
     {
       id: 'c-hcmut-tee-01',
       title: 'Áo Polo Trắng HCMUT — Classic Blue Tipping (HCMUT Shop #1)',

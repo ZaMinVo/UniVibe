@@ -589,6 +589,21 @@
       imgClass: 'object-cover',
       objectPosition: 'center 52%',
     },
+    'assets/products/hcmut-bottle-studio.jpg': {
+      background: '#D5DCE2',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-bottle-closeup.jpg': {
+      background: '#02053D',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-bottle-lifestyle.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
     'assets/products/hcmut-merch-kit.jpg': {
       background: '#040B3C',
       imgClass: 'object-cover',
