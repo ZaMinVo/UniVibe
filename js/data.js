@@ -171,8 +171,8 @@
       timeframe: 'week',
       featured: true,
       galleryImages: [
-        'assets/products/hcmut-bottle-studio-v2.jpg',
-        'assets/products/hcmut-bottle-desk-v2.jpg',
+        'assets/products/hcmut-bottle-studio-v3.jpg',
+        'assets/products/hcmut-bottle-desk-v3.jpg',
       ],
       viewLabels: [
         'Phối cảnh Studio (500ml)',
@@ -237,21 +237,21 @@
       timeframe: 'week',
       featured: true,
       galleryImages: [
-        'assets/products/hcmut-deskpad.png',
-        'assets/products/hcmut-deskpad-closeup.png',
-        'assets/products/hcmut-deskpad-top.png',
+        'assets/products/hcmut-deskpad-v2.jpg',
+        'assets/products/hcmut-deskpad-closeup-v2.jpg',
+        'assets/products/hcmut-deskpad-top-v2.jpg',
       ],
       viewLabels: [
-        'Phối cảnh 3D Studio',
+        'Phối cảnh Bàn Kiến Trúc',
         'Cận cảnh Bo Viền & Logo BK',
         'Góc Nhìn Mặt Phẳng (900×400)',
       ],
       palette: ['#030391', '#1488DB', '#FFFFFF', '#D3D3D3'],
-      tags: ['Deskpad 900x400', '3D Studio Render', 'BK TP.HCM', 'Bo viền khâu', 'Nguồn HCMUT'],
+      tags: ['Deskpad 900x400', 'Vải dệt Jacquard', 'BK TP.HCM', 'Chỉ bo viền 3D', 'Nguồn HCMUT'],
       story:
-        'Chuyển thể ngôn ngữ tối giản của dòng sản phẩm #1 trên HCMUT Shop sang lót chuột toàn bàn 3D Studio: nền xanh kỹ thuật Bách khoa (#030391) nhấn mảng khối hình học chéo và đường sọc nhịp điệu tối giản, đặt cụm wordmark HCMUT góc trái trên và huy hiệu lập phương BK TP.HCM lục giác trắng góc phải dưới.',
+        'Chuyển thể ngôn ngữ tối giản của dòng sản phẩm #1 trên HCMUT Shop sang lót chuột toàn bàn đặt trên mặt bàn đá kiến trúc: bề mặt vải dệt Jacquard microfiber thấm mực in nền xanh kỹ thuật Bách khoa (#030391) với mảng khối hình học chéo, sọc nhịp điệu kiến trúc và huy hiệu lập phương BK TP.HCM sắc nét hoàn thiện bằng đường chỉ bo viền vắt sổ xoắn 3D trên đế cao su lưu hóa 4mm.',
       specs:
-        'Kích thước 900 × 400 × 4mm; bề mặt vải dệt microfiber kiểm soát mượt mọi loại chuột; đường chỉ may bo viền sọc xanh #030391 / #1488DB chống tưa mép; đế cao su lưu hóa 4mm chống trượt tuyệt đối.',
+        'Kích thước 900 × 400 × 4mm; bề mặt vải dệt Jacquard microfiber chống xù kiểm soát mượt mọi loại chuột; đường chỉ polyester bo viền vắt sổ xoắn đôi hai sắc xanh #030391 / #1488DB chống tưa mép; đế cao su bọt khí lưu hóa 4mm bám chắc trên mặt bàn đá/gỗ.',
       ratings: {
         creativity: 5.0,
         identity: 5.0,
