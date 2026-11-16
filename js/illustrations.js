@@ -589,12 +589,12 @@
       imgClass: 'object-cover',
       objectPosition: 'center 52%',
     },
-    'assets/products/hcmut-bottle-studio.jpg': {
+    'assets/products/hcmut-bottle-studio-v2.jpg': {
       background: '#D5DCE2',
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-bottle-desk.jpg': {
+    'assets/products/hcmut-bottle-desk-v2.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',
       objectPosition: 'center center',

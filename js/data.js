@@ -159,7 +159,7 @@
   const INITIAL_CONCEPTS = [
     {
       id: 'c-hcmut-bottle-01',
-      title: 'Bình Giữ Nhiệt Inox HCMUT — Brushed Steel & Deep Navy (500ml)',
+      title: 'Bình Giữ Nhiệt Inox HCMUT — Architectural Collector Edition (500ml)',
       campusId: 'hcmut',
       campusShort: 'HCMUT',
       category: 'bottle',
@@ -171,8 +171,8 @@
       timeframe: 'week',
       featured: true,
       galleryImages: [
-        'assets/products/hcmut-bottle-studio.jpg',
-        'assets/products/hcmut-bottle-desk.jpg',
+        'assets/products/hcmut-bottle-studio-v2.jpg',
+        'assets/products/hcmut-bottle-desk-v2.jpg',
       ],
       viewLabels: [
         'Phối cảnh Studio (500ml)',
@@ -181,13 +181,13 @@
       palette: ['#030391', '#D4D8DF', '#1488DB', '#FFFFFF'],
       tags: [
         'Bình giữ nhiệt 500ml',
-        'Inox 304 phay xước',
-        'Sơn tĩnh điện Navy',
+        'Spot-UV & Sọc Kiến Trúc',
+        'Cổ khắc vạch Vernier',
+        'Quai xách thép gập',
         'Studio Render',
-        'Nguồn HCMUT',
       ],
-      story: 'Lấy cảm hứng từ tinh thần kỹ thuật chính xác và ngôn ngữ nhận diện tối giản của HCMUT, mẫu bình giữ nhiệt 500ml kết hợp thân trụ phủ sơn tĩnh điện Deep Navy mịn tay cùng cổ và nắp thép không gỉ 304 phay xước. Đường ron nhấn Sky Blue (#1488DB) mảnh quanh nắp tạo điểm dừng thị giác tinh tế, trong khi cụm wordmark HCMUT với nét cắt chéo đặc trưng giữa chữ U và T được cân chỉnh tỷ lệ theo chuẩn nhận diện nhà trường.',
-      specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm giữ nhiệt nóng 12h / lạnh 24h; cổ bình thép phay xước chống bám vân tay kết hợp ron silicone Sky Blue; logo HCMUT in lụa sắc nét trên nền sơn tĩnh điện Deep Navy.',
+      story: 'Phiên bản Architectural Collector Edition nâng cấp đồng bộ ngôn ngữ hình học của hệ Túi Tote và Deskpad HCMUT: mặt cắt chéo kết hợp cụm sọc dọc vát tầng và lớp phủ Spot-UV bóng tách mảng trên nền sơn tĩnh điện Deep Navy nhám, đi kèm wordmark HCMUT, chỉ số SERIES 01 / 500 ML và huy hiệu lập phương BK sắc nét. Phần cổ thép 304 phay xước được khắc laser dải vạch chia vernier kỹ thuật bên dưới ron Sky Blue, hoàn thiện với quai xách thép gập phẳng gắn gọn trên ngàm trục bên nắp.',
+      specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm giữ nhiệt nóng 12h / lạnh 24h; thân sơn tĩnh điện Deep Navy nhám phối mảng Spot-UV bóng, sọc kiến trúc vát tầng và huy hiệu BK isometric; cổ thép phay xước khắc laser vạch chia vernier, ron silicone Sky Blue và quai xách thép 304 gập phẳng gia công CNC.',
       ratings: {
         creativity: 5.0,
         identity: 5.0,
