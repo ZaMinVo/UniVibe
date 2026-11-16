@@ -594,11 +594,6 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-bottle-closeup.jpg': {
-      background: '#02053D',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
     'assets/products/hcmut-bottle-lifestyle.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',

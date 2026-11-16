@@ -172,24 +172,22 @@
       featured: true,
       galleryImages: [
         'assets/products/hcmut-bottle-studio.jpg',
-        'assets/products/hcmut-bottle-closeup.jpg',
         'assets/products/hcmut-bottle-lifestyle.jpg',
       ],
       viewLabels: [
         'Phối cảnh Studio (500ml)',
-        'Cận cảnh Khắc Thép Phay Xước',
         'Phối cảnh Bàn Kiến Trúc',
       ],
       palette: ['#030391', '#D4D8DF', '#1488DB', '#FFFFFF'],
       tags: [
         'Bình giữ nhiệt 500ml',
         'Inox 304 phay xước',
+        'Sơn tĩnh điện Navy',
         'Studio Render',
-        'Khắc laser HCMUT',
         'Nguồn HCMUT',
       ],
       story: 'Lấy cảm hứng từ tinh thần kỹ thuật chính xác và ngôn ngữ nhận diện tối giản của HCMUT, mẫu bình giữ nhiệt 500ml kết hợp thân trụ phủ sơn tĩnh điện Deep Navy mịn tay cùng cổ và nắp thép không gỉ 304 phay xước. Đường ron nhấn Sky Blue (#1488DB) mảnh quanh nắp tạo điểm dừng thị giác tinh tế, trong khi cụm wordmark HCMUT với nét cắt chéo đặc trưng giữa chữ U và T được cân chỉnh tỷ lệ theo chuẩn nhận diện nhà trường.',
-      specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm giữ nhiệt nóng 12h / lạnh 24h; cổ bình thép phay xước chống bám vân tay kết hợp ron silicone Sky Blue; logo HCMUT in lụa kỹ thuật cao trên thân navy và khắc chìm sâu trên đai kim loại.',
+      specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm giữ nhiệt nóng 12h / lạnh 24h; cổ bình thép phay xước chống bám vân tay kết hợp ron silicone Sky Blue; logo HCMUT in lụa sắc nét trên nền sơn tĩnh điện Deep Navy.',
       ratings: {
         creativity: 5.0,
         identity: 5.0,
