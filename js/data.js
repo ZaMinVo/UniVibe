@@ -172,7 +172,7 @@
       featured: true,
       galleryImages: [
         'assets/products/hcmut-bottle-studio.jpg',
-        'assets/products/hcmut-bottle-lifestyle.jpg',
+        'assets/products/hcmut-bottle-desk.jpg',
       ],
       viewLabels: [
         'Phối cảnh Studio (500ml)',

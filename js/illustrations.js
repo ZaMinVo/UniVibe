@@ -594,7 +594,7 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-bottle-lifestyle.jpg': {
+    'assets/products/hcmut-bottle-desk.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',
       objectPosition: 'center center',
