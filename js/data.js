@@ -133,7 +133,7 @@
       verifiedEdu: false,
       avatarBg: '#141413',
       initials: 'AD',
-      bio: 'Tác giả ẩn danh đóng góp các concept Bình Giữ Nhiệt Inox 500ml, Lót Chuột Deskpad và bộ sưu tập 4 phiên bản Móc Khóa ngành Khoa học & Kỹ thuật Máy tính (HCMUT · CSE) để cộng đồng chọn lọc và đánh giá.',
+      bio: 'Tác giả ẩn danh đóng góp các concept Monolith 500 (Bình giữ nhiệt 500ml), Datum Grid 900 (Lót chuột Deskpad) và 4 phiên bản Móc Khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism) để cộng đồng tham khảo.',
       skills: ['Minimalist Studio Merch', 'Móc Khóa KHMT (HCMUT · CSE)', 'HCMUT Wordmark System'],
       badges: ['Ẩn danh', 'Nguồn: HCMUT'],
       contacts: {},

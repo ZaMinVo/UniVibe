@@ -279,7 +279,7 @@ h4,
   background: #a3a3a3;
 }
 
-/* Version & Shortlist Badges (HCMUT CSE Lab) */
+/* Version Badge */
 .version-pill {
   display: inline-flex;
   align-items: center;
@@ -292,72 +292,6 @@ h4,
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.top-pick-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.2rem 0.55rem;
-  background-color: var(--brand-royal);
-  color: #ffffff;
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* 1-5 Criteria Rating Buttons */
-.eval-score-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  background-color: #ffffff;
-  color: var(--color-text-muted);
-  border: 1px solid #d4d4d4;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  cursor: pointer;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
-}
-
-.eval-score-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.eval-score-btn--active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #ffffff;
-}
-
-/* Comparison Matrix Table */
-.compare-table th {
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  text-align: left;
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid var(--color-border);
-  background-color: #fafafa;
-  white-space: nowrap;
-}
-
-.compare-table td {
-  padding: 0.85rem 1rem;
-  font-size: 0.8125rem;
-  color: var(--color-text);
-  border-bottom: 1px solid var(--color-border);
-  vertical-align: middle;
 }
 
 @media (prefers-reduced-motion: reduce) {

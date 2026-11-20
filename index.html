@@ -42,7 +42,7 @@
   </script>
 
   <!-- Editorial Gallery Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=2026112002" />
+  <link rel="stylesheet" href="css/styles.css?v=2026112004" />
 </head>
 <body class="bg-[#FAFAFA] text-[#1A1A1A] font-sans antialiased selection:bg-[#1A1A1A] selection:text-white">
 
@@ -56,10 +56,9 @@
         </a>
 
         <!-- Center Editorial Navigation -->
-        <nav class="hidden md:flex items-center gap-8 lg:gap-10 text-sm tracking-widest uppercase font-normal text-[#666666]" aria-label="Điều hướng chính">
+        <nav class="hidden md:flex items-center gap-10 text-sm tracking-widest uppercase font-normal text-[#666666]" aria-label="Điều hướng chính">
           <a href="#hero" class="hover:text-[#1A1A1A] transition-colors py-2">Triển lãm</a>
           <a href="#campus-hubs" class="hover:text-[#1A1A1A] transition-colors py-2">Trường ĐH</a>
-          <a href="#cs-keychain-lab" class="hover:text-[#1A1A1A] transition-colors py-2 text-[#1A1A1A] font-medium">Bình chọn KHMT</a>
           <a href="#gallery" class="hover:text-[#1A1A1A] transition-colors py-2">Tác phẩm</a>
           <a href="#feature-work" class="hover:text-[#1A1A1A] transition-colors py-2">Lộ trình</a>
         </nav>
@@ -90,7 +89,6 @@
         <nav class="flex flex-col gap-2 text-xs tracking-widest uppercase text-[#666666]" aria-label="Điều hướng di động">
           <a href="#hero" class="py-2 hover:text-[#1A1A1A]">Triển lãm</a>
           <a href="#campus-hubs" class="py-2 hover:text-[#1A1A1A]">Trường ĐH</a>
-          <a href="#cs-keychain-lab" class="py-2 text-[#1A1A1A] font-medium">Bình chọn KHMT</a>
           <a href="#gallery" class="py-2 hover:text-[#1A1A1A]">Tác phẩm</a>
           <a href="#feature-work" class="py-2 hover:text-[#1A1A1A]">Lộ trình</a>
         </nav>
@@ -135,15 +133,6 @@
       </div>
     </section>
 
-    <!-- ==================== 2B. CS KEYCHAIN VERSION SELECTION & EVALUATION LAB ==================== -->
-    <section id="cs-keychain-lab" class="scroll-mt-20 py-16 sm:py-20 bg-[#FAFAFA] border-b border-[#E5E5E5]">
-      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        <div id="keychainLabContainer">
-          <!-- Populated by js/app.js -->
-        </div>
-      </div>
-    </section>
-
     <!-- ==================== 3. SELECTED WORKS GALLERY ==================== -->
     <section id="gallery" class="scroll-mt-20 py-16 sm:py-20">
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
@@ -175,10 +164,8 @@
               <input id="searchInput" type="search" placeholder="Tìm tác phẩm..." class="gallery-input pl-6 text-sm" aria-label="Tìm kiếm thiết kế" />
             </div>
 
-            <select id="sortSelect" class="gallery-input w-full sm:w-52 text-xs uppercase tracking-wider font-medium text-[#666666] cursor-pointer" aria-label="Sắp xếp thiết kế">
+            <select id="sortSelect" class="gallery-input w-full sm:w-48 text-xs uppercase tracking-wider font-medium text-[#666666] cursor-pointer" aria-label="Sắp xếp thiết kế">
               <option value="featured">Thứ tự đề xuất</option>
-              <option value="rating">Điểm đánh giá cao nhất</option>
-              <option value="shortlisted">Ưu tiên mẫu đã chọn</option>
               <option value="newest">Mới cập nhật</option>
               <option value="category">Theo loại vật phẩm</option>
               <option value="title">Tên tác phẩm (A - Z)</option>
@@ -224,10 +211,10 @@
             </article>
 
             <article class="border-t border-[#1A1A1A] pt-5">
-              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2">02 / Đã mở bản Local</div>
-              <h3 class="font-display text-xl font-bold text-[#1A1A1A] mb-2">Đánh giá & Chọn lọc</h3>
+              <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-2">02 / Kế hoạch</div>
+              <h3 class="font-display text-xl font-bold text-[#1A1A1A] mb-2">Đánh giá thiết kế</h3>
               <p class="text-sm text-[#666666] leading-relaxed">
-                Đã mở chấm điểm 3 tiêu chí, chọn lọc phiên bản, chốt phương án #1 và lưu nhận xét cục bộ; đồng bộ bình chọn cộng đồng qua cloud sẽ mở ở pha sau.
+                Góp ý chuyên môn theo độ sáng tạo, mức độ đồng bộ và tính khả thi khi sản xuất thực tế.
               </p>
             </article>
 
@@ -260,7 +247,6 @@
           <ul class="space-y-3 text-sm text-[#666666]">
             <li><a href="#hero" class="hover:text-[#1A1A1A] transition-colors">Tâm điểm</a></li>
             <li><a href="#campus-hubs" class="hover:text-[#1A1A1A] transition-colors">Trường ĐH</a></li>
-            <li><a href="#cs-keychain-lab" class="hover:text-[#1A1A1A] transition-colors">Bình chọn KHMT</a></li>
             <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Tác phẩm</a></li>
           </ul>
         </div>
@@ -268,7 +254,7 @@
         <div>
           <h4 class="font-semibold text-[#1A1A1A] mb-4 text-xs uppercase tracking-widest font-sans">Bộ sưu tập</h4>
           <ul class="space-y-3 text-sm text-[#666666]">
-            <li><a href="#cs-keychain-lab" class="hover:text-[#1A1A1A] transition-colors">Bộ 4 Móc Khóa KHMT (V1–V4)</a></li>
+            <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Bộ 4 Móc Khóa KHMT (V1–V4)</a></li>
             <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Monolith 500 — Bình Giữ Nhiệt</a></li>
             <li><a href="#gallery" class="hover:text-[#1A1A1A] transition-colors">Datum Grid 900 — Lót Chuột Deskpad</a></li>
           </ul>
@@ -352,8 +338,8 @@
   <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
 
   <!-- Scripts -->
-  <script src="js/illustrations.js?v=2026112003"></script>
-  <script src="js/data.js?v=2026112003"></script>
-  <script src="js/app.js?v=2026112003"></script>
+  <script src="js/illustrations.js?v=2026112004"></script>
+  <script src="js/data.js?v=2026112004"></script>
+  <script src="js/app.js?v=2026112004"></script>
 </body>
 </html>
