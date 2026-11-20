@@ -201,7 +201,7 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#666666] max-w-xl leading-relaxed font-normal">
-              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Monolith 500, Datum Grid 900 và 4 phiên bản Móc khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism) theo hệ nhận diện chuẩn HCMUT.
+              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Monolith 500, Datum Grid 900 và 5 phiên bản Móc khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism, Die Shot 2026) theo hệ nhận diện chuẩn HCMUT.
             </p>
 
             <div class="flex flex-wrap items-center gap-4 pt-2">
@@ -358,7 +358,7 @@
               <div class="p-8 bg-[#FAFAFA] border border-[#E5E5E5] text-center space-y-4">
                 <div class="font-display text-2xl font-bold text-[#1A1A1A]">${escapeHtml(campus.shortName)} đang biên tập</div>
                 <p class="text-sm text-[#666666] leading-relaxed">
-                  Phòng trưng bày hiện tập trung vào bộ sưu tập chuẩn của <strong>HCMUT</strong>. Cổng tự thêm mẫu cho các trường thành viên nằm trong lộ trình Feature Work.
+                  Phòng trưng bày hiện tập trung vào bộ sưu tập chuẩn của <strong>HCMUT</strong>.
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
                   <button type="button" id="viewHcmutShowcaseBtn" class="gallery-btn-primary gallery-btn-sm">Xem bộ sưu tập HCMUT</button>
@@ -765,12 +765,6 @@
               <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">${escapeHtml(concept.specs || 'Đang cập nhật thông số.')}</p>
             </div>
           </div>
-
-          <!-- Minimal Feature Work Notice -->
-          <div class="border-t border-[#E5E5E5] pt-4 flex items-center justify-between gap-4 text-xs text-[#666666]">
-            <span>Chế độ Chỉ Trưng Bày — Tương tác nằm trong Feature Work.</span>
-            <a href="#feature-work" data-jump-feature-work="true" class="uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] shrink-0">Lộ trình →</a>
-          </div>
         </div>
       </div>
     `;
@@ -782,12 +776,6 @@
         copyToClipboard(shareUrl, 'Đã sao chép liên kết tác phẩm!');
       });
     }
-
-    body.querySelectorAll('[data-jump-feature-work]').forEach((link) => {
-      link.addEventListener('click', () => {
-        closeConceptModal();
-      });
-    });
   }
 
   // -------------------- Modal 2: Anonymous Archive Portfolio --------------------

@@ -599,6 +599,16 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
+    'assets/products/hcmut-cs-keychain-v5-studio.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v5-detail.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
   };
 
   function renderMerchIllustration(item, viewIndex = 0) {

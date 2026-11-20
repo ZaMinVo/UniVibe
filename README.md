@@ -8,17 +8,18 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Bộ sưu tập 6 concept / 12 góc nhìn studio (`1400×1050`):**
+- **Bộ sưu tập 7 concept / 14 góc nhìn studio (`1400×1050`):**
   1. **Monolith 500 — Bình Giữ Nhiệt Inox** (`c-hcmut-bottle-01`, 2 góc nhìn).
   2. **Datum Grid 900 — Lót Chuột Deskpad** (`c-hcmut-pad-01`, 2 góc nhìn).
-  3. **Móc Khóa Ngành Khoa Học Máy Tính (HCMUT · CSE) — 4 Phiên Bản (`V1–V4`):**
+  3. **Móc Khóa Ngành Khoa Học Máy Tính (HCMUT · CSE) — 5 Phiên Bản (`V1–V5`):**
      - **V1 · Circuit 24K (`c-hcmut-cs-keychain-v1`):** Bo mạch FR-4 2.4mm đen lì, mạch đồng mạ vàng 24K ENIG, chip QFN-16 `BK-CS`, linh kiện SMD 0603, chân cắm vàng cạnh hông & khoen đồng mạ vàng.
      - **V2 · Lambda 6061 (`c-hcmut-cs-keychain-v2`):** Thẻ nhôm nguyên khối AL-6061 vát mép kim cương 45°, rãnh dây lót vòng `#1488DB`, khắc laser `HCMUT · CSE // COMPUTER SCIENCE · λ → O(log n)` kèm thước đo mm & móc khóa carabiner thép phay.
      - **V3 · Tactile 0xBK (`c-hcmut-cs-keychain-v3`):** Hộp switch CNC than chì `#23262C`, housing polycarbonate mờ, trục switch tactile `#1488DB` và keycap PBT gốm nhám in `CS`, `0xBK`, huy hiệu `BK` & cạnh trước `HCMUT // CSE`.
      - **V4 · Hexa Prism (`c-hcmut-cs-keychain-v4`):** Khối lục giác PMMA vát cạnh 8.2mm chiết suất quang học, lõi thép phay tráng men `BK · CSE · KHMT · 1957` treo nổi chính giữa và khoen xoay thép 304.
+     - **V5 · Die Shot 2026 (`c-hcmut-cs-keychain-v5`):** Khối chip bán dẫn QFN 36×36mm vỏ epoxy đen mờ khắc laser huy hiệu 3 khối lập phương `BK TP.HCM` & mã `BKCS2026`, mặt sau đóng khung 40 chân đồng mạ vàng 24K bao quanh cửa sổ ảnh hiển vi quang học *silicon die-shot* đa sắc.
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
-- **Ghi nhận tác giả (*Attribution*):** Toàn bộ 6 tác phẩm được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** hoặc **HCMUT · CSE**, không chứa dữ liệu mẫu chính thức *by HCMUT*.
-- **Không ôm đồm thương mại điện tử hay bình chọn trực tiếp:** Nền tảng giữ vai trò trưng bày, truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
+- **Ghi nhận tác giả (*Attribution*):** Toàn bộ 7 tác phẩm được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** hoặc **HCMUT · CSE**, không chứa dữ liệu mẫu chính thức *by HCMUT*.
+- **Chỉ trưng bày:** Nền tảng không xử lý thanh toán hay tương tác người dùng; giữ vai trò trưng bày, truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---
 
@@ -31,20 +32,7 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 
 ---
 
-## 3. Feature Work (Định hướng phát triển tính năng cho người dùng)
-
-Các tính năng tương tác cộng đồng được tách thành lộ trình **Feature Work**:
-
-1. **Cổng đăng tải cộng đồng (*User Concept Submission*):**
-   - Cho phép sinh viên tự đăng tải concept vật phẩm mới, chọn hệ màu trường và chế độ Ẩn danh hoặc định danh.
-2. **Bình chọn đa tiêu chí & Phản biện (*3-Criteria Rating & Critique*):**
-   - Đánh giá 1–5 sao theo 3 tiêu chí (*Thẩm mỹ & Hoàn thiện*, *Tính nhận diện*, *Tính ứng dụng & Độ bền*) kèm bình luận góp ý tinh chỉnh chi tiết.
-3. **Kết nối CLB / Đoàn-Hội (*Leaderboards & Production Bridge*):**
-   - Xác thực email `.edu.vn`, xếp hạng tác phẩm tiêu biểu và kết nối CLB đưa bản thiết kế vào sản xuất thực tế.
-
----
-
-## 4. Hiện thực Giao diện & Triển khai GitHub Pages
+## 3. Hiện thực Giao diện & Triển khai GitHub Pages
 
 - **Phong cách Giao diện:** Bố cục phòng tranh tinh giản theo [uupm.cc/demo/nft-art-gallery](https://uupm.cc/demo/nft-art-gallery) (nền `#FAFAFA`, bảng màu mực `#1A1A1A` / `#666666`, hệ chữ **Playfair Display** + **Inter**, đường viền mảnh `1px` `#E5E5E5`, tác phẩm studio thực tế hiển thị trọn vẹn).
 - **Kiến trúc Static Zero-Build:** Chạy thuần bằng HTML5, Tailwind CSS CDN, CSS tùy biến ([css/styles.css](css/styles.css)) và Vanilla JavaScript ([js/illustrations.js](js/illustrations.js), [js/data.js](js/data.js), [js/app.js](js/app.js)).

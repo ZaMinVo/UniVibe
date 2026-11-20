@@ -117,7 +117,7 @@
   ];
 
   const CATEGORIES = [
-    { id: 'all', label: 'Tất cả (6)' },
+    { id: 'all', label: 'Tất cả (7)' },
     { id: 'keychain', label: 'Móc Khóa' },
     { id: 'bottle', label: 'Bình Giữ Nhiệt' },
     { id: 'mousepad', label: 'Lót Chuột' },
@@ -133,7 +133,7 @@
       verifiedEdu: false,
       avatarBg: '#141413',
       initials: 'AD',
-      bio: 'Tác giả ẩn danh đóng góp các concept Monolith 500 (Bình giữ nhiệt 500ml), Datum Grid 900 (Lót chuột Deskpad) và 4 phiên bản Móc Khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism) để cộng đồng tham khảo.',
+      bio: 'Tác giả ẩn danh đóng góp các concept Monolith 500 (Bình giữ nhiệt 500ml), Datum Grid 900 (Lót chuột Deskpad) và 5 phiên bản Móc Khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism, Die Shot 2026) để cộng đồng tham khảo.',
       skills: ['Minimalist Studio Merch', 'Móc Khóa KHMT (HCMUT · CSE)', 'HCMUT Wordmark System'],
       badges: ['Ẩn danh', 'Nguồn: HCMUT'],
       contacts: {},
@@ -172,13 +172,6 @@
       ],
       story: 'Lấy cảm hứng từ tư duy thiết kế công nghiệp Braun và đồng hồ kỹ thuật Thụy Sĩ: thân bình dáng trụ đứng đồng đường kính phủ sơn sứ nhám Warm Ceramic Stone (#ECEAE4) mịn tay, nhấn bằng duy nhất một vòng ron silicone Sky Blue (#1488DB) nằm gọn dưới nắp vặn Inox 304 phay xước có vân khía cơ khí và quai gập phẳng đồng tâm. Đồ họa bề mặt tổ chức theo lưới Thụy Sĩ với wordmark HCMUT than chì, vạch chỉ số NO. 01 — 500 ML, thước vạch chia dung tích dọc sườn phải và huy hiệu lập phương BK (#030391 / #1488DB) ở đáy trái.',
       specs: 'Dung tích 500ml; kết cấu 2 lớp chân không Inox 304 thực phẩm dáng trụ thẳng đồng nhất đường kính; thân phủ sơn sứ nhám Warm Stone (#ECEAE4) bền trầy; nắp thép phay xước tạo khía micro-knurling kết hợp quai gập thép phẳng sát mép nắp và ron silicone chuẩn HCMUT Sky Blue (#1488DB); in lụa mực Graphite bám sâu trên hạt sơn nhám.',
-      ratings: {
-        creativity: 5.0,
-        identity: 5.0,
-        practicality: 5.0,
-        count: 1,
-      },
-      comments: [],
     },
     {
       id: 'c-hcmut-pad-01',
@@ -207,13 +200,6 @@
         'Tái thiết kế lót chuột toàn bàn theo ngôn ngữ bảng cắt kỹ thuật (Architectural Cutting Mat): nền vải dệt Cordura sắc than chì lì (#23262B) trung hòa phản xạ, in lưới tọa độ 50mm với dấu thập (+) định chuẩn, thước chia cm/5mm dọc trục đáy có mốc gốc 00 nhấn xanh HCMUT Sky Blue (#1488DB), cụm đo góc 1/4 vòng cung tiết chế vùng phải và khung tên bản vẽ (Title Block) góc dưới bên phải tích hợp huy hiệu BK TP.HCM cùng thông số 900 × 400 / 4.0 MM.',
       specs:
         'Kích thước 900 × 400 × 4mm; bề mặt vải dệt Cordura microfiber màu Obsidian Charcoal thấm mực sắc nét từng thớ sợi; viền chỉ may vắt sổ 3D màu than chì đơn sắc tinh giản tiệp nền; đế cao su bọt khí lưu hóa 4mm chống trượt tuyệt đối trên mặt bàn đá hoặc gỗ.',
-      ratings: {
-        creativity: 5.0,
-        identity: 5.0,
-        practicality: 5.0,
-        count: 1,
-      },
-      comments: [],
     },
     {
       id: 'c-hcmut-cs-keychain-v1',
@@ -256,13 +242,6 @@
         'Phiên bản V1 tôn vinh bản sắc Khoa Khoa học & Kỹ thuật Máy tính (HCMUT · CSE) bằng chính ngôn ngữ phần cứng thực thụ: bo mạch FR-4 dày 2.4mm phủ solder mask đen lì, định tuyến bus đồng 45° mạ vàng ENIG 24K kết nối giữa IC QFN-16 trung tâm, cụm điện trở/tụ SMD 0603, hàng chân cắm cạnh hông (TX/RX/CLK/CS/IO/5V/GND/BK) và mã nhị phân 01000010 01001011 ("BK").',
       specs:
         'Phôi FR-4 lõi sợi thủy tinh dày 2.4mm (cạnh lộ vân amber tự nhiên); phủ solder mask đen mờ chống bám vân tay; mạ vàng tĩnh điện ENIG 24K ở toàn bộ đường mạch, lỗ xỏ grommet và finger edge; gắn IC QFN-16 BK-CS cùng 3 tụ SMD 0603, khoen đồng thau mạ vàng.',
-      ratings: {
-        creativity: 5.0,
-        identity: 5.0,
-        practicality: 4.5,
-        count: 1,
-      },
-      comments: [],
     },
     {
       id: 'c-hcmut-cs-keychain-v2',
@@ -305,13 +284,6 @@
         'Được thiết kế cùng ngôn ngữ dụng cụ đo kỹ thuật với Bình Giữ Nhiệt và Deskpad: phiến nhôm hàng không 6061-T6 nguyên khối bắn cát titan sáng lì, vát mép kim cương 45° bắt sáng, lót rãnh xỏ dây bằng vòng nhấn Sky Blue (#1488DB) kèm móc carabiner chốt ren Inox 304. Bố cục khắc laser sắc lẹm cụm HCMUT · CSE // COMPUTER SCIENCE, ký hiệu độ phức tạp λ → O(log n) và thước chia mm dọc mép dưới.',
       specs:
         'Gia công phay CNC 5 trục từ nhôm 6061-T6 dày 4.0mm, bắn hạt thủy tinh anodize bạc Titan; rãnh móc bo ống lót #1488DB; khắc laser fiber 0.05mm hai mặt kèm huy hiệu lập phương BK TP.HCM; móc carabiner oval Inox 304 vặn khóa ren chống tuột.',
-      ratings: {
-        creativity: 4.8,
-        identity: 5.0,
-        practicality: 5.0,
-        count: 1,
-      },
-      comments: [],
     },
     {
       id: 'c-hcmut-cs-keychain-v3',
@@ -354,13 +326,6 @@
         'Biến món đồ quen thuộc nhất của lập trình viên thành phụ kiện đeo ba lô có thể bấm thực sự: đế switch 1u tiện CNC nhôm anodize than chì (#23262C) khắc SWITCH TESTER · 03, đặt cụm housing polycarbonate mờ để lộ rõ trục switch chữ thập sắc xanh HCMUT Sky Blue (#1488DB). Phía trên là nút keycap profile Cherry chất liệu PBT gốm ấm (#EAE7DF) in chuyển nhiệt ký tự CS, 0xBK, huy hiệu BK và mặt hông HCMUT // CSE.',
       specs:
         'Đế CNC nhôm anodized Obsidian Charcoal gắn tai xỏ khuyên + dây dù đan lõi thép bóp ống nhôm #1488DB; switch cơ tactile 55g vỏ polycarbonate mờ hỗ trợ thay thế hot-swap; keycap 1u PBT dày 1.5mm in dye-sub 5 mặt chống mờ ký tự.',
-      ratings: {
-        creativity: 5.0,
-        identity: 4.9,
-        practicality: 4.7,
-        count: 1,
-      },
-      comments: [],
     },
     {
       id: 'c-hcmut-cs-keychain-v4',
@@ -403,13 +368,45 @@
         'Khai thác trực tiếp hình khối lục giác tổ ong của Đại học Bách Khoa kết hợp biểu đồ đồ thị (Graph Network) trong Khoa học Máy tính: khối lăng kính acrylic quang học PMMA dày 8.2mm vát cạnh tán sắc ánh xanh dịu, đúc treo nổi ở mặt phẳng giữa một tấm lõi thép không gỉ 304 cắt tia laser thành mạng nút đỉnh lục giác bao quanh huy hiệu lập phương BK và chữ CSE · KHMT / HCMUT · 1957.',
       specs:
         'Khối acrylic quang học đúc nguyên sinh PMMA (chiết suất 1.49) dày 8.2mm cắt CNC vát cạnh 45°; lõi giữa Inox 304 dày 0.8mm tráng men 2 màu #030391 & #1488DB không phai trong suốt vòng đời sản phẩm; chụp chốt chữ U thép phay + khớp xoay chống xoắn.',
-      ratings: {
-        creativity: 4.9,
-        identity: 5.0,
-        practicality: 4.5,
-        count: 1,
-      },
-      comments: [],
+    },
+    {
+      id: 'c-hcmut-cs-keychain-v5',
+      seriesId: 'hcmut-cs-keychain',
+      versionCode: 'V5',
+      versionShortName: 'Die Shot 2026',
+      title: 'Die Shot 2026 — Móc Khóa Chip Bán Dẫn',
+      campusId: 'hcmut',
+      campusShort: 'HCMUT',
+      category: 'keychain',
+      source: 'HCMUT · CSE',
+      designVariant: 'cs-keychain-v5',
+      useNavyStage: false,
+      creatorId: 'cr-anonymous',
+      createdAt: '2026-11-20',
+      timeframe: 'week',
+      featured: true,
+      galleryImages: [
+        'assets/products/hcmut-cs-keychain-v5-studio.jpg',
+        'assets/products/hcmut-cs-keychain-v5-detail.jpg',
+      ],
+      viewLabels: [
+        'Phối cảnh Studio (Mặt chip)',
+        'Macro Die-shot & Chân QFN',
+      ],
+      palette: ['#17191D', '#D9B45A', '#3FB7D6', '#7BC24A'],
+      materialSummary: 'Vỏ Epoxy Đen Khắc Laser · Chân QFN Mạ Vàng & Mặt Sau Die-Shot Vi Mạch',
+      dimensions: '36 × 36 × 4.2 mm',
+      tags: [
+        'Móc khóa KHMT',
+        'HCMUT CSE',
+        'Die Shot 2026',
+        'V5',
+        'Chip bán dẫn',
+      ],
+      story:
+        'Lấy cảm hứng từ mẫu chip bán dẫn thực nghiệm của Bách Khoa: khối vỏ đúc epoxy đen mờ chuẩn đóng gói QFN vuông 36×36mm, mặt trước khắc laser trắng bạc siêu nét huy hiệu 3 khối lập phương BK TP.HCM kèm mã định danh BKCS2026 và dấu chấm định vị Pin-1. Mặt sau đóng khung 40 chân đồng mạ vàng ENIG 24K chạy dọc 4 cạnh, ôm trọn ô cửa kính sapphire bảo vệ bức ảnh hiển vi quang học (silicon die-shot) rực rỡ sắc lục, lam, vàng của các phân vùng thanh ghi, bộ đệm SRAM và lõi tính toán.',
+      specs:
+        'Khung vỏ QFN vuông 36 × 36 × 4.2mm đúc nhựa nhiệt rắn epoxy đen mờ chống trầy; mặt trước khắc laser UV trắng bạc độ phân giải cao; mặt sau mạ vàng ENIG 24K trên 40 pad chân rìa (castellated side leads) kết hợp bản in thạch bản đa sắc die-shot phủ kính cường lực mỏng; tai móc nhôm 6061 tiện CNC liền trục kèm khoen thép phay và dây đeo cổ tay vải dệt.',
     },
   ];
 
