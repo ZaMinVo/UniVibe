@@ -539,27 +539,22 @@
   }
 
   const STUDIO_IMAGE_STYLES = {
-    'assets/products/hcmut-deskpad-v2.jpg': {
+    'assets/products/hcmut-bottle-swiss-studio.jpg': {
+      background: '#D8DADD',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-bottle-swiss-desk.jpg': {
+      background: '#D4CFC8',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-deskpad-swiss-studio.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-deskpad-closeup-v2.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-deskpad-top-v2.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-bottle-studio-v3.jpg': {
-      background: '#D5DCE2',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-bottle-desk-v3.jpg': {
+    'assets/products/hcmut-deskpad-swiss-detail.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',
       objectPosition: 'center center',

@@ -8,7 +8,7 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **2 concept chủ lực** được tuyển chọn kỹ lưỡng (**Bình Giữ Nhiệt Inox 500ml** & **Lót Chuột Deskpad 900×400×4mm**), hiển thị bằng phối cảnh vật liệu PBR 3D/Studio thực tế theo chuẩn nhận diện HCMUT (`#030391`, `#1488DB`, `#FFFFFF`, wordmark `HCMUT` + huy hiệu lập phương `BK TP.HCM` trên bối cảnh studio và bàn đá kiến trúc, ghi rõ **Nguồn: HCMUT**).
+- **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **2 concept chủ lực** tái thiết kế theo ngôn ngữ **Swiss Technical (Braun × Cutting Mat)**: **Bình Giữ Nhiệt Inox 500ml (Swiss Technical Edition)** & **Lót Chuột Deskpad 900×400×4mm (Swiss Cutting Mat Edition)**, hiển thị qua **4 ảnh studio & bối cảnh kỹ thuật** theo chuẩn nhận diện HCMUT (`#1488DB`, `#030391`, wordmark `HCMUT` + huy hiệu lập phương `BK`, ghi rõ **Nguồn: HCMUT**).
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
 - **Ghi nhận tác giả (*Attribution*):** Toàn bộ **Bình Giữ Nhiệt Inox 500ml** và **Lót Chuột Deskpad 900×400×4mm** được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT**, không chứa dữ liệu mẫu chính thức *by HCMUT* hay dữ liệu demo cũ.
 - **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
@@ -19,7 +19,7 @@ Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày 
 
 1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
 2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo 2 nhóm vật phẩm hiện tại (*Bình Giữ Nhiệt*, *Lót Chuột*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
-3. **Chi tiết Tác phẩm Studio Đa góc nhìn:** Hiển thị đầy đủ câu chuyện thiết kế và các góc nhìn Studio vật lý thực tế (**Bình Giữ Nhiệt Inox 500ml** với 2 góc nhìn Studio & Bàn Kiến Trúc; **Lót Chuột Deskpad** với 3 góc nhìn Bàn Kiến Trúc, Cận cảnh Bo Viền & Mặt Phẳng).
+3. **Chi tiết Tác phẩm Studio 2 Góc Nhìn Đồng Bộ:** Mỗi tác phẩm gồm 2 góc nhìn chất lượng cao nhất cùng câu chuyện thiết kế chi tiết (**Bình Giữ Nhiệt Inox 500ml**: Studio & Bàn Kỹ Thuật; **Lót Chuột Deskpad**: Bàn Kỹ Thuật & Cận cảnh Vật Liệu / Khung Bản Vẽ).
 4. **Bảng mã màu & Chất liệu:** Xem *Câu chuyện bản sắc (The Vibe Story)*, sao chép nhanh mã màu HEX chuẩn nhận diện và tham khảo thông số chất liệu dự kiến.
 5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào bộ sưu tập cá nhân trên trình duyệt (`localStorage`).
 
