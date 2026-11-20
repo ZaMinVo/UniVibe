@@ -12,7 +12,7 @@
 
   const CRITERIA_LIST = [
     { key: 'creativity', label: 'Thẩm mỹ & Hoàn thiện' },
-    { key: 'identity', label: 'Bản sắc KHMT × Bách Khoa' },
+    { key: 'identity', label: 'Tính nhận diện' },
     { key: 'practicality', label: 'Tính ứng dụng & Độ bền' },
   ];
 
@@ -289,7 +289,7 @@
       );
       if (hasAnyScore(ev)) {
         lines.push(
-          `  Tiêu chí: Thẩm mỹ=${ev.creativity ?? '-'}/5 | Bản sắc KHMT×BK=${ev.identity ?? '-'}/5 | Ứng dụng=${ev.practicality ?? '-'}/5`
+          `  Tiêu chí: Thẩm mỹ=${ev.creativity ?? '-'}/5 | Nhận diện=${ev.identity ?? '-'}/5 | Ứng dụng=${ev.practicality ?? '-'}/5`
         );
       }
       if (ev.note) {
