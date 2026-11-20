@@ -4,39 +4,44 @@
 
 ---
 
-## 1. Định vị & Phiên bản hiện tại (Pure Showcase Gallery — Chỉ trưng bày)
+## 1. Định vị & Phiên bản hiện tại (Showcase & Selection Lab)
 
-Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
+Trang web kết hợp **Phòng trưng bày tuyển chọn** và **Phòng chọn lọc & đánh giá thiết kế cục bộ (`localStorage`)**:
 
-- **Không gian trưng bày tinh gọn:** Tập trung vào chất lượng với **2 concept chủ lực** tái thiết kế theo ngôn ngữ **Swiss Technical (Braun × Cutting Mat)**: **Bình Giữ Nhiệt Inox 500ml (Swiss Technical Edition)** & **Lót Chuột Deskpad 900×400×4mm (Swiss Cutting Mat Edition)**, hiển thị qua **4 ảnh studio & bối cảnh kỹ thuật** theo chuẩn nhận diện HCMUT (`#1488DB`, `#030391`, wordmark `HCMUT` + huy hiệu lập phương `BK`, ghi rõ **Nguồn: HCMUT**).
+- **Bộ sưu tập 6 concept / 12 góc nhìn studio (`1400×1050`):**
+  1. **Bình Giữ Nhiệt Inox HCMUT — Swiss Technical Edition (500ml)** (`c-hcmut-bottle-01`, 2 góc nhìn).
+  2. **Lót Chuột Deskpad HCMUT — Swiss Cutting Mat Edition (900×400×4mm)** (`c-hcmut-pad-01`, 2 góc nhìn).
+  3. **Móc Khóa Ngành Khoa Học Máy Tính (HCMUT · CSE) — 4 Phiên Bản Đánh Giá (`V1–V4`):**
+     - **V1 — PCB Gold-ENIG (`c-hcmut-cs-keychain-v1`):** Bo mạch FR-4 2.4mm đen lì, mạch đồng mạ vàng 24K ENIG, chip QFN-16 `BK-CS`, linh kiện SMD 0603, chân cắm vàng cạnh hông & khoen đồng mạ vàng.
+     - **V2 — Nhôm CNC Swiss (`c-hcmut-cs-keychain-v2`):** Thẻ nhôm nguyên khối AL-6061 vát mép kim cương 45°, rãnh dây lót vòng `#1488DB`, khắc laser `HCMUT · CSE // COMPUTER SCIENCE · λ → O(log n)` kèm thước đo mm & móc khóa carabiner thép phay.
+     - **V3 — Phím Cơ Tactile Keycap (`c-hcmut-cs-keychain-v3`):** Hộp switch CNC than chì `#23262C`, housing polycarbonate mờ, trục switch tactile `#1488DB` và keycap PBT gốm nhám in `CS`, `0xBK`, huy hiệu `BK` & cạnh trước `HCMUT // CSE`.
+     - **V4 — Lăng Kính Lục Giác Acrylic × Thép (`c-hcmut-cs-keychain-v4`):** Khối lục giác PMMA vát cạnh 8.2mm chiết suất quang học, lõi thép phay tráng men `BK · CSE · KHMT · 1957` treo nổi chính giữa và khoen xoay thép 304.
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
-- **Ghi nhận tác giả (*Attribution*):** Toàn bộ **Bình Giữ Nhiệt Inox 500ml** và **Lót Chuột Deskpad 900×400×4mm** được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT**, không chứa dữ liệu mẫu chính thức *by HCMUT* hay dữ liệu demo cũ.
-- **Không ôm đồm thương mại điện tử:** Nền tảng không xử lý thanh toán hay nhận đặt hàng trực tiếp, giữ trọn vai trò truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
+- **Ghi nhận tác giả (*Attribution*):** Toàn bộ 6 tác phẩm được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** hoặc **HCMUT · CSE**, không chứa dữ liệu mẫu chính thức *by HCMUT*.
+- **Không xử lý thanh toán:** Nền tảng giữ vai trò trưng bày, chuẩn hóa nhận diện và thu thập chọn lọc/đánh giá phiên bản.
 
 ---
 
-## 2. Trải nghiệm Trưng bày hiện có
+## 2. Trải nghiệm Trưng bày, Chọn lọc & Đánh giá
 
 1. **Không gian Trường (*Multi-Campus Hubs*):** Chuyển đổi nhanh giữa góc nhìn **Khám phá Chung liên trường** và không gian nhận diện riêng của từng trường đại học.
-2. **Phòng Trưng Bày có Lọc & Tìm kiếm:** Lọc theo 2 nhóm vật phẩm hiện tại (*Bình Giữ Nhiệt*, *Lót Chuột*), tìm kiếm theo từ khóa/tag/nguồn và sắp xếp theo thứ tự trưng bày, thời gian hoặc tên mẫu.
-3. **Chi tiết Tác phẩm Studio 2 Góc Nhìn Đồng Bộ:** Mỗi tác phẩm gồm 2 góc nhìn chất lượng cao nhất cùng câu chuyện thiết kế chi tiết (**Bình Giữ Nhiệt Inox 500ml**: Studio & Bàn Kỹ Thuật; **Lót Chuột Deskpad**: Bàn Kỹ Thuật & Cận cảnh Vật Liệu / Khung Bản Vẽ).
-4. **Bảng mã màu & Chất liệu:** Xem *Câu chuyện bản sắc (The Vibe Story)*, sao chép nhanh mã màu HEX chuẩn nhận diện và tham khảo thông số chất liệu dự kiến.
-5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào bộ sưu tập cá nhân trên trình duyệt (`localStorage`).
+2. **Phòng Tuyển Chọn Móc Khóa KHMT (`#cs-keychain-lab`):** Đặt 4 phiên bản `V1–V4` cạnh nhau kèm bảng ma trận so sánh thông số (chất liệu, kích thước, ước tính chi phí, ưu/nhược điểm), nút **Chọn lọc**, chốt **Phương án #1**, bộ lọc (`Tất cả` / `Đã chọn lọc` / `Đã chấm điểm`) và xuất báo cáo văn bản nhanh vào clipboard.
+3. **Chấm Điểm 3 Tiêu Chí & Ghi Chú Trong Modal:** Bên cạnh 2 góc nhìn studio độ phân giải cao, mỗi sản phẩm cho phép chấm 1–5 sao theo 3 tiêu chí (*Thẩm mỹ & Hoàn thiện*, *Bản sắc KHMT × Bách Khoa*, *Tính ứng dụng & Độ bền*) và lưu ghi chú phản biện cá nhân vào trình duyệt (`localStorage`).
+4. **Phòng Trưng Bày có Lọc & Sắp Xếp:** Lọc theo danh mục (*Tất cả*, *Móc Khóa*, *Bình Giữ Nhiệt*, *Lót Chuột*), lọc riêng *Đã chọn lọc*, tìm kiếm từ khóa/mã HEX và sắp xếp theo đề xuất, mới cập nhật, điểm đánh giá cao nhất hoặc ưu tiên mẫu đã chọn.
+5. **Lưu mẫu yêu thích (*Bookmarks*):** Lưu lại các mẫu ưng ý vào ngăn *Personal Archive*.
 
 ---
 
-## 3. Feature Work (Định hướng phát triển tính năng cho người dùng)
+## 3. Feature Work (Định hướng mở rộng)
 
-Các tính năng tương tác cộng đồng và cho phép người dùng tự đóng góp thiết kế được tách thành lộ trình **Feature Work**:
+Các hạng mục máy chủ cộng đồng nhiều người dùng được tách thành **Feature Work**:
 
-1. **Cho phép người dùng thêm thiết kế (*User Concept Submission*):**
-   - Mở cổng để sinh viên tự đăng tải concept vật phẩm mới, chọn không gian trường, tùy chỉnh bảng màu 4 mã HEX, gắn ảnh mockup và lựa chọn đăng **Ẩn danh** hoặc định danh cá nhân.
-2. **Công cụ tạo Prompt Mockup Studio (*AI Mockup Studio*):**
-   - Tự động sinh công thức prompt chụp sản phẩm thực tế trong studio khớp với màu sắc, chất liệu và logo nhận diện của từng trường đại học.
-3. **Bình chọn đa tiêu chí & Phản biện (*3-Criteria Rating & Critique*):**
-   - Đánh giá 1–5 sao theo 3 tiêu chí (*Độ sáng tạo & Thẩm mỹ*, *Bản sắc trường*, *Tính ứng dụng thực tế*) kèm bình luận góp ý tinh chỉnh chi tiết.
-4. **Bảng xếp hạng Định kỳ & Hồ sơ Tác giả (*Leaderboards & Creator Bridge*):**
-   - Vinh danh Top Thiết kế / Tác giả theo Tuần/Tháng/Năm, xác thực email `.edu.vn`, xuất thẻ chia sẻ *Vibe Card* và cầu nối giúp CLB/Đoàn-Hội liên hệ tác giả hợp tác sản xuất.
+1. **Cổng đăng tải cộng đồng (*User Concept Submission*):**
+   - Cho phép sinh viên tự đăng tải concept vật phẩm mới, chọn hệ màu trường và chế độ Ẩn danh hoặc định danh.
+2. **Tổng hợp bình chọn & Đồng bộ Cloud (*Live Community Polling*):**
+   - Gom kết quả chọn lọc & chấm điểm 3 tiêu chí từ nhiều sinh viên (thay cho lưu cục bộ trên trình duyệt hiện tại).
+3. **Kết nối CLB / Đoàn-Hội (*Leaderboards & Production Bridge*):**
+   - Xác thực email `.edu.vn`, xếp hạng tác phẩm đạt điểm cao và kết nối CLB đưa phiên bản được chọn lọc (`#1`) vào sản xuất thực tế.
 
 ---
 

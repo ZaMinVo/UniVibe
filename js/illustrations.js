@@ -559,6 +559,46 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
+    'assets/products/hcmut-cs-keychain-v1-studio.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v1-detail.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v2-studio.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v2-detail.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v3-studio.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v3-detail.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v4-studio.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
+    'assets/products/hcmut-cs-keychain-v4-detail.jpg': {
+      background: '#CFCBC4',
+      imgClass: 'object-cover',
+      objectPosition: 'center center',
+    },
   };
 
   function renderMerchIllustration(item, viewIndex = 0) {
@@ -572,7 +612,7 @@
       };
       return `
         <div class="w-full h-full relative flex items-center justify-center overflow-hidden" style="background: ${studioStyle.background}">
-          <img src="${escapeXml(imageSrc)}" alt="${escapeXml(item.title)}" class="w-full h-full ${studioStyle.imgClass} transition-transform duration-500 ease-out group-hover:scale-[1.025]" style="object-position: ${studioStyle.objectPosition}" loading="lazy" />
+          <img src="${escapeXml(imageSrc)}" alt="${escapeXml(item.title)}" class="w-full h-full ${studioStyle.imgClass} transition-transform duration-500 ease-out group-hover:scale-[1.025]" style="object-position: ${studioStyle.objectPosition}" />
         </div>
       `;
     }
@@ -580,7 +620,7 @@
     if (item && item.customImageUrl && viewIndex === 0) {
       return `
         <div class="w-full h-full relative bg-[#F3F0EA] flex items-center justify-center overflow-hidden">
-          <img src="${escapeXml(item.customImageUrl)}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]" loading="lazy" />
+          <img src="${escapeXml(item.customImageUrl)}" alt="${escapeXml(item.title)}" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]" />
         </div>
       `;
     }

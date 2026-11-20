@@ -1,12 +1,20 @@
 /* ==========================================================================
    UniVibe — Main Interactive Application Logic
-   Editorial Gallery Architecture (inspired by uupm.cc/demo/nft-art-gallery)
+   Editorial Gallery + HCMUT CSE Keychain Version Selection & Evaluation Lab
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'univibe_gallery_state_v3';
+  const STORAGE_KEY = 'univibe_gallery_state_v4';
+  const LEGACY_STORAGE_KEY_V3 = 'univibe_gallery_state_v3';
+  const KEYCHAIN_SERIES_ID = 'hcmut-cs-keychain';
+
+  const CRITERIA_LIST = [
+    { key: 'creativity', label: 'Thẩm mỹ & Hoàn thiện' },
+    { key: 'identity', label: 'Bản sắc KHMT × Bách Khoa' },
+    { key: 'practicality', label: 'Tính ứng dụng & Độ bền' },
+  ];
 
   const { CAMPUSES, CATEGORIES, CREATORS, INITIAL_CONCEPTS } = window.UniVibeData;
   const { renderMerchIllustration, renderCampusEmblem } = window.UniVibeIllustrations;
@@ -16,9 +24,15 @@
     concepts: [],
     creators: [],
     bookmarks: [],
+    shortlist: [],
+    topPickId: null,
+    evaluations: {},
+    draftNotes: {},
     campusScope: 'vnuhcm',
     activeCampus: 'all',
     activeCategory: 'all',
+    labFilter: 'all',
+    onlyShortlisted: false,
     searchQuery: '',
     sortBy: 'featured',
     activeConceptId: null,
@@ -63,6 +77,10 @@
     return String(num).padStart(2, '0');
   }
 
+  function formatScore(num) {
+    return typeof num === 'number' && !Number.isNaN(num) ? num.toFixed(1) : '—';
+  }
+
   function showToast(message) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -88,13 +106,207 @@
     }
   }
 
-  // -------------------- Persistence (Bookmarks Only — Showcase Mode) --------------------
+  // -------------------- Evaluation & Selection Helpers --------------------
+  function normalizeScore(val) {
+    const num = Number(val);
+    if (!Number.isInteger(num) || num < 1 || num > 5) return null;
+    return num;
+  }
+
+  function getConceptEvaluation(conceptId) {
+    const stored = state.evaluations && state.evaluations[conceptId] ? state.evaluations[conceptId] : {};
+    return {
+      creativity: normalizeScore(stored.creativity),
+      identity: normalizeScore(stored.identity),
+      practicality: normalizeScore(stored.practicality),
+      note: typeof stored.note === 'string' ? stored.note : '',
+      updatedAt: typeof stored.updatedAt === 'string' ? stored.updatedAt : null,
+    };
+  }
+
+  function hasAnyScore(ev) {
+    return CRITERIA_LIST.some((cr) => typeof ev[cr.key] === 'number');
+  }
+
+  function isConceptRated(conceptId) {
+    return hasAnyScore(getConceptEvaluation(conceptId));
+  }
+
+  function getConceptAverageScore(conceptId) {
+    const ev = getConceptEvaluation(conceptId);
+    const vals = CRITERIA_LIST.map((cr) => ev[cr.key]).filter((v) => typeof v === 'number');
+    if (vals.length === 0) return null;
+    const avg = vals.reduce((sum, v) => sum + v, 0) / vals.length;
+    return Math.round(avg * 10) / 10;
+  }
+
+  function toggleShortlist(conceptId) {
+    const idx = state.shortlist.indexOf(conceptId);
+    const concept = state.concepts.find((c) => c.id === conceptId);
+    const label = concept && concept.versionCode ? concept.versionCode : 'tác phẩm';
+
+    if (idx === -1) {
+      state.shortlist.push(conceptId);
+      showToast(`Đã đưa ${label} vào danh sách Chọn lọc.`);
+    } else {
+      state.shortlist.splice(idx, 1);
+      if (state.topPickId === conceptId) {
+        state.topPickId = null;
+      }
+      showToast(`Đã bỏ ${label} khỏi danh sách Chọn lọc.`);
+    }
+
+    saveState();
+    renderAll();
+    if (state.activeConceptId === conceptId && !document.getElementById('conceptModal').classList.contains('hidden')) {
+      renderConceptModal();
+    }
+  }
+
+  function setTopPick(conceptId) {
+    const concept = state.concepts.find((c) => c.id === conceptId);
+    const label = concept && concept.versionCode ? `${concept.versionCode} (${concept.versionShortName})` : 'mẫu';
+
+    if (state.topPickId === conceptId) {
+      state.topPickId = null;
+      showToast(`Đã bỏ chốt phương án #1 cho ${label}.`);
+    } else {
+      state.topPickId = conceptId;
+      if (!state.shortlist.includes(conceptId)) {
+        state.shortlist.push(conceptId);
+      }
+      showToast(`Đã chốt ${label} làm Phương án #1!`);
+    }
+
+    saveState();
+    renderAll();
+    if (state.activeConceptId === conceptId && !document.getElementById('conceptModal').classList.contains('hidden')) {
+      renderConceptModal();
+    }
+  }
+
+  function setCriterionScore(conceptId, criterionKey, val) {
+    if (!CRITERIA_LIST.some((cr) => cr.key === criterionKey)) return;
+    const score = normalizeScore(val);
+    if (!score) return;
+
+    const noteEl = document.getElementById('conceptEvalNote');
+    if (noteEl && state.activeConceptId === conceptId) {
+      state.draftNotes[conceptId] = noteEl.value;
+    }
+
+    const prev = getConceptEvaluation(conceptId);
+    const draftNote =
+      typeof state.draftNotes[conceptId] === 'string' ? state.draftNotes[conceptId] : prev.note;
+
+    state.evaluations[conceptId] = {
+      creativity: prev.creativity,
+      identity: prev.identity,
+      practicality: prev.practicality,
+      note: draftNote.trim(),
+      [criterionKey]: score,
+      updatedAt: new Date().toISOString(),
+    };
+
+    saveState();
+    renderKeychainLab();
+    renderCategoryFilters();
+    renderGallery();
+    if (state.activeConceptId === conceptId && !document.getElementById('conceptModal').classList.contains('hidden')) {
+      renderConceptModal();
+    }
+  }
+
+  function saveEvaluationNote(conceptId) {
+    const noteEl = document.getElementById('conceptEvalNote');
+    const rawNote = noteEl
+      ? noteEl.value
+      : typeof state.draftNotes[conceptId] === 'string'
+        ? state.draftNotes[conceptId]
+        : '';
+    const trimmed = rawNote.trim();
+    const prev = getConceptEvaluation(conceptId);
+
+    state.draftNotes[conceptId] = trimmed;
+    state.evaluations[conceptId] = {
+      creativity: prev.creativity,
+      identity: prev.identity,
+      practicality: prev.practicality,
+      note: trimmed,
+      updatedAt: new Date().toISOString(),
+    };
+
+    saveState();
+    renderKeychainLab();
+    renderCategoryFilters();
+    renderGallery();
+    if (state.activeConceptId === conceptId && !document.getElementById('conceptModal').classList.contains('hidden')) {
+      renderConceptModal();
+    }
+    showToast('Đã lưu đánh giá & nhận xét.');
+  }
+
+  function resetAllEvaluations() {
+    state.shortlist = [];
+    state.topPickId = null;
+    state.evaluations = {};
+    state.draftNotes = {};
+    state.labFilter = 'all';
+    state.onlyShortlisted = false;
+    saveState();
+    renderAll();
+    if (state.activeConceptId && !document.getElementById('conceptModal').classList.contains('hidden')) {
+      renderConceptModal();
+    }
+    showToast('Đã đặt lại toàn bộ chọn lọc & đánh giá.');
+  }
+
+  function formatEvaluationReport() {
+    const keychains = state.concepts.filter((c) => c.seriesId === KEYCHAIN_SERIES_ID);
+    const topPick = keychains.find((c) => c.id === state.topPickId);
+    const shortlisted = keychains.filter((c) => state.shortlist.includes(c.id));
+
+    const lines = [
+      '=== BÁO CÁO CHỌN LỌC & ĐÁNH GIÁ MÓC KHÓA KHMT (HCMUT · CSE) ===',
+      `Phương án chốt #1: ${topPick ? `${topPick.versionCode} — ${topPick.versionShortName}` : 'Chưa chốt'}`,
+      `Danh sách Chọn lọc (${shortlisted.length}/${keychains.length}): ${
+        shortlisted.length ? shortlisted.map((c) => `${c.versionCode} (${c.versionShortName})`).join(', ') : 'Chưa chọn'
+      }`,
+      '',
+      'Chi tiết từng phiên bản:',
+    ];
+
+    keychains.forEach((c) => {
+      const ev = getConceptEvaluation(c.id);
+      const avg = getConceptAverageScore(c.id);
+      const badges = [];
+      if (state.topPickId === c.id) badges.push('#1 CHỐT');
+      if (state.shortlist.includes(c.id)) badges.push('ĐÃ CHỌN LỌC');
+      const statusText = badges.length ? ` [${badges.join(' · ')}]` : '';
+
+      lines.push(
+        `- ${c.versionCode} · ${c.versionShortName}${statusText}: Điểm TB = ${avg !== null ? `${formatScore(avg)}/5.0` : 'Chưa chấm'}`
+      );
+      if (hasAnyScore(ev)) {
+        lines.push(
+          `  Tiêu chí: Thẩm mỹ=${ev.creativity ?? '-'}/5 | Bản sắc KHMT×BK=${ev.identity ?? '-'}/5 | Ứng dụng=${ev.practicality ?? '-'}/5`
+        );
+      }
+      if (ev.note) {
+        lines.push(`  Nhận xét: "${ev.note}"`);
+      }
+    });
+
+    return lines.join('\n');
+  }
+
+  // -------------------- Persistence (Local Storage) --------------------
   function loadState() {
     let saved = null;
     try {
       localStorage.removeItem('univibe_gallery_state_v1');
       localStorage.removeItem('univibe_gallery_state_v2');
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY_V3);
       if (raw) saved = JSON.parse(raw);
     } catch (_) {
       saved = null;
@@ -104,8 +316,37 @@
     state.creators = CREATORS.map((cr) => ({ ...cr, contacts: { ...cr.contacts } }));
 
     const validIds = new Set(state.concepts.map((c) => c.id));
-    if (saved && Array.isArray(saved.bookmarks)) {
-      state.bookmarks = saved.bookmarks.filter((id) => validIds.has(id));
+    if (saved && typeof saved === 'object') {
+      if (Array.isArray(saved.bookmarks)) {
+        state.bookmarks = saved.bookmarks.filter((id) => validIds.has(id));
+      }
+      if (Array.isArray(saved.shortlist)) {
+        state.shortlist = Array.from(new Set(saved.shortlist.filter((id) => validIds.has(id))));
+      }
+      if (typeof saved.topPickId === 'string' && validIds.has(saved.topPickId)) {
+        state.topPickId = saved.topPickId;
+        if (!state.shortlist.includes(saved.topPickId)) {
+          state.shortlist.push(saved.topPickId);
+        }
+      }
+      if (saved.evaluations && typeof saved.evaluations === 'object') {
+        const cleanEvals = {};
+        Object.keys(saved.evaluations).forEach((cid) => {
+          if (!validIds.has(cid)) return;
+          const rawEv = saved.evaluations[cid];
+          if (!rawEv || typeof rawEv !== 'object') return;
+          const note = typeof rawEv.note === 'string' ? rawEv.note.slice(0, 600) : '';
+          cleanEvals[cid] = {
+            creativity: normalizeScore(rawEv.creativity),
+            identity: normalizeScore(rawEv.identity),
+            practicality: normalizeScore(rawEv.practicality),
+            note,
+            updatedAt: typeof rawEv.updatedAt === 'string' ? rawEv.updatedAt : null,
+          };
+          if (note) state.draftNotes[cid] = note;
+        });
+        state.evaluations = cleanEvals;
+      }
     }
   }
 
@@ -115,6 +356,9 @@
         STORAGE_KEY,
         JSON.stringify({
           bookmarks: state.bookmarks,
+          shortlist: state.shortlist,
+          topPickId: state.topPickId,
+          evaluations: state.evaluations,
         })
       );
     } catch (_) {
@@ -137,11 +381,15 @@
     const filtered = state.concepts.filter((c) => {
       if (state.activeCampus !== 'all' && c.campusId !== state.activeCampus) return false;
       if (state.activeCategory !== 'all' && c.category !== state.activeCategory) return false;
+      if (state.onlyShortlisted && !state.shortlist.includes(c.id)) return false;
       if (q) {
         const creator = getCreatorById(c.creatorId);
         const campus = getCampusById(c.campusId);
         const haystack = [
           c.title,
+          c.versionCode || '',
+          c.versionShortName || '',
+          c.materialSummary || '',
           c.story || '',
           c.specs || '',
           c.campusShort,
@@ -159,6 +407,19 @@
     });
 
     filtered.sort((a, b) => {
+      if (state.sortBy === 'rating') {
+        const scoreA = getConceptAverageScore(a.id);
+        const scoreB = getConceptAverageScore(b.id);
+        if ((scoreB ?? -1) !== (scoreA ?? -1)) return (scoreB ?? -1) - (scoreA ?? -1);
+        return Number(state.topPickId === b.id) - Number(state.topPickId === a.id);
+      }
+      if (state.sortBy === 'shortlisted') {
+        const topDiff = Number(state.topPickId === b.id) - Number(state.topPickId === a.id);
+        if (topDiff !== 0) return topDiff;
+        const shortDiff = Number(state.shortlist.includes(b.id)) - Number(state.shortlist.includes(a.id));
+        if (shortDiff !== 0) return shortDiff;
+        return (getConceptAverageScore(b.id) ?? -1) - (getConceptAverageScore(a.id) ?? -1);
+      }
       if (state.sortBy === 'newest') return String(b.createdAt).localeCompare(String(a.createdAt));
       if (state.sortBy === 'category') return String(a.category).localeCompare(String(b.category));
       if (state.sortBy === 'title') return String(a.title).localeCompare(String(b.title), 'vi');
@@ -197,11 +458,14 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#666666] max-w-xl leading-relaxed font-normal">
-              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Bình giữ nhiệt Inox 500ml và Lót chuột Deskpad theo hệ nhận diện chuẩn HCMUT.
+              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Bình giữ nhiệt Inox 500ml, Lót chuột Deskpad và loạt 4 phiên bản Móc khóa ngành Khoa học Máy tính (HCMUT · CSE) để bình chọn & đánh giá.
             </p>
 
-            <div class="flex flex-wrap items-center gap-4 pt-2">
-              <a href="#gallery" class="gallery-btn-primary">
+            <div class="flex flex-wrap items-center gap-3.5 pt-2">
+              <a href="#cs-keychain-lab" class="gallery-btn-primary">
+                Bình chọn Móc khóa
+              </a>
+              <a href="#gallery" class="gallery-btn-outline">
                 Xem triển lãm
               </a>
               <a href="#campus-hubs" class="gallery-btn-outline">
@@ -451,21 +715,278 @@
     strip.innerHTML = allCard + campusCards;
   }
 
+  // -------------------- Render: CS Keychain Selection & Comparison Lab --------------------
+  function renderKeychainLab() {
+    const container = document.getElementById('keychainLabContainer');
+    if (!container) return;
+
+    const allKeychains = state.concepts.filter((c) => c.seriesId === KEYCHAIN_SERIES_ID);
+    if (allKeychains.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    const shortlistedKeychains = allKeychains.filter((c) => state.shortlist.includes(c.id));
+    const ratedKeychains = allKeychains.filter((c) => isConceptRated(c.id));
+    const topPick = allKeychains.find((c) => c.id === state.topPickId) || null;
+    const hasAnyUserAction =
+      shortlistedKeychains.length > 0 || ratedKeychains.length > 0 || Boolean(topPick);
+
+    const visibleKeychains = allKeychains.filter((c) => {
+      if (state.labFilter === 'shortlisted') return state.shortlist.includes(c.id);
+      if (state.labFilter === 'rated') return isConceptRated(c.id);
+      return true;
+    });
+
+    const filterTabs = [
+      { id: 'all', label: `Tất cả (${allKeychains.length})` },
+      { id: 'shortlisted', label: `Đã chọn lọc (${shortlistedKeychains.length})` },
+      { id: 'rated', label: `Đã chấm điểm (${ratedKeychains.length})` },
+    ];
+
+    container.innerHTML = `
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[#E5E5E5] mb-8">
+        <div class="space-y-2 max-w-2xl">
+          <p class="gallery-badge">Phòng tuyển chọn phiên bản — HCMUT · CSE</p>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-[#1A1A1A]">
+            Móc Khóa <span class="italic font-semibold">Khoa Học Máy Tính</span>
+          </h2>
+          <p class="text-sm text-[#666666] leading-relaxed">
+            So sánh trực tiếp 4 hướng thiết kế V1–V4 cho sinh viên Khoa Khoa học & Kỹ thuật Máy tính (Bách Khoa TP.HCM). Bấm chọn lọc các mẫu ưng ý, chấm điểm theo 3 tiêu chí trong chi tiết sản phẩm và chốt phương án #1 (lưu tự động trên trình duyệt).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 border border-[#E5E5E5] bg-white px-5 py-3.5 shrink-0">
+          <div>
+            <div class="text-[11px] uppercase tracking-wider text-[#666666]">Chọn lọc</div>
+            <div id="labShortlistCount" class="font-display text-xl font-bold text-[#1A1A1A] tabular-nums">${shortlistedKeychains.length}/${allKeychains.length}</div>
+          </div>
+          <div class="border-l border-[#E5E5E5] pl-4">
+            <div class="text-[11px] uppercase tracking-wider text-[#666666]">Đã chấm</div>
+            <div id="labRatedCount" class="font-display text-xl font-bold text-[#1A1A1A] tabular-nums">${ratedKeychains.length}/${allKeychains.length}</div>
+          </div>
+          <div class="border-l border-[#E5E5E5] pl-4">
+            <div class="text-[11px] uppercase tracking-wider text-[#666666]">Phương án #1</div>
+            <div id="labTopPickLabel" class="font-display text-xl font-bold ${topPick ? 'text-[#030391]' : 'text-[#999999]'}">${topPick ? escapeHtml(topPick.versionCode) : 'Chưa chốt'}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lab Toolbar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div class="flex flex-wrap items-center gap-5 border-b border-[#E5E5E5] sm:border-b-0" role="group" aria-label="Bộ lọc phiên bản móc khóa">
+          ${filterTabs
+            .map(
+              (ft) => `
+            <button type="button" data-lab-filter="${ft.id}" class="gallery-tab ${
+              state.labFilter === ft.id ? 'gallery-tab--active' : ''
+            }">
+              ${escapeHtml(ft.label)}
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" data-export-eval="true" class="gallery-btn-outline gallery-btn-sm">
+            Sao chép báo cáo đánh giá
+          </button>
+          ${
+            hasAnyUserAction
+              ? `<button type="button" data-reset-eval="true" class="gallery-btn-outline gallery-btn-sm !border-[#D4D4D4] !text-[#666666] hover:!border-[#1A1A1A] hover:!text-white">
+                   Đặt lại
+                 </button>`
+              : ''
+          }
+        </div>
+      </div>
+
+      <!-- 4-Version Comparison Cards -->
+      ${
+        visibleKeychains.length === 0
+          ? `
+        <div class="border border-[#E5E5E5] bg-white p-10 text-center mb-10">
+          <p class="font-display text-2xl font-bold text-[#1A1A1A] mb-2">Chưa có phiên bản trong bộ lọc này</p>
+          <p class="text-sm text-[#666666] mb-5">Hãy bấm “Chọn lọc” hoặc “Chấm điểm” trên một trong 4 phiên bản V1–V4 trước.</p>
+          <button type="button" data-lab-filter="all" class="gallery-btn-primary gallery-btn-sm">Xem cả 4 phiên bản</button>
+        </div>
+      `
+          : `
+        <div id="keychainVersionGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+          ${visibleKeychains
+            .map((c) => {
+              const isShort = state.shortlist.includes(c.id);
+              const isTop = state.topPickId === c.id;
+              const avg = getConceptAverageScore(c.id);
+              const ev = getConceptEvaluation(c.id);
+
+              return `
+                <article class="gallery-card group flex flex-col ${
+                  isTop ? '!border-[#030391] ring-1 ring-[#030391]' : isShort ? '!border-[#1A1A1A]' : ''
+                }" data-version-card="${escapeHtml(c.id)}">
+                  <div class="px-4 py-3 bg-white border-b border-[#E5E5E5] flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="version-pill">${escapeHtml(c.versionCode)}</span>
+                      ${isTop ? '<span class="top-pick-pill">#1 Ưu tiên</span>' : ''}
+                      ${
+                        !isTop && isShort
+                          ? '<span class="text-[11px] uppercase tracking-wider font-semibold text-[#1A1A1A] px-1.5 py-0.5 border border-[#1A1A1A]">Đã chọn</span>'
+                          : ''
+                      }
+                    </div>
+                    <span class="text-xs font-semibold tabular-nums ${avg !== null ? 'text-[#1A1A1A]' : 'text-[#999999]'}">
+                      ${avg !== null ? `★ ${formatScore(avg)} / 5.0` : 'Chưa chấm'}
+                    </span>
+                  </div>
+
+                  <div class="relative aspect-[4/3] overflow-hidden bg-[#F5F5F5]">
+                    <button type="button" data-open-concept="${escapeHtml(c.id)}" class="art-frame block w-full h-full cursor-pointer" aria-label="Xem chi tiết ${escapeHtml(c.title)}">
+                      ${renderMerchIllustration(c, 0)}
+                    </button>
+                  </div>
+
+                  <div class="p-5 flex-1 flex flex-col bg-white space-y-3">
+                    <div>
+                      <h3 class="font-display text-lg font-bold text-[#1A1A1A] leading-snug">
+                        <button type="button" data-open-concept="${escapeHtml(c.id)}" class="text-left hover:text-[#666666] transition-colors cursor-pointer">
+                          ${escapeHtml(c.versionShortName)}
+                        </button>
+                      </h3>
+                      <p class="text-xs text-[#666666] mt-1">${escapeHtml(c.materialSummary)}</p>
+                      <div class="text-[11px] font-medium text-[#1A1A1A] tabular-nums mt-1.5">${escapeHtml(c.dimensions)} · ${escapeHtml(c.costTier)}</div>
+                    </div>
+
+                    <div class="text-xs space-y-1.5 pt-2 border-t border-[#E5E5E5]">
+                      <div class="text-[#1A1A1A]"><span class="font-semibold text-[#030391]">+ Điểm mạnh:</span> ${escapeHtml(c.highlight)}</div>
+                      <div class="text-[#666666]"><span class="font-semibold text-[#1A1A1A]">− Cân nhắc:</span> ${escapeHtml(c.tradeoff)}</div>
+                    </div>
+
+                    ${
+                      ev.note
+                        ? `<div class="bg-[#FAFAFA] border border-[#E5E5E5] px-2.5 py-2 text-xs text-[#1A1A1A] italic line-clamp-2">“${escapeHtml(ev.note)}”</div>`
+                        : ''
+                    }
+
+                    <div class="mt-auto pt-3 border-t border-[#E5E5E5] space-y-1.5">
+                      <div class="grid grid-cols-2 gap-1.5">
+                        <button type="button" data-toggle-shortlist="${escapeHtml(c.id)}" class="py-2 px-2 text-[11px] font-medium uppercase tracking-wider whitespace-nowrap border transition-colors cursor-pointer ${
+                          isShort
+                            ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
+                            : 'bg-white text-[#1A1A1A] border-[#D4D4D4] hover:border-[#1A1A1A]'
+                        }">
+                          ${isShort ? 'Đã chọn ✓' : 'Chọn lọc'}
+                        </button>
+                        <button type="button" data-open-rate="${escapeHtml(c.id)}" class="py-2 px-2 text-[11px] font-medium uppercase tracking-wider whitespace-nowrap border border-[#D4D4D4] bg-white text-[#1A1A1A] hover:border-[#1A1A1A] transition-colors cursor-pointer">
+                          ${avg !== null ? 'Sửa điểm' : 'Chấm điểm'}
+                        </button>
+                      </div>
+                      <button type="button" data-set-top-pick="${escapeHtml(c.id)}" class="w-full py-2 px-2 text-[11px] font-medium uppercase tracking-wider whitespace-nowrap border transition-colors cursor-pointer ${
+                        isTop
+                          ? 'bg-[#030391] text-white border-[#030391]'
+                          : 'bg-white text-[#030391] border-[#CBD5E1] hover:border-[#030391]'
+                      }">
+                        ${isTop ? '#1 Phương án đã chốt' : 'Chốt phương án #1'}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              `;
+            })
+            .join('')}
+        </div>
+      `
+      }
+
+      <!-- Side-by-Side Comparison Matrix -->
+      <div class="bg-white border border-[#E5E5E5]">
+        <div class="px-5 py-3.5 border-b border-[#E5E5E5] flex items-center justify-between gap-4">
+          <h3 class="text-xs uppercase tracking-[0.16em] font-semibold text-[#1A1A1A]">Bảng đối chiếu thông số 4 phiên bản</h3>
+          <span class="text-xs text-[#666666] hidden sm:inline">Bấm vào tên phiên bản để xem 2 góc nhìn & chấm điểm chi tiết</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="compare-table w-full">
+            <thead>
+              <tr>
+                <th>Phiên bản</th>
+                <th>Chất liệu & Công nghệ</th>
+                <th>Kích thước</th>
+                <th>Chi phí dự kiến</th>
+                <th>Điểm TB (3 tiêu chí)</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allKeychains
+                .map((c) => {
+                  const avg = getConceptAverageScore(c.id);
+                  const isShort = state.shortlist.includes(c.id);
+                  const isTop = state.topPickId === c.id;
+                  const statusLabel = isTop
+                    ? '<span class="top-pick-pill">#1 Đã chốt</span>'
+                    : isShort
+                      ? '<span class="inline-block text-[11px] font-semibold uppercase tracking-wider text-[#1A1A1A] border border-[#1A1A1A] px-2 py-0.5">Đã chọn lọc</span>'
+                      : '<span class="text-xs text-[#999999]">Đang xem xét</span>';
+
+                  return `
+                    <tr class="hover:bg-[#FAFAFA] transition-colors">
+                      <td class="whitespace-nowrap">
+                        <button type="button" data-open-concept="${escapeHtml(c.id)}" class="inline-flex items-center gap-2 font-semibold text-[#1A1A1A] hover:underline cursor-pointer text-left">
+                          <span class="version-pill">${escapeHtml(c.versionCode)}</span>
+                          <span>${escapeHtml(c.versionShortName)}</span>
+                        </button>
+                      </td>
+                      <td>${escapeHtml(c.materialSummary)}</td>
+                      <td class="tabular-nums whitespace-nowrap">${escapeHtml(c.dimensions)}</td>
+                      <td class="tabular-nums whitespace-nowrap">${escapeHtml(c.costTier)}</td>
+                      <td class="tabular-nums whitespace-nowrap font-semibold">${avg !== null ? `★ ${formatScore(avg)} / 5.0` : '<span class="text-[#999999] font-normal">Chưa chấm</span>'}</td>
+                      <td class="whitespace-nowrap">${statusLabel}</td>
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
   // -------------------- Render: Category Filter Tabs --------------------
   function renderCategoryFilters() {
     const bar = document.getElementById('categoryFilterBar');
     if (!bar) return;
 
-    bar.innerHTML = CATEGORIES.map((cat) => {
-      const active = state.activeCategory === cat.id;
+    const scopedConcepts = state.concepts.filter(
+      (c) => state.activeCampus === 'all' || c.campusId === state.activeCampus
+    );
+
+    const categoryButtonsHtml = CATEGORIES.map((cat) => {
+      const count =
+        cat.id === 'all'
+          ? scopedConcepts.length
+          : scopedConcepts.filter((c) => c.category === cat.id).length;
+      const baseLabel = cat.id === 'all' ? 'Tất cả' : cat.label;
+      const active = state.activeCategory === cat.id && !state.onlyShortlisted;
       return `
         <button type="button" data-category-id="${escapeHtml(cat.id)}" class="gallery-tab ${
           active ? 'gallery-tab--active' : ''
         }">
-          ${escapeHtml(cat.label)}
+          ${escapeHtml(`${baseLabel} (${count})`)}
         </button>
       `;
     }).join('');
+
+    const shortlistedInScopeCount = scopedConcepts.filter((c) => state.shortlist.includes(c.id)).length;
+    const shortlistToggleHtml = `
+      <button type="button" data-toggle-only-shortlisted="true" class="gallery-tab ${
+        state.onlyShortlisted ? 'gallery-tab--active !text-[#030391] !border-[#030391]' : ''
+      }">
+        Đã chọn lọc (${shortlistedInScopeCount})
+      </button>
+    `;
+
+    bar.innerHTML = categoryButtonsHtml + shortlistToggleHtml;
   }
 
   // -------------------- Render: Available Works Gallery Grid --------------------
@@ -492,6 +1013,9 @@
       .map((item) => {
         const creator = getCreatorById(item.creatorId);
         const isBookmarked = state.bookmarks.includes(item.id);
+        const isShortlisted = state.shortlist.includes(item.id);
+        const isTopPick = state.topPickId === item.id;
+        const avgScore = getConceptAverageScore(item.id);
 
         return `
           <article class="gallery-card group flex flex-col">
@@ -500,6 +1024,16 @@
               <button type="button" data-open-concept="${escapeHtml(item.id)}" class="art-frame block w-full h-full cursor-pointer" aria-label="Mở chi tiết ${escapeHtml(item.title)}">
                 ${renderMerchIllustration(item, 0)}
               </button>
+
+              <div class="absolute top-3.5 left-3.5 z-10 flex items-center gap-1.5 flex-wrap pointer-events-none">
+                ${item.versionCode ? `<span class="version-pill">${escapeHtml(item.versionCode)}</span>` : ''}
+                ${isTopPick ? `<span class="top-pick-pill">#1 Ưu tiên</span>` : ''}
+                ${
+                  !isTopPick && isShortlisted
+                    ? `<span class="px-2 py-0.5 text-[11px] uppercase tracking-wider font-semibold bg-white text-[#1A1A1A] border border-[#1A1A1A]">Đã chọn lọc</span>`
+                    : ''
+                }
+              </div>
 
               <button type="button" data-toggle-bookmark="${escapeHtml(item.id)}" class="gallery-btn-icon absolute top-3.5 right-3.5 z-10 ${
                 isBookmarked ? '!bg-white !border-[#1A1A1A]' : ''
@@ -514,14 +1048,21 @@
                 <span class="text-xs uppercase tracking-[0.14em] text-[#666666] font-medium">
                   ${escapeHtml(getCategoryLabel(item.category))}
                 </span>
-                <div class="flex items-center gap-1.5" aria-label="Bảng màu sản phẩm">
-                  ${(item.palette || [])
-                    .slice(0, 4)
-                    .map(
-                      (hex) =>
-                        `<span class="w-2.5 h-2.5 rounded-full border border-[#E5E5E5]" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
-                    )
-                    .join('')}
+                <div class="flex items-center gap-2.5">
+                  ${
+                    avgScore !== null
+                      ? `<span class="text-xs font-semibold tabular-nums text-[#1A1A1A]">★ ${formatScore(avgScore)}</span>`
+                      : ''
+                  }
+                  <div class="flex items-center gap-1.5" aria-label="Bảng màu sản phẩm">
+                    ${(item.palette || [])
+                      .slice(0, 4)
+                      .map(
+                        (hex) =>
+                          `<span class="w-2.5 h-2.5 rounded-full border border-[#E5E5E5]" style="background:${escapeHtml(hex)}" title="${escapeHtml(hex)}"></span>`
+                      )
+                      .join('')}
+                  </div>
                 </div>
               </div>
 
@@ -535,9 +1076,14 @@
                 by <button type="button" data-open-creator="${escapeHtml(creator.id)}" class="hover:text-[#1A1A1A] transition-colors cursor-pointer">${escapeHtml(creator.name)}</button>
               </p>
 
-              <div class="mt-auto pt-4 border-t border-[#E5E5E5] flex items-center justify-between">
-                <span class="text-xs text-[#666666] uppercase tracking-wider">Nguồn</span>
-                <span class="font-semibold text-sm text-[#1A1A1A]">${escapeHtml(item.source || 'HCMUT')}</span>
+              <div class="mt-auto pt-4 border-t border-[#E5E5E5] flex items-center justify-between gap-3">
+                <div>
+                  <span class="text-xs text-[#666666] uppercase tracking-wider mr-2">Nguồn</span>
+                  <span class="font-semibold text-sm text-[#1A1A1A]">${escapeHtml(item.source || 'HCMUT')}</span>
+                </div>
+                <button type="button" data-open-concept="${escapeHtml(item.id)}" class="text-xs uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] transition-colors cursor-pointer">
+                  Chi tiết & Chấm điểm →
+                </button>
               </div>
             </div>
           </article>
@@ -590,13 +1136,22 @@
       .join('');
   }
 
-  // -------------------- Modal 1: Concept Detail Showcase --------------------
-  function openConceptModal(conceptId) {
+  // -------------------- Modal 1: Concept Detail Showcase & Evaluation --------------------
+  function openConceptModal(conceptId, focusEval = false) {
     state.activeConceptId = conceptId;
     state.activeDetailView = 0;
     renderConceptModal();
     document.getElementById('conceptModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+
+    if (focusEval) {
+      window.requestAnimationFrame(() => {
+        const panel = document.getElementById('conceptEvalPanel');
+        if (panel && panel.scrollIntoView) {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    }
   }
 
   function closeConceptModal() {
@@ -612,6 +1167,13 @@
     const campus = getCampusById(concept.campusId);
     const creator = getCreatorById(concept.creatorId);
     const isBookmarked = state.bookmarks.includes(concept.id);
+    const isShortlisted = state.shortlist.includes(concept.id);
+    const isTopPick = state.topPickId === concept.id;
+    const isKeychainSeries = concept.seriesId === KEYCHAIN_SERIES_ID;
+    const ev = getConceptEvaluation(concept.id);
+    const avgScore = getConceptAverageScore(concept.id);
+    const currentNoteVal =
+      typeof state.draftNotes[concept.id] === 'string' ? state.draftNotes[concept.id] : ev.note;
 
     const galleryImages = Array.isArray(concept.galleryImages) ? concept.galleryImages : [];
     const viewCount = galleryImages.length > 0 ? galleryImages.length : 1;
@@ -627,7 +1189,7 @@
 
     body.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-        <!-- Left Column: Studio Artwork (1 or Multi-Angle depending on concept) -->
+        <!-- Left Column: Studio Artwork (2 Synchronized Angles) -->
         <div class="lg:col-span-6 space-y-4">
           <div class="border border-[#E5E5E5] bg-white p-3">
             <div id="detailArtworkFrame" class="art-frame aspect-[4/3] bg-[#F5F5F5]">
@@ -669,10 +1231,11 @@
           </div>
         </div>
 
-        <!-- Right Column: Curatorial Placard Info -->
+        <!-- Right Column: Curatorial Placard Info + Interactive Selection & Rating -->
         <div class="lg:col-span-6 space-y-6 pr-2">
           <div class="pr-8">
             <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-[#666666] mb-2">
+              ${concept.versionCode ? `<span class="version-pill">${escapeHtml(concept.versionCode)}</span>` : ''}
               <span class="font-semibold text-[#1A1A1A]">${escapeHtml(campus.shortName)}</span>
               <span>/</span>
               <span>${escapeHtml(getCategoryLabel(concept.category))}</span>
@@ -706,7 +1269,6 @@
           ${
             concept.story && concept.story.trim()
               ? `
-          <!-- Curatorial Note -->
           <div>
             <div class="text-xs uppercase tracking-widest text-[#666666] font-medium mb-1.5">Câu chuyện thiết kế</div>
             <p class="text-sm text-[#1A1A1A]/90 leading-relaxed">${escapeHtml(concept.story)}</p>
@@ -739,10 +1301,85 @@
             </div>
           </div>
 
-          <!-- Minimal Feature Work Notice -->
-          <div class="border-t border-[#E5E5E5] pt-4 flex items-center justify-between gap-4 text-xs text-[#666666]">
-            <span>Chế độ Chỉ Trưng Bày — Tương tác nằm trong Feature Work.</span>
-            <a href="#feature-work" data-jump-feature-work="true" class="uppercase tracking-wider font-medium text-[#1A1A1A] hover:text-[#666666] shrink-0">Lộ trình →</a>
+          <!-- Interactive Selection & 3-Criteria Rating Panel -->
+          <div id="conceptEvalPanel" class="bg-white border border-[#E5E5E5] p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#E5E5E5]">
+              <div>
+                <div class="text-xs uppercase tracking-widest text-[#666666] font-medium">Đánh giá & Chọn lọc</div>
+                <div id="conceptEvalAvgText" class="text-lg font-display font-bold text-[#1A1A1A] tabular-nums mt-0.5">
+                  ${avgScore !== null ? `${formatScore(avgScore)} / 5.0` : 'Chưa chấm điểm'}
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" data-toggle-shortlist="${escapeHtml(concept.id)}" class="gallery-btn-sm border text-xs font-medium uppercase tracking-wider cursor-pointer transition-colors ${
+                  isShortlisted
+                    ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
+                    : 'bg-white text-[#1A1A1A] border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white'
+                }">
+                  ${isShortlisted ? 'Đã chọn lọc ✓' : 'Chọn lọc'}
+                </button>
+                ${
+                  isKeychainSeries
+                    ? `<button type="button" data-set-top-pick="${escapeHtml(concept.id)}" class="gallery-btn-sm border text-xs font-medium uppercase tracking-wider cursor-pointer transition-colors ${
+                        isTopPick
+                          ? 'bg-[#030391] text-white border-[#030391]'
+                          : 'bg-white text-[#030391] border-[#030391] hover:bg-[#030391] hover:text-white'
+                      }">
+                        ${isTopPick ? '#1 Đã chốt' : 'Chốt phương án #1'}
+                      </button>`
+                    : ''
+                }
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              ${CRITERIA_LIST.map((cr) => {
+                const currentVal = ev[cr.key];
+                return `
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <span class="text-xs font-medium text-[#1A1A1A]">${escapeHtml(cr.label)}</span>
+                    <div class="flex items-center gap-1.5" role="group" aria-label="Chấm điểm ${escapeHtml(cr.label)}">
+                      ${[1, 2, 3, 4, 5]
+                        .map(
+                          (score) => `
+                        <button type="button"
+                          data-rate-concept="${escapeHtml(concept.id)}"
+                          data-rate-criterion="${escapeHtml(cr.key)}"
+                          data-rate-value="${score}"
+                          class="eval-score-btn ${currentVal === score ? 'eval-score-btn--active' : ''}"
+                          aria-pressed="${currentVal === score ? 'true' : 'false'}"
+                        >
+                          ${score}
+                        </button>
+                      `
+                        )
+                        .join('')}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="pt-3 border-t border-[#E5E5E5] space-y-2.5">
+              <label for="conceptEvalNote" class="block text-xs uppercase tracking-widest text-[#666666] font-medium">
+                Nhận xét & Đề xuất tinh chỉnh
+              </label>
+              <textarea id="conceptEvalNote" rows="2" class="w-full border border-[#D4D4D4] bg-[#FAFAFA] px-3 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]" placeholder="Ghi chú chất liệu, độ bền, kích thước hoặc cảm nhận khi chọn mẫu này...">${escapeHtml(currentNoteVal)}</textarea>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <span class="text-[11px] text-[#666666]">Lưu cục bộ trong trình duyệt (localStorage).</span>
+                <button type="button" id="saveConceptEvalBtn" data-save-eval="${escapeHtml(concept.id)}" class="gallery-btn-primary gallery-btn-sm">
+                  Lưu đánh giá
+                </button>
+              </div>
+              ${
+                ev.note
+                  ? `<div id="savedEvalNotePreview" class="bg-[#FAFAFA] border border-[#E5E5E5] px-3 py-2 text-xs text-[#1A1A1A]">
+                       <span class="uppercase tracking-wider text-[10px] font-semibold text-[#666666] block mb-0.5">Nhận xét đã lưu</span>
+                       <span>“${escapeHtml(ev.note)}”</span>
+                     </div>`
+                  : ''
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -756,11 +1393,19 @@
       });
     }
 
-    body.querySelectorAll('[data-jump-feature-work]').forEach((link) => {
-      link.addEventListener('click', () => {
-        closeConceptModal();
+    const noteInput = document.getElementById('conceptEvalNote');
+    if (noteInput) {
+      noteInput.addEventListener('input', (e) => {
+        state.draftNotes[concept.id] = e.target.value;
       });
-    });
+    }
+
+    const saveEvalBtn = document.getElementById('saveConceptEvalBtn');
+    if (saveEvalBtn) {
+      saveEvalBtn.addEventListener('click', () => {
+        saveEvaluationNote(concept.id);
+      });
+    }
   }
 
   // -------------------- Modal 2: Anonymous Archive Portfolio --------------------
@@ -853,6 +1498,7 @@
   function renderAll() {
     renderHero();
     renderCampusHubStrip();
+    renderKeychainLab();
     renderCategoryFilters();
     renderGallery();
     renderBookmarks();
@@ -875,9 +1521,67 @@
         return;
       }
 
+      const labFilterBtn = e.target.closest('[data-lab-filter]');
+      if (labFilterBtn) {
+        state.labFilter = labFilterBtn.dataset.labFilter;
+        renderKeychainLab();
+        return;
+      }
+
+      const exportEvalBtn = e.target.closest('[data-export-eval]');
+      if (exportEvalBtn) {
+        copyToClipboard(formatEvaluationReport(), 'Đã sao chép báo cáo đánh giá vào clipboard!');
+        return;
+      }
+
+      const resetEvalBtn = e.target.closest('[data-reset-eval]');
+      if (resetEvalBtn) {
+        resetAllEvaluations();
+        return;
+      }
+
+      const shortlistBtn = e.target.closest('[data-toggle-shortlist]');
+      if (shortlistBtn) {
+        toggleShortlist(shortlistBtn.dataset.toggleShortlist);
+        return;
+      }
+
+      const topPickBtn = e.target.closest('[data-set-top-pick]');
+      if (topPickBtn) {
+        setTopPick(topPickBtn.dataset.setTopPick);
+        return;
+      }
+
+      const openRateBtn = e.target.closest('[data-open-rate]');
+      if (openRateBtn) {
+        closeBookmarksDrawer();
+        closeCreatorModal();
+        openConceptModal(openRateBtn.dataset.openRate, true);
+        return;
+      }
+
+      const rateBtn = e.target.closest('[data-rate-criterion]');
+      if (rateBtn) {
+        setCriterionScore(
+          rateBtn.dataset.rateConcept,
+          rateBtn.dataset.rateCriterion,
+          rateBtn.dataset.rateValue
+        );
+        return;
+      }
+
       const categoryBtn = e.target.closest('[data-category-id]');
       if (categoryBtn) {
         state.activeCategory = categoryBtn.dataset.categoryId;
+        state.onlyShortlisted = false;
+        renderCategoryFilters();
+        renderGallery();
+        return;
+      }
+
+      const onlyShortBtn = e.target.closest('[data-toggle-only-shortlisted]');
+      if (onlyShortBtn) {
+        state.onlyShortlisted = !state.onlyShortlisted;
         renderCategoryFilters();
         renderGallery();
         return;
@@ -905,6 +1609,10 @@
 
       const detailViewBtn = e.target.closest('[data-detail-view]');
       if (detailViewBtn) {
+        const noteEl = document.getElementById('conceptEvalNote');
+        if (noteEl && state.activeConceptId) {
+          state.draftNotes[state.activeConceptId] = noteEl.value;
+        }
         state.activeDetailView = Number(detailViewBtn.dataset.detailView) || 0;
         renderConceptModal();
         return;
@@ -938,6 +1646,7 @@
       resetBtn.addEventListener('click', () => {
         state.activeCampus = 'all';
         state.activeCategory = 'all';
+        state.onlyShortlisted = false;
         state.searchQuery = '';
         state.sortBy = 'featured';
         if (searchInput) searchInput.value = '';
@@ -970,6 +1679,7 @@
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener('click', (e) => {
+        if (!e.target || !e.target.isConnected) return;
         if (!e.target.closest('.gallery-modal-panel')) {
           el.classList.add('hidden');
           document.body.style.overflow = '';
