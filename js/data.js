@@ -390,11 +390,11 @@
         'assets/products/hcmut-cs-keychain-v5-detail.jpg',
       ],
       viewLabels: [
-        'Phối cảnh Studio (Mặt chip)',
-        'Macro Die-shot & Chân QFN',
+        'Phối cảnh Studio (2 Mặt Chip & Die-Shot)',
+        'Macro Vi Mạch Die-Shot & Chân QFN',
       ],
       palette: ['#17191D', '#D9B45A', '#3FB7D6', '#7BC24A'],
-      materialSummary: 'Vỏ Epoxy Đen Khắc Laser · Chân QFN Mạ Vàng & Mặt Sau Die-Shot Vi Mạch',
+      materialSummary: 'Vỏ QFN-48 Đen Xước Khắc Laser · Kính Sapphire & Vi Mạch VLSI Die-Shot',
       dimensions: '36 × 36 × 4.2 mm',
       tags: [
         'Móc khóa KHMT',
@@ -404,9 +404,9 @@
         'Chip bán dẫn',
       ],
       story:
-        'Lấy cảm hứng từ mẫu chip bán dẫn thực nghiệm của Bách Khoa: khối vỏ đúc epoxy đen mờ chuẩn đóng gói QFN vuông 36×36mm, mặt trước khắc laser trắng bạc siêu nét huy hiệu 3 khối lập phương BK TP.HCM kèm mã định danh BKCS2026 và dấu chấm định vị Pin-1. Mặt sau đóng khung 40 chân đồng mạ vàng ENIG 24K chạy dọc 4 cạnh, ôm trọn ô cửa kính sapphire bảo vệ bức ảnh hiển vi quang học (silicon die-shot) rực rỡ sắc lục, lam, vàng của các phân vùng thanh ghi, bộ đệm SRAM và lõi tính toán.',
+        'Lấy cảm hứng từ mẫu chip bán dẫn thực nghiệm của Trường Đại học Bách Khoa: khối vỏ đóng gói QFN-48 vuông 36×36mm vát cạnh 45° xử lý bề mặt đen xước mịn, mặt trước khắc laser fiber ánh bạc cross-hatch biểu tượng 3 khối lập phương BK TP.HCM tách rãnh stencil, mã định danh BKCS2026 và chấm định vị Pin-1 ở góc trên bên phải. Mặt sau đóng khung 48 chân đồng mạ vàng ENIG 24K chạy dọc 4 cạnh, ôm trọn ô cửa kính sapphire vát mép hiển thị bản vi mạch VLSI silicon die-shot sắc lục, lam, vàng với 3 cuộn cảm xoắn ốc RF (spiral inductors), cụm bộ nhớ SRAM và vòng pad nối dây quanh viền.',
       specs:
-        'Khung vỏ QFN vuông 36 × 36 × 4.2mm đúc nhựa nhiệt rắn epoxy đen mờ chống trầy; mặt trước khắc laser UV trắng bạc độ phân giải cao; mặt sau mạ vàng ENIG 24K trên 40 pad chân rìa (castellated side leads) kết hợp bản in thạch bản đa sắc die-shot phủ kính cường lực mỏng; tai móc nhôm 6061 tiện CNC liền trục kèm khoen thép phay và dây đeo cổ tay vải dệt.',
+        'Khung vỏ QFN-48 vuông 36 × 36 × 4.2mm vát 45° đen xước chống trầy; mặt trước khắc laser fiber độ phân giải cao; mặt sau mạ vàng ENIG 24K trên 48 pad chân rìa (castellated side leads) kết hợp mặt vi mạch quang học VLSI die-shot (3 cuộn cảm RF xoắn ốc + mảng SRAM) phủ kính sapphire vát cạnh trong suốt; đi kèm xích mắt nhỏ, khoen tròn và móc khóa càng cua thép không gỉ 304 phay xước.',
     },
   ];
 
