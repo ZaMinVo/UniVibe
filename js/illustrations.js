@@ -559,46 +559,6 @@
       imgClass: 'object-cover',
       objectPosition: 'center center',
     },
-    'assets/products/hcmut-cs-keychain-v1-studio.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v1-detail.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v2-studio.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v2-detail.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v3-studio.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v3-detail.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v4-studio.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
-    'assets/products/hcmut-cs-keychain-v4-detail.jpg': {
-      background: '#CFCBC4',
-      imgClass: 'object-cover',
-      objectPosition: 'center center',
-    },
     'assets/products/hcmut-cs-keychain-v5-studio.jpg': {
       background: '#CFCBC4',
       imgClass: 'object-cover',

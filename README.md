@@ -8,17 +8,12 @@
 
 Trang web hiện tại hoạt động hoàn toàn ở chế độ **trưng bày tĩnh (*Showcase-Only*)**:
 
-- **Bộ sưu tập 7 concept / 14 góc nhìn studio (`1400×1050`):**
+- **Bộ sưu tập 3 concept / 6 góc nhìn studio (`1400×1050`):**
   1. **Monolith 500 — Bình Giữ Nhiệt Inox** (`c-hcmut-bottle-01`, 2 góc nhìn).
   2. **Datum Grid 900 — Lót Chuột Deskpad** (`c-hcmut-pad-01`, 2 góc nhìn).
-  3. **Móc Khóa Ngành Khoa Học Máy Tính (HCMUT · CSE) — 5 Phiên Bản (`V1–V5`):**
-     - **V1 · Circuit 24K (`c-hcmut-cs-keychain-v1`):** Bo mạch FR-4 2.4mm đen lì, mạch đồng mạ vàng 24K ENIG, chip QFN-16 `BK-CS`, linh kiện SMD 0603, chân cắm vàng cạnh hông & khoen đồng mạ vàng.
-     - **V2 · Lambda 6061 (`c-hcmut-cs-keychain-v2`):** Thẻ nhôm nguyên khối AL-6061 vát mép kim cương 45°, rãnh dây lót vòng `#1488DB`, khắc laser `HCMUT · CSE // COMPUTER SCIENCE · λ → O(log n)` kèm thước đo mm & móc khóa carabiner thép phay.
-     - **V3 · Tactile 0xBK (`c-hcmut-cs-keychain-v3`):** Hộp switch CNC than chì `#23262C`, housing polycarbonate mờ, trục switch tactile `#1488DB` và keycap PBT gốm nhám in `CS`, `0xBK`, huy hiệu `BK` & cạnh trước `HCMUT // CSE`.
-     - **V4 · Hexa Prism (`c-hcmut-cs-keychain-v4`):** Khối lục giác PMMA vát cạnh 8.2mm chiết suất quang học, lõi thép phay tráng men `BK · CSE · KHMT · 1957` treo nổi chính giữa và khoen xoay thép 304.
-     - **V5 · Die Shot 2026 (`c-hcmut-cs-keychain-v5`):** Khối chip bán dẫn QFN 36×36mm vỏ epoxy đen mờ khắc laser huy hiệu 3 khối lập phương `BK TP.HCM` & mã `BKCS2026`, mặt sau đóng khung 40 chân đồng mạ vàng 24K bao quanh cửa sổ ảnh hiển vi quang học *silicon die-shot* đa sắc.
+  3. **Die Shot 2026 — Móc Khóa Chip Bán Dẫn** (`c-hcmut-cs-keychain-v5`, 2 góc nhìn): Khối chip bán dẫn QFN-48 36×36mm vát 45° đen xước khắc laser biểu tượng 3 khối lập phương `BK TP.HCM` & mã `BKCS2026`, mặt sau đóng khung 48 chân đồng mạ vàng 24K bao quanh cửa sổ kính sapphire hiển thị vi mạch quang học *VLSI silicon die-shot* với 3 cuộn cảm xoắn ốc RF.
 - **Ưu tiên Không gian ĐHQG-HCM:** Khu vực chuyển đổi trường học ưu tiên hiển thị 6 trường thành viên ĐHQG-HCM (HCMUT, UIT, HCMUS, USSH, HCMIU, UEL) với logo chính thức, cùng tùy chọn xem toàn bộ 9 trường đối tác.
-- **Ghi nhận tác giả (*Attribution*):** Toàn bộ 7 tác phẩm được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** hoặc **HCMUT · CSE**, không chứa dữ liệu mẫu chính thức *by HCMUT*.
+- **Ghi nhận tác giả (*Attribution*):** Toàn bộ 3 tác phẩm được xuất bản công khai dưới danh nghĩa **by Ẩn danh** kèm trích dẫn **Nguồn: HCMUT** hoặc **HCMUT · CSE**, không chứa dữ liệu mẫu chính thức *by HCMUT*.
 - **Chỉ trưng bày:** Nền tảng không xử lý thanh toán hay tương tác người dùng; giữ vai trò trưng bày, truyền cảm hứng thiết kế và chuẩn hóa nhận diện.
 
 ---

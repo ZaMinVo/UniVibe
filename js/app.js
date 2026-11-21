@@ -201,7 +201,7 @@
             </h1>
 
             <p class="text-base sm:text-lg text-[#666666] max-w-xl leading-relaxed font-normal">
-              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Monolith 500, Datum Grid 900 và 5 phiên bản Móc khóa KHMT (Circuit 24K, Lambda 6061, Tactile 0xBK, Hexa Prism, Die Shot 2026) theo hệ nhận diện chuẩn HCMUT.
+              Bộ sưu tập tuyển chọn ${totalConcepts} thiết kế vật phẩm tối giản gồm Monolith 500 (Bình giữ nhiệt), Datum Grid 900 (Lót chuột Deskpad) và Die Shot 2026 (Móc khóa Chip bán dẫn KHMT) theo hệ nhận diện chuẩn HCMUT.
             </p>
 
             <div class="flex flex-wrap items-center gap-4 pt-2">
